@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Grid, Switch } from '@mui/material';
 
-const Toggler = styled.p`
+const Toggler = styled.div`
   margin-right: 30px;
 `;
 

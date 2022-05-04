@@ -1,10 +1,11 @@
-import styled from '@emotion/styled';
 import { AppBar, Box, Button, Container, IconButton, Toolbar } from '@mui/material';
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
+import styled from '@emotion/styled';
 
 import { LocalizationToggler } from './LocalizationTogger';
+import { useEffect, useState } from 'react';
 
 const Typography = styled.p`
   font-size: 1.2em;
@@ -12,13 +13,27 @@ const Typography = styled.p`
   margin-left: 10px;
 `;
 
-//this is for checking until authorization functionality is implemented
-const token = '1';
-
 export const Header = () => {
+  //this is for checking until authorization functionality is implemented
+  const token = '1';
+
+  const [scroll, setScroll] = useState(0);
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => setScroll(window.scrollY));
+    return () => window.removeEventListener('scroll', () => setScroll(window.scrollY));
+  }, []);
+
   return (
     <>
-      <AppBar position={token ? 'sticky' : 'static'}>
+      <AppBar
+        position={token ? 'sticky' : 'static'}
+        sx={
+          token && scroll > 0
+            ? { top: 0, transition: 'top 0.5s ease-in-out' }
+            : { top: '-100px', transition: 'top 0.05s ease-in-out' }
+        }
+      >
         <Container>
           <Toolbar>
             <AppRegistrationOutlinedIcon sx={{ fontSize: 30 }}></AppRegistrationOutlinedIcon>
