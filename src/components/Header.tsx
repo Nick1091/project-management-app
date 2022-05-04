@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
-import { AppBar, Box, Button, Container, Toolbar } from '@mui/material';
+import { AppBar, Box, Button, Container, IconButton, Toolbar } from '@mui/material';
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 
 import { LocalizationToggler } from './LocalizationTogger';
 
@@ -24,6 +26,12 @@ export const Header = () => {
             {token ? (
               <>
                 <LocalizationToggler></LocalizationToggler>
+                <IconButton color="inherit" aria-label="add to shopping cart">
+                  <AddToQueueIcon sx={{ fontSize: 30, mr: '15px' }}></AddToQueueIcon>
+                </IconButton>
+                <IconButton color="inherit" aria-label="add to shopping cart">
+                  <ManageAccountsIcon sx={{ fontSize: 30, mr: '15px' }}></ManageAccountsIcon>
+                </IconButton>
                 <Button color="secondary" variant="contained">
                   Logout
                 </Button>
