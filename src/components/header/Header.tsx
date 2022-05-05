@@ -14,9 +14,13 @@ export const Header = () => {
   const [scroll, setScroll] = useState(0);
   const appBarTopStyle = token && scroll > 0 ? 0 : '-100px';
 
+  const handleScroll = () => {
+    setScroll(window.scrollY);
+  };
+
   useEffect(() => {
-    window.addEventListener('scroll', () => setScroll(window.scrollY));
-    return () => window.removeEventListener('scroll', () => setScroll(window.scrollY));
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
