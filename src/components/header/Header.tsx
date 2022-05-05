@@ -11,8 +11,8 @@ import { Typography } from './Header-styles';
 export const Header = () => {
   //this is for checking until authorization functionality is implemented
   const token = '1';
-
   const [scroll, setScroll] = useState(0);
+  const appBarTopStyle = token && scroll > 0 ? 0 : '-100px';
 
   useEffect(() => {
     window.addEventListener('scroll', () => setScroll(window.scrollY));
@@ -23,11 +23,7 @@ export const Header = () => {
     <>
       <AppBar
         position={token ? 'sticky' : 'static'}
-        sx={
-          token && scroll > 0
-            ? { top: 0, transition: 'top 0.5s ease-in-out' }
-            : { top: '-100px', transition: 'top 0.05s ease-in-out' }
-        }
+        sx={{ top: appBarTopStyle, transition: 'top 0.5s ease-in-out' }}
       >
         <Container>
           <Toolbar>
