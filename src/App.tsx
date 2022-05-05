@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { AppLayout } from './components/AppLayout';
+import { AppLayout } from './components/appLayout/AppLayout';
 import { Board } from './pages/Board';
 import { EditProfile } from './pages/EditProfile';
 import { MainBoards } from './pages/MainBoards';

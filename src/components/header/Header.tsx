@@ -2,17 +2,11 @@ import { AppBar, Box, Button, Container, IconButton, Link, Toolbar } from '@mui/
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import styled from '@emotion/styled';
-
-import { LocalizationToggler } from './LocalizationTogger';
-import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-const Typography = styled.p`
-  font-size: 1.2em;
-  margin-right: auto;
-  margin-left: 10px;
-`;
+import { LocalizationToggler } from '../localizationTogger/LocalizationTogger';
+import { Typography } from './Header-styles';
 
 export const Header = () => {
   //this is for checking until authorization functionality is implemented
