@@ -31,7 +31,7 @@ export const Header = () => {
             <Typography>Project Management App</Typography>
             {token ? (
               <>
-                <LocalizationToggler></LocalizationToggler>
+                <LocalizationToggler />
                 <IconButton color="inherit">
                   <AddToQueueIcon sx={{ fontSize: 30, mr: '15px' }}></AddToQueueIcon>
                 </IconButton>
@@ -46,7 +46,7 @@ export const Header = () => {
               </>
             ) : (
               <>
-                <LocalizationToggler></LocalizationToggler>
+                <LocalizationToggler />
                 <Box mr={3}>
                   <Button color="inherit" variant="outlined">
                     Log In
