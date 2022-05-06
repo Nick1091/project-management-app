@@ -5,7 +5,7 @@ import { EditProfile } from './pages/EditProfile';
 import { LoginPage } from './pages/LoginPage';
 import { MainBoards } from './pages/MainBoards';
 import { NotFound } from './pages/NotFound';
-import { RegistrationPage } from './pages/RegistrationPage';
+import { RegisterPage } from './pages/RegisterPage';
 import { Welcome } from './pages/Welcome';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Route index element={<Welcome />} />
         <Route path="/main" element={<MainBoards />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/registration" element={<RegistrationPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/board" element={<Board />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="*" element={<NotFound />} />

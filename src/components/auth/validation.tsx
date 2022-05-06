@@ -39,10 +39,3 @@ export const loginValidation = {
     return true;
   },
 };
-
-export const errorMessagesServer = {
-  404: 'User not found!',
-  403: 'Wrong credentials!',
-  409: 'Email already in use!',
-  500: 'Something went wrong. Try again later',
-};
