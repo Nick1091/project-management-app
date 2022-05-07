@@ -10,6 +10,7 @@ import {
   SubComponentName,
   SubComponentLogin,
   SubComponentPassword,
+  fetchToken,
 } from '../../components/auth';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SubTitleError, SubTitle } from './RegisterPageStyle';
@@ -31,7 +32,8 @@ export const RegisterPage: React.FC = () => {
   const { handleSubmit } = methods;
   const onSubmit: SubmitHandler<ILoginObj> = async (data, e) => {
     e?.preventDefault();
-    dispatch(fetchLogin(data));
+    const createUser = await dispatch(fetchLogin(data));
+    createUser.meta.requestStatus !== 'rejected' && dispatch(fetchToken(data));
   };
   return (
     <Container sx={{ marginTop: '10vh' }} maxWidth="xs">
@@ -56,7 +58,6 @@ export const RegisterPage: React.FC = () => {
               fullWidth={true}
               size="medium"
               type="submit"
-              loadingPosition="end"
               variant="contained"
             >
               register

@@ -32,7 +32,6 @@ export const fetchToken = createAsyncThunk('post/fetchToken', async (data: ILogi
   try {
     const response = await axios.post(
       REQUEST_URLS.SING_IN_URL,
-      // JSON.stringify({ name: data.name, login: data.login, password: data.password }),
       JSON.stringify({ login: data.login, password: data.password }),
       {
         headers: {

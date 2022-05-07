@@ -15,9 +15,8 @@ import {
 export const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const {
-    authUser: { error, token, isLoading },
+    authUser: { error, isLoading },
   } = useAppSelector((state) => state.authUser);
-  console.log(token);
 
   const methods = useForm<ILoginObj>({
     defaultValues: {
@@ -55,7 +54,6 @@ export const LoginPage: React.FC = () => {
               fullWidth={true}
               size="medium"
               type="submit"
-              loadingPosition="end"
               variant="contained"
             >
               Login
