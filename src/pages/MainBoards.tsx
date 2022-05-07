@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import { NewBoard } from '../components/NewBoard';
-import { BoardsList } from '../components/BoardsList';
+import { NewBoard } from '../components/MainBoardsComponents/NewBoard';
+import { BoardsList } from '../components/MainBoardsComponents/BoardsList';
 import styled from 'styled-components';
 
 const BoardsContainer = styled.ul`

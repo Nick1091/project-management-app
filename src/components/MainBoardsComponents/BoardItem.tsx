@@ -4,12 +4,12 @@ import { styled as styles } from '@mui/material/styles';
 import { DeleteForever } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { styledBoard } from '../styles/styledBoard';
-import { ConfirmModal } from './ConfirmModal';
+import { styledBoard } from '../../styles/styledBoard';
+import { ConfirmModal } from '../ConfirmModal';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store/store';
-import { deleteBoard } from '../store/boardsSlice';
-import { token } from '../config/config';
+import { AppDispatch } from '../../store/store';
+import { deleteBoard } from '../../store/boardsSlice';
+import { token } from '../../config/config';
 
 const Board = styled.li`
   ${styledBoard};

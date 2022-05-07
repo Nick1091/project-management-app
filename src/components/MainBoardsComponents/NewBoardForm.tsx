@@ -3,12 +3,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ErrorMessage } from './ErrorMessage';
-import { token } from '../config/config';
-import { createBoard } from '../store/boardsSlice';
+import { ErrorMessage } from '../ErrorMessage';
+import { token } from '../../config/config';
+import { createBoard } from '../../store/boardsSlice';
 import { useDispatch } from 'react-redux';
 import { Button, IconButton, TextField } from '@mui/material';
-import { AppDispatch } from '../store/store';
+import { AppDispatch } from '../../store/store';
 import { styled as styles } from '@mui/material/styles';
 import styled from 'styled-components';
 

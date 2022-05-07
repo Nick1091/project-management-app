@@ -2,7 +2,7 @@ import React from 'react';
 import { styled as styles } from '@mui/material/styles';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
-import { styledBoard } from '../styles/styledBoard';
+import { styledBoard } from '../../styles/styledBoard';
 import { NewBoardPopover } from './NewBoardPopover';
 
 const CreateBoardBtn = styles(Button)`
