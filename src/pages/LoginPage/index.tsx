@@ -1,9 +1,8 @@
 import React from 'react';
-import { Typography, Container } from '@mui/material';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { SubTitle, SubTitleError } from './LoginPageStyle';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { Typography, Container } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   LoginFormWrapperStyle,
   SubComponentLogin,
@@ -11,6 +10,7 @@ import {
   ILoginObj,
   fetchToken,
 } from '../../components/auth';
+import { SubTitle, SubTitleError } from './LoginPageStyle';
 
 export const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
