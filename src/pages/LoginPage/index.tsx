@@ -51,7 +51,7 @@ export const LoginPage: React.FC = () => {
               loading={isLoading}
               sx={{ marginTop: 2, paddingTop: 1 }}
               disableElevation={true}
-              fullWidth={true}
+              fullWidth
               size="medium"
               type="submit"
               variant="contained"

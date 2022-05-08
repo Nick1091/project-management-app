@@ -8,27 +8,25 @@ export const SubComponentPassword: React.FC = () => {
     formState: { errors },
   } = useFormContext();
   return (
-    <>
-      <Controller
-        control={control}
-        name="password"
-        rules={passwordValidation}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            variant="outlined"
-            label="password"
-            type="password"
-            size="medium"
-            margin="dense"
-            fullWidth={true}
-            onChange={(e) => field.onChange(e)}
-            value={field.value}
-            error={!!errors.password?.message}
-            helperText={errors.password?.message ?? ' '}
-          />
-        )}
-      />
-    </>
+    <Controller
+      control={control}
+      name="password"
+      rules={passwordValidation}
+      render={({ field }) => (
+        <TextField
+          {...field}
+          variant="outlined"
+          label="password"
+          type="password"
+          size="medium"
+          margin="dense"
+          fullWidth={true}
+          onChange={field.onChange}
+          value={field.value}
+          error={!!errors.password?.message}
+          helperText={errors.password?.message ?? ' '}
+        />
+      )}
+    />
   );
 };

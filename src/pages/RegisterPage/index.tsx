@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { LoadingButton } from '@mui/lab';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   fetchLogin,
   ILoginObj,
@@ -12,7 +13,6 @@ import {
   SubComponentPassword,
   fetchToken,
 } from '../../components/auth';
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SubTitleError, SubTitle } from './RegisterPageStyle';
 
 export const RegisterPage: React.FC = () => {

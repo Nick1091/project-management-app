@@ -1,8 +1,14 @@
+const minNameLength = 2;
+const minPasswordLength = 6;
+const maxPasswordLength = 18;
+const minLoginLength = 3;
+const maxLoginLength = 12;
+
 export const nameValidation = {
   required: 'Input your name',
   validate: (value: string) => {
-    if (value.length <= 2) {
-      return 'input more than 2 letters';
+    if (value.length <= minNameLength) {
+      return `input more than ${minNameLength - 1} letters`;
     }
     if (
       value.match(
@@ -15,26 +21,28 @@ export const nameValidation = {
     }
   },
 };
+
 export const passwordValidation = {
   required: 'Input password',
   validate: (value: string) => {
-    if (value.length < 6) {
-      return 'password must be more than 6 characters';
+    if (value.length < minPasswordLength) {
+      return `password must be more than ${minPasswordLength} characters`;
     }
-    if (value.length > 18) {
-      return 'password must be no more than 18 characters';
+    if (value.length > maxPasswordLength) {
+      return `password must be no more than ${maxPasswordLength} characters`;
     }
     return true;
   },
 };
+
 export const loginValidation = {
   required: 'Input login',
   validate: (value: string) => {
-    if (value.length < 3) {
-      return 'login must be more than 3 characters';
+    if (value.length < minLoginLength) {
+      return `login must be more than ${minLoginLength} characters`;
     }
     if (value.length > 12) {
-      return 'login must be no more than 12 characters';
+      return `login must be no more than ${maxLoginLength} characters`;
     }
     return true;
   },
