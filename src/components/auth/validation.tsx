@@ -41,7 +41,7 @@ export const loginValidation = {
     if (value.length < minLoginLength) {
       return `login must be more than ${minLoginLength} characters`;
     }
-    if (value.length > 12) {
+    if (value.length > maxLoginLength) {
       return `login must be no more than ${maxLoginLength} characters`;
     }
     return true;
