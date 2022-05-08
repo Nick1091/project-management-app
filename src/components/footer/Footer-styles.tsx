@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 
 export const FooterContainer = styled.div`
-  position: absolute;
-  bottom: 0;
+  margin-top: 1.5em;
   width: 100%;
   height: 4.5em;
   box-shadow: 0px -7px 25px 0px rgba(34, 60, 80, 0.2);
