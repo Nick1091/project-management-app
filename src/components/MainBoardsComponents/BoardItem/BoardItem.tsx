@@ -1,43 +1,11 @@
 import { useState } from 'react';
-import styled from 'styled-components';
-import { styled as styles } from '@mui/material/styles';
-import { DeleteForever } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
-import { NavLink } from 'react-router-dom';
-import { styledBoard } from '../../styles/styledBoard';
-import { ConfirmModal } from '../ConfirmModal';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store/store';
-import { deleteBoard } from '../../store/boardsSlice';
-import { token } from '../../config/config';
-
-const Board = styled.li`
-  ${styledBoard};
-  position: relative;
-  & span {
-    font-weight: 500;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-  }
-`;
-
-const BoardLink = styled(NavLink)`
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  display: block;
-  padding: 8px;
-  color: #111111;
-`;
-
-const DeleteBtn = styles(IconButton)`
-  position: absolute;
-  right: 4px;
-  top: 4px;
-`;
+import { AppDispatch } from '../../../store/store';
+import { deleteBoard } from '../../../store/boardsSlice';
+import { token } from '../../../config/config';
+import { DeleteForever } from '@mui/icons-material';
+import { ConfirmModal } from '../../ConfirmModal/ConfirmModal';
+import { Board, BoardLink, DeleteBtn } from './BoardItemStyles';
 
 export const BoardItem = ({ title, id }: { title: string; id: string }) => {
   const [isVisibleRemoveBtn, setIsVisibleRemoveBtn] = useState(false);

@@ -10,5 +10,5 @@ export type BoardsState = {
 };
 
 export type State = {
-  boards: BoardsState;
+  boardsState: BoardsState;
 };

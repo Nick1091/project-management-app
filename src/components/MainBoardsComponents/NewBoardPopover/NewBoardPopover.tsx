@@ -1,14 +1,6 @@
 import React from 'react';
-import { styled as styles } from '@mui/material/styles';
-import { Popover } from '@mui/material';
-import { NewBoardForm } from './NewBoardForm';
-
-const CreateBoardPopover = styles(Popover)`
-  & .MuiPaper-root {
-    max-width: 400px;
-    width: 50%;
-  }
-`;
+import { NewBoardForm } from '../NewBoardForm/NewBoardForm';
+import { CreateBoardPopover } from './NewBoardPopoverStyles';
 
 type NewBoardPopoverProps = {
   isOpenPopover: boolean;

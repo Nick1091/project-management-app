@@ -5,11 +5,11 @@ import { token } from '../../config/config';
 import { State } from '../../types/types';
 import { AppDispatch } from '../../store/store';
 import { CircularProgress } from '@mui/material';
-import { BoardItem } from './BoardItem';
+import { BoardItem } from './BoardItem/BoardItem';
 
 export const BoardsList = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, error, boards } = useSelector((state: State) => state.boards);
+  const { isLoading, error, boards } = useSelector((state: State) => state.boardsState);
 
   useEffect(() => {
     dispatch(getBoards(token));

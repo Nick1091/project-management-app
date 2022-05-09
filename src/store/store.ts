@@ -4,7 +4,7 @@ import { boardsReducer } from './boardsSlice';
 
 export const store = configureStore<State>({
   reducer: {
-    boards: boardsReducer,
+    boardsState: boardsReducer,
   },
 });
 

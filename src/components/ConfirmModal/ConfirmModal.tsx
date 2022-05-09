@@ -1,30 +1,6 @@
 import React from 'react';
-import { Alert, Modal, Button } from '@mui/material';
-import { styled } from '@mui/system';
-
-const style = {
-  position: 'absolute',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  boxShadow: 24,
-  bgcolor: 'rgb(25, 18, 7)',
-  color: '#fff',
-  fontSize: '18px',
-  borderRadius: '4px',
-  p: '24px',
-};
-
-const ModalOverlay = styled(Alert)`
-  & .MuiAlert-message {
-    display: flex;
-    flex-direction: column;
-  }
-`;
+import { Modal, Button } from '@mui/material';
+import { modalStyles, ModalOverlay } from './ConfirmModalStyles';
 
 type ConfirmModalProps = {
   isOpen: boolean;
@@ -41,7 +17,7 @@ export const ConfirmModal = ({
 }: ConfirmModalProps) => {
   return (
     <Modal open={isOpen} onClose={() => closeModal()}>
-      <ModalOverlay severity="warning" sx={style}>
+      <ModalOverlay severity="warning" sx={modalStyles}>
         <span>{alertText}</span>
         <div>
           <Button
