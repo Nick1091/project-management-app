@@ -3,7 +3,7 @@ import { NewBoardForm } from '../NewBoardForm/NewBoardForm';
 import { CreateBoardPopover } from './NewBoardPopoverStyles';
 
 type NewBoardPopoverProps = {
-  isOpenPopover: boolean;
+  isPopoverOpened: boolean;
   popoverElement: HTMLElement | null;
   handleClosePopover: () => void;
   popoverId?: string;
@@ -11,14 +11,14 @@ type NewBoardPopoverProps = {
 
 export const NewBoardPopover = ({
   handleClosePopover,
-  isOpenPopover,
+  isPopoverOpened,
   popoverElement,
   popoverId,
 }: NewBoardPopoverProps) => {
   return (
     <CreateBoardPopover
       id={popoverId}
-      open={isOpenPopover}
+      open={isPopoverOpened}
       anchorEl={popoverElement}
       onClose={handleClosePopover}
       anchorOrigin={{

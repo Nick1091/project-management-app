@@ -4,9 +4,8 @@ import { CreateBoardBtn, CreateBoardWrapper } from './NewBoardStyles';
 
 export const NewBoard = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-  const isOpenPopover = Boolean(anchorEl);
-  let popoverId;
-  if (isOpenPopover) popoverId = 'simple-popover';
+  const isPopoverOpened = Boolean(anchorEl);
+  const popoverId = isPopoverOpened ? 'simple-popover' : undefined;
 
   const handlePopoverClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -20,7 +19,7 @@ export const NewBoard = () => {
       <NewBoardPopover
         popoverElement={anchorEl}
         popoverId={popoverId}
-        isOpenPopover={isOpenPopover}
+        isPopoverOpened={isPopoverOpened}
         handleClosePopover={() => setAnchorEl(null)}
       />
     </>

@@ -16,7 +16,7 @@ export const ConfirmModal = ({
   handleSubmit,
 }: ConfirmModalProps) => {
   return (
-    <Modal open={isOpen} onClose={() => closeModal()}>
+    <Modal open={isOpen} onClose={closeModal}>
       <ModalOverlay severity="warning" sx={modalStyles}>
         <span>{alertText}</span>
         <div>
@@ -28,7 +28,7 @@ export const ConfirmModal = ({
           >
             Ok
           </Button>
-          <Button onClick={() => closeModal()}>Cancel</Button>
+          <Button onClick={closeModal}>Cancel</Button>
         </div>
       </ModalOverlay>
     </Modal>
