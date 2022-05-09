@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchLogin, fetchToken } from '../components/auth';
-import { TypeToken, UserID } from './storeTypes';
+import { fetchLogin, fetchToken } from '../requests';
+import { TypeToken, UserID } from '../types';
 
 type InitType = {
-  name?: string | null;
-  login?: string | null;
-  password?: string | null;
-  token?: string | null;
-  id?: string | null;
-  error?: string | null;
+  name: string | null;
+  login: string | null;
+  password: string | null;
+  token: string | null;
+  id: string | null;
+  error: string | null;
   isLoading: boolean;
 };
 
@@ -17,6 +17,12 @@ type AuthType = {
 };
 const initialState: AuthType = {
   authUser: {
+    name: null,
+    login: null,
+    password: null,
+    token: null,
+    id: null,
+    error: null,
     isLoading: false,
   },
 };
@@ -27,6 +33,12 @@ const authSlice = createSlice({
   reducers: {
     removeUser: (state) => {
       state.authUser = {
+        name: null,
+        login: null,
+        password: null,
+        token: null,
+        id: null,
+        error: null,
         isLoading: false,
       };
     },

@@ -3,16 +3,12 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { Typography, Container } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  LoginFormWrapperStyle,
-  SubComponentLogin,
-  SubComponentPassword,
-  ILoginObj,
-  fetchToken,
-} from '../../components/auth';
-import { SubTitle, SubTitleError } from './LoginPageStyle';
+import { SubComponentLogin, SubComponentPassword } from '../../components/Auth';
+import { LoginFormWrapperStyle, SubTitle } from './LoginPageStyle';
+import { fetchToken } from '../../requests';
+import { ILoginObj } from '../../types';
 
-export const LoginPage: React.FC = () => {
+export const LoginPage = () => {
   const dispatch = useAppDispatch();
   const {
     authUser: { error, isLoading },
@@ -39,9 +35,9 @@ export const LoginPage: React.FC = () => {
           Login
         </Typography>
         {error ? (
-          <SubTitleError>{error}</SubTitleError>
+          <SubTitle color={'#d40000'}>{error}</SubTitle>
         ) : (
-          <SubTitle>If you already have an account, just login</SubTitle>
+          <SubTitle color={'#80808081'}>If you already have an account, just login</SubTitle>
         )}
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>

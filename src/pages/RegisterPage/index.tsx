@@ -3,18 +3,12 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { Typography, Container } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  fetchLogin,
-  ILoginObj,
-  LoginFormWrapperStyle,
-  SubComponentName,
-  SubComponentLogin,
-  SubComponentPassword,
-  fetchToken,
-} from '../../components/auth';
-import { SubTitleError, SubTitle } from './RegisterPageStyle';
+import { SubComponentName, SubComponentLogin, SubComponentPassword } from '../../components/Auth';
+import { fetchLogin, fetchToken } from '../../requests';
+import { LoginFormWrapperStyle, SubTitle } from './RegisterPageStyle';
+import { ILoginObj } from '../../types';
 
-export const RegisterPage: React.FC = () => {
+export const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const {
     authUser: { error, isLoading },
@@ -41,9 +35,11 @@ export const RegisterPage: React.FC = () => {
           Registration
         </Typography>
         {error ? (
-          <SubTitleError>{error}</SubTitleError>
+          <SubTitle color={'#d40000'}>{error}</SubTitle>
         ) : (
-          <SubTitle>If you don&apos;t have an account yet, create one here</SubTitle>
+          <SubTitle color={'#80808081'}>
+            If you don&apos;t have an account yet, create one here
+          </SubTitle>
         )}
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
