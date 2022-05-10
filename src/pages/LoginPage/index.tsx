@@ -35,9 +35,9 @@ export const LoginPage = () => {
           Login
         </Typography>
         {error ? (
-          <SubTitle color={'#d40000'}>{error}</SubTitle>
+          <SubTitle color="#d40000">{error}</SubTitle>
         ) : (
-          <SubTitle color={'#80808081'}>If you already have an account, just login</SubTitle>
+          <SubTitle color="#80808081">If you already have an account, just login</SubTitle>
         )}
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>

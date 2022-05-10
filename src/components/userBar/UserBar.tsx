@@ -3,7 +3,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { LocalizationToggler } from '../localizationTogger/LocalizationTogger';
+import { LocalizationToggler } from '../LocalizationTogger/LocalizationTogger';
 
 export const UserBar = () => {
   return (

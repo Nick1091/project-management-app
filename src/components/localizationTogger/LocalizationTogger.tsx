@@ -1,5 +1,5 @@
 import { Grid, Switch } from '@mui/material';
-import { Toggler } from './LocalizationTogger-styles';
+import { Toggler } from './LocalizationToggerStyles';
 
 export const LocalizationToggler = () => {
   return (

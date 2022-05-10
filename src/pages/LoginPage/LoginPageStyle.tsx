@@ -8,7 +8,7 @@ export const SubTitle = styled.p`
   line-height: 1.75;
   letter-spacing: 0.00938em;
   text-align: center;
-  color: ${(props) => props.color};
+  color: ${(props: { color: string }) => props.color};
   margin-bottom: 8px;
 `;
 
