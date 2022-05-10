@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
 
-import { LocalizationToggler } from '../localizationTogger/LocalizationTogger';
+import { LocalizationToggler } from '../LocalizationToggler';
 
 export const GuestBar = () => {
   return (

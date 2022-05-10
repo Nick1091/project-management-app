@@ -1,8 +1,8 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
-import { loginValidation } from '../../validation/validation';
+import { nameValidation } from '../../validation';
 
-export const SubComponentLogin = () => {
+export const SubComponentName = () => {
   const {
     control,
     formState: { errors },
@@ -11,21 +11,21 @@ export const SubComponentLogin = () => {
   return (
     <Controller
       control={control}
-      name="login"
-      rules={loginValidation}
+      name="name"
+      rules={nameValidation}
       render={({ field }) => (
         <TextField
           {...field}
           variant="outlined"
-          label="login"
-          type="login"
+          label="name"
+          type="name"
           size="medium"
           margin="dense"
           fullWidth={true}
           onChange={field.onChange}
           value={field.value}
-          error={!!errors.login?.message}
-          helperText={errors.login?.message ?? ' '}
+          error={!!errors.name?.message}
+          helperText={errors.name?.message ?? ' '}
         />
       )}
     />

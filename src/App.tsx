@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { AppLayout } from './components/appLayout/AppLayout';
+import { AppLayout } from './components/AppLayout';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { Board } from './pages/Board';
 import { EditProfile } from './pages/EditProfile';
