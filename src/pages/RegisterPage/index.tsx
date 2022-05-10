@@ -5,7 +5,7 @@ import { LoadingButton } from '@mui/lab';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SubComponentName, SubComponentLogin, SubComponentPassword } from '../../components/Auth';
 import { fetchLogin, fetchToken } from '../../requests';
-import { LoginFormWrapperStyle, SubTitle } from './RegisterPageStyle';
+import { LoginFormWrapperStyle, SubTitle } from './styled';
 import { ILoginObj } from '../../types';
 
 export const RegisterPage = () => {

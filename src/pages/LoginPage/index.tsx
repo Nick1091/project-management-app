@@ -4,7 +4,7 @@ import { Typography, Container } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SubComponentLogin, SubComponentPassword } from '../../components/Auth';
-import { LoginFormWrapperStyle, SubTitle } from './LoginPageStyle';
+import { LoginFormWrapperStyle, SubTitle } from './styled';
 import { fetchToken } from '../../requests';
 import { ILoginObj } from '../../types';
 

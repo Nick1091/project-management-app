@@ -3,9 +3,9 @@ import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutl
 
 import { useEffect, useState } from 'react';
 
-import { Typography } from './HeaderStyles';
-import { UserBar } from '../UserBar/UserBar';
-import { GuestBar } from '../GuestBar/GuestBar';
+import { Typography } from './styled';
+import { UserBar } from '../UserBar';
+import { GuestBar } from '../GuestBar';
 
 export const Header = () => {
   //this is for checking until authorization functionality is implemented

@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
-import { nameValidation } from '../../validation/validation';
+import { nameValidation } from '../../validation';
 
 export const SubComponentName = () => {
   const {

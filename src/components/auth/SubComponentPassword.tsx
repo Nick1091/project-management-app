@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
-import { passwordValidation } from '../../validation/validation';
+import { passwordValidation } from '../../validation';
 
 export const SubComponentPassword = () => {
   const {
