@@ -15,7 +15,12 @@ import {
   TitleInput,
 } from './NewBoardFormStyles';
 
-const boardFormSchema = yup.object({ title: yup.string().required('This field is required') });
+const boardFormSchema = yup.object({
+  title: yup
+    .string()
+    .required('This field is required')
+    .max(60, 'Field should be 60 characters maximum'),
+});
 
 type BoardInputs = {
   title: string;

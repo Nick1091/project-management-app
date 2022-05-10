@@ -22,7 +22,7 @@ export const BoardLink = styled(NavLink)`
   height: 100%;
   text-decoration: none;
   display: block;
-  padding: 8px;
+  padding: 8px 24px 8px 8px;
   color: #111111;
 `;
 
