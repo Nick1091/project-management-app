@@ -105,3 +105,38 @@ export const deleteBoard = createAsyncThunk(
     }
   }
 );
+
+export const getBoardById = createAsyncThunk(
+  'boards/getBoardById',
+  async ({ token, id }: { token: string; id: string }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${REQUEST_URLS.BOARDS_URL}/${id}`, {
+        headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      });
+      return response.data;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
+    }
+  }
+);
+
+export const editBoard = createAsyncThunk(
+  'boards/editBoard',
+  async (
+    { token, id, title }: { token: string; id: string; title: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.put(
+        `${REQUEST_URLS.BOARDS_URL}/${id}`,
+        { title },
+        {
+          headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+        }
+      );
+      return response.data.title;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
+    }
+  }
+);

@@ -41,7 +41,7 @@ function App() {
           path="/register"
           element={token ? <Navigate to="/main" state={{ from: location }} /> : <RegisterPage />}
         />
-        <Route path="/board" element={<Board />} />
+        <Route path="/main/board/:id" element={<Board />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="*" element={<NotFound />} />
       </Route>

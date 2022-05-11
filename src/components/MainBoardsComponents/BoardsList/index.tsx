@@ -6,7 +6,7 @@ import { BoardItem } from '../BoardItem';
 
 export const BoardsList = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, error, boards } = useAppSelector((state) => state.boardsState);
+  const { isLoading, error, boards } = useAppSelector((state) => state.mainBoards);
   const {
     authUser: { token },
   } = useAppSelector((state) => state.authUser);
