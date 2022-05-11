@@ -3,4 +3,5 @@ export const REQUEST_URLS = {
   SING_UP_URL: `${URL}/signup`,
   SING_IN_URL: `${URL}/signin`,
   BOARDS_URL: `${URL}/boards`,
+  USERS: `${URL}/users`,
 };

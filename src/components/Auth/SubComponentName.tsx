@@ -21,7 +21,7 @@ export const SubComponentName = () => {
           type="name"
           size="medium"
           margin="dense"
-          fullWidth={true}
+          fullWidth
           onChange={field.onChange}
           value={field.value}
           error={!!errors.name?.message}
