@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoards } from '../../store/boardsSlice';
-import { token } from '../../config/config';
-import { State } from '../../types/types';
-import { AppDispatch } from '../../store/store';
+import { getBoards } from '../../../store/boardsSlice';
+import { token } from '../../../config';
+import { State } from '../../../types/types';
+import { AppDispatch } from '../../../store/store';
 import { CircularProgress } from '@mui/material';
-import { BoardItem } from './BoardItem/BoardItem';
+import { BoardItem } from '../BoardItem';
 
 export const BoardsList = () => {
   const dispatch = useDispatch<AppDispatch>();

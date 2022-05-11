@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button } from '@mui/material';
-import { modalStyles, ModalOverlay } from './ConfirmModalStyles';
+import { modalStyles, ModalOverlay } from './styled';
 
 type ConfirmModalProps = {
   isOpen: boolean;

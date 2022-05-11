@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store/store';
 import { deleteBoard } from '../../../store/boardsSlice';
-import { token } from '../../../config/config';
+import { token } from '../../../config';
 import { DeleteForever } from '@mui/icons-material';
-import { ConfirmModal } from '../../ConfirmModal/ConfirmModal';
-import { Board, BoardLink, DeleteBtn } from './BoardItemStyles';
+import { ConfirmModal } from '../../ConfirmModal';
+import { Board, BoardLink, DeleteBtn } from './styled';
 
 export const BoardItem = ({ title, id }: { title: string; id: string }) => {
   const [isVisibleRemoveBtn, setIsVisibleRemoveBtn] = useState(false);

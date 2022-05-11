@@ -1,6 +1,6 @@
 import React from 'react';
-import { NewBoardForm } from '../NewBoardForm/NewBoardForm';
-import { CreateBoardPopover } from './NewBoardPopoverStyles';
+import { NewBoardForm } from '../NewBoardForm';
+import { CreateBoardPopover } from './styled';
 
 type NewBoardPopoverProps = {
   isPopoverOpened: boolean;

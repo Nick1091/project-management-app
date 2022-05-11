@@ -1,6 +1,6 @@
 import React from 'react';
-import { NewBoardPopover } from '../NewBoardPopover/NewBoardPopover';
-import { CreateBoardBtn, CreateBoardWrapper } from './NewBoardStyles';
+import { NewBoardPopover } from '../NewBoardPopover';
+import { CreateBoardBtn, CreateBoardWrapper } from './styled';
 
 export const NewBoard = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);

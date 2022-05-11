@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Board } from './pages/Board';
-import { MainBoards } from './pages/MainBoards/MainBoards';
+import { MainBoards } from './pages/MainBoards';
 import { Welcome } from './pages/Welcome';
 
 function App() {

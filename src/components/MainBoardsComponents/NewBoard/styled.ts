@@ -1,7 +1,7 @@
 import { styled as styles } from '@mui/material/styles';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
-import { styledBoard } from '../../../styles/styledBoard';
+import { styledBoard } from '../styles/styledBoard';
 
 export const CreateBoardBtn = styles(Button)`
   padding: 8px;

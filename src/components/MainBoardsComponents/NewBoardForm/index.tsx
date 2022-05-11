@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { token } from '../../../config/config';
+import { token } from '../../../config';
 import { createBoard } from '../../../store/boardsSlice';
 import { useDispatch } from 'react-redux';
 import { Button, IconButton } from '@mui/material';
@@ -13,7 +13,7 @@ import {
   NewBoardFormWrapper,
   StyledCloseIcon,
   TitleInput,
-} from './NewBoardFormStyles';
+} from './styled';
 
 const boardFormSchema = yup.object({
   title: yup
