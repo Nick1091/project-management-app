@@ -1,12 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { useAppDispatch } from '../../../hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { token } from '../../../config';
-import { createBoard } from '../../../store/boardsSlice';
-import { useDispatch } from 'react-redux';
+import { createBoard } from '../../../requests';
 import { Button, IconButton } from '@mui/material';
-import { AppDispatch } from '../../../store/store';
 import {
   CreateBoardForm,
   HeaderBoardForm,
@@ -33,7 +32,7 @@ export const NewBoardForm = ({ handleClosePopover }: { handleClosePopover: () =>
     reset,
     formState: { errors },
   } = useForm<BoardInputs>({ resolver: yupResolver(boardFormSchema) });
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const handleBoardFormSubmit = (formData: BoardInputs) => {
     dispatch(createBoard({ token, title: formData.title }));
     reset();

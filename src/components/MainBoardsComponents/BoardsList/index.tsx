@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getBoards } from '../../../store/boardsSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { getBoards } from '../../../requests';
 import { token } from '../../../config';
-import { State } from '../../../types/types';
-import { AppDispatch } from '../../../store/store';
 import { CircularProgress } from '@mui/material';
 import { BoardItem } from '../BoardItem';
 
 export const BoardsList = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, error, boards } = useSelector((state: State) => state.boardsState);
+  const dispatch = useAppDispatch();
+  const { isLoading, error, boards } = useAppSelector((state) => state.boardsState);
 
   useEffect(() => {
     dispatch(getBoards(token));
