@@ -1,9 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { token } from '../../../config';
 import { createBoard } from '../../../requests';
 import { Button, IconButton } from '@mui/material';
 import {
@@ -33,8 +32,11 @@ export const NewBoardForm = ({ handleClosePopover }: { handleClosePopover: () =>
     formState: { errors },
   } = useForm<BoardInputs>({ resolver: yupResolver(boardFormSchema) });
   const dispatch = useAppDispatch();
+  const {
+    authUser: { token },
+  } = useAppSelector((state) => state.authUser);
   const handleBoardFormSubmit = (formData: BoardInputs) => {
-    dispatch(createBoard({ token, title: formData.title }));
+    if (token) dispatch(createBoard({ token, title: formData.title }));
     reset();
     handleClosePopover();
   };
