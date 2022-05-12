@@ -17,7 +17,7 @@ export const UserBar = () => {
         </Link>
       </IconButton>
       <Button color="secondary" variant="contained">
-        Logout
+        Sign Out
       </Button>
     </>
   );

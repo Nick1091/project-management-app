@@ -8,7 +8,7 @@ export const GuestBar = () => {
       <LocalizationToggler />
       <Box mr={3}>
         <Button color="inherit" variant="outlined">
-          Log In
+          Sign In
         </Button>
       </Box>
       <Button color="secondary" variant="contained">
