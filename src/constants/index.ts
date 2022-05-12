@@ -4,3 +4,8 @@ export const REQUEST_URLS = {
   SING_IN_URL: `${URL}/signin`,
   BOARDS_URL: `${URL}/boards`,
 };
+export const contacts = [
+  { name: 'Igor Alyanoy', link: 'https://github.com/alyanoyigor', id: 0 },
+  { name: 'Nikolaу Kuckharchuk', link: 'https://github.com/Nick1091', id: 1 },
+  { name: 'Anna Voroshilova', link: 'https://github.com/VoroshilovaAV', id: 2 },
+];

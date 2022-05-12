@@ -4,14 +4,9 @@ import { DevContact } from '../DevContact';
 import rssLogo from '../../assets/icons/rs-school-logo.svg';
 
 import { DevsContainer, FooterContainer } from './styled';
+import { contacts } from '../../constants';
 
 export const Footer = () => {
-  const contacts = [
-    { name: 'Igor Alyanoy', link: 'https://github.com/alyanoyigor', id: 0 },
-    { name: 'Nikolaу Kuckharchuk', link: 'https://github.com/Nick1091', id: 1 },
-    { name: 'Anna Voroshilova', link: 'https://github.com/VoroshilovaAV', id: 2 },
-  ];
-
   return (
     <FooterContainer>
       <DevsContainer>
