@@ -1,8 +1,11 @@
 import { Controller, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import { passwordValidation } from '../../validation';
 
 export const SubComponentPassword = () => {
+  const { t } = useTranslation(['profile']);
+
   const {
     control,
     formState: { errors },
@@ -17,7 +20,7 @@ export const SubComponentPassword = () => {
         <TextField
           {...field}
           variant="outlined"
-          label="password"
+          label={t('password')}
           type="password"
           size="medium"
           margin="dense"

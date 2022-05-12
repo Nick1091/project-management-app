@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppLayout } from './components/AppLayout';
 import { useAppDispatch, useAppSelector } from './hooks';
@@ -14,11 +15,14 @@ import { setToken } from './store/authSlice';
 function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const { i18n } = useTranslation();
   const {
     authUser: { token },
   } = useAppSelector((state) => state.authUser);
 
   useEffect(() => {
+    const lang = localStorage.getItem('i18nextLng');
+    i18n.changeLanguage(lang ? lang : 'en');
     const tokenStor = localStorage.getItem('token');
     tokenStor && dispatch(setToken(tokenStor));
     // eslint-disable-next-line react-hooks/exhaustive-deps
