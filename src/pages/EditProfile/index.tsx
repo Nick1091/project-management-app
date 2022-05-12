@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { Typography, Container, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -15,9 +15,7 @@ export const EditProfile = () => {
     authUser: { error, isLoading, token, id },
   } = useAppSelector((state) => state.authUser);
 
-  const [isOpenConfirmModalEdit, setIsOpenConfirmModalEdit] = useState(false);
   const [isOpenConfirmModalDelete, setIsOpenConfirmModalDelete] = useState(false);
-  const [dataDetails, setDataDetails] = useState<ILoginObj>();
 
   const methods = useForm<ILoginObj>({
     defaultValues: {
@@ -29,11 +27,15 @@ export const EditProfile = () => {
 
   const { handleSubmit } = methods;
 
-  const onSubmit: SubmitHandler<ILoginObj> = (data, e) => {
-    e?.preventDefault();
-    setDataDetails(data);
-    setIsOpenConfirmModalEdit(true);
+  useEffect(() => {
     token && dispatch(getUserId(token));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onSubmit: SubmitHandler<ILoginObj> = async (data, e) => {
+    e?.preventDefault();
+    token && id && dispatch(putCredentialsData({ ...data, token, id }));
+    methods.reset();
   };
 
   return (
@@ -63,24 +65,11 @@ export const EditProfile = () => {
             >
               Edit
             </LoadingButton>
-            {isOpenConfirmModalEdit && (
-              <ConfirmModal
-                isOpen={isOpenConfirmModalEdit}
-                handleSubmit={() => {
-                  token &&
-                    id &&
-                    dataDetails &&
-                    dispatch(putCredentialsData({ ...dataDetails, token, id }));
-                }}
-                alertText={`Do you really want to edit profile?`}
-                closeModal={() => {
-                  setIsOpenConfirmModalEdit(false);
-                }}
-              />
-            )}
           </form>
           <Button
-            onClick={() => setIsOpenConfirmModalDelete(true)}
+            onClick={() => {
+              setIsOpenConfirmModalDelete(true);
+            }}
             size="small"
             sx={{ mt: '20px' }}
             variant="text"
@@ -91,6 +80,7 @@ export const EditProfile = () => {
             <ConfirmModal
               isOpen={isOpenConfirmModalDelete}
               handleSubmit={() => {
+                console.log(id);
                 token && id && dispatch(deleteUser({ token, id }));
               }}
               alertText={`Do you really want to delete profile?`}
