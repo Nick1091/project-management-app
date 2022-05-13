@@ -140,3 +140,29 @@ export const editBoard = createAsyncThunk(
     }
   }
 );
+
+export const createBoardColumn = createAsyncThunk(
+  'board/createColumn',
+  async (
+    {
+      token,
+      boardId,
+      columnTitle,
+      order,
+    }: { token: string; boardId: string; columnTitle: string; order: number },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post(
+        `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns`,
+        { title: columnTitle, order },
+        {
+          headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
+    }
+  }
+);

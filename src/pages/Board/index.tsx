@@ -1,17 +1,45 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { editBoard, getBoardById } from '../../requests';
-import { CircularProgress } from '@mui/material';
 import styled from 'styled-components';
+import { styled as styles } from '@mui/material/styles';
+import { createBoardColumn, getBoardById } from '../../requests';
+import { Button, CircularProgress, TextField } from '@mui/material';
+import { BoardTitle } from '../../components/BoardComponents/BoardTitle';
+import { Modal } from '../../components/Modal';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { BoardInputs } from '../../types/boardTypes';
+import { boardFormSchema } from '../../validation';
+import { useForm } from 'react-hook-form';
+import { removeAllColumns } from '../../store/boardSlice';
 
-const Form = styled.form`
-  display: ${(props: { isTitleHidden: boolean }) =>
-    props.isTitleHidden ? 'inline-block' : 'none'};
+const ColumnContainer = styled.ul`
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  list-style-type: none;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  height: calc(100vh - 159px); // header + title
 `;
-const Title = styled.h1`
-  display: ${(props: { isTitleHidden: boolean }) =>
-    props.isTitleHidden ? 'none' : 'inline-block'};
+
+const Column = styled.li`
+  width: 272px;
+  background-color: #091e420a;
+  flex-shrink: 0;
+  border-radius: 4px;
+`;
+
+const CreateColumnBtn = styles(Button)`
+  width: 100%;
+`;
+
+const ColumnForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  gap: 8px;
 `;
 
 export const Board = () => {
@@ -20,40 +48,42 @@ export const Board = () => {
   const {
     authUser: { token },
   } = useAppSelector((state) => state.authUser);
-  const [isTitleHidden, setIsTitleHidden] = useState(false);
   const { boardTitle, columns, isLoading, error } = useAppSelector((state) => state.boardState);
-  const [inputTitleValue, setInputTitleValue] = useState(boardTitle);
-  const [newTitle, setNewTitle] = useState(boardTitle);
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [counter, setCounter] = useState(0);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<BoardInputs>({ resolver: yupResolver(boardFormSchema) });
 
   useEffect(() => {
     if (token && id) dispatch(getBoardById({ token, id }));
   }, [dispatch, token, id]);
 
   useEffect(() => {
-    setInputTitleValue(boardTitle);
-    setNewTitle(boardTitle);
-    console.log('update');
-  }, [boardTitle]);
+    setCounter(
+      columns.reduce(
+        (biggerOrder, column) => (biggerOrder > column.order ? biggerOrder : column.order),
+        0
+      ) + 1
+    );
+  }, [columns]);
 
   useEffect(() => {
-    if (inputRef.current) inputRef.current.focus();
-  }, [isTitleHidden]);
+    return () => {
+      dispatch(removeAllColumns());
+    };
+  }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputTitleValue(e.target.value);
-  };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (token && id) dispatch(editBoard({ token, id, title: inputTitleValue }));
-    setIsTitleHidden(false);
-  };
-  const handleBlur = (e: React.FocusEvent<HTMLFormElement>) => {
-    const relatedTarget: Element | null = e.relatedTarget;
-    if (!e.currentTarget.contains(relatedTarget)) {
-      setIsTitleHidden(false);
-      setInputTitleValue(newTitle);
-    }
+  const createColumnHandler = ({ title }: BoardInputs) => {
+    if (token && id)
+      dispatch(createBoardColumn({ token, boardId: id, columnTitle: title, order: counter }));
+    setCounter((prevNumber) => (prevNumber = prevNumber + 1));
+    reset();
+    setIsModalOpened(false);
   };
 
   if (isLoading) return <CircularProgress />;
@@ -61,30 +91,33 @@ export const Board = () => {
 
   return (
     <>
-      <div>
-        <Title isTitleHidden={isTitleHidden} onClick={() => setIsTitleHidden(true)}>
-          {newTitle}
-        </Title>
-        <Form onSubmit={handleSubmit} onBlur={handleBlur} isTitleHidden={isTitleHidden}>
-          <input ref={inputRef} value={inputTitleValue} onChange={handleChange} />
-          <button
-            type="button"
-            onClick={() => {
-              setIsTitleHidden(false);
-              setInputTitleValue(newTitle);
-            }}
-          >
-            Cancel
-          </button>
-          <button type="submit">Submit</button>
-        </Form>
-      </div>
-      {columns.length > 0 && (
-        <div>
-          {columns.map((column) => (
-            <div key={column.id}>{column.title}</div>
-          ))}
-        </div>
+      <BoardTitle boardTitle={boardTitle} token={token} id={id} />
+      <ColumnContainer>
+        {columns.length > 0 &&
+          [...columns]
+            .sort((columnA, columnB) => columnA.order - columnB.order)
+            .map((column) => <Column key={column.id}>{column.title}</Column>)}
+        <Column>
+          <CreateColumnBtn onClick={() => setIsModalOpened(true)}>Create Column</CreateColumnBtn>
+        </Column>
+      </ColumnContainer>
+
+      {isModalOpened && (
+        <Modal isOpen={isModalOpened} closeModal={() => setIsModalOpened(false)}>
+          <ColumnForm onSubmit={handleSubmit(createColumnHandler)}>
+            <TextField
+              id="outlined-basic"
+              label="Column Title"
+              variant="outlined"
+              error={Boolean(errors.title)}
+              helperText={errors.title?.message}
+              {...register('title')}
+            />
+            <Button type="submit" variant="outlined" disabled={Boolean(errors.title)}>
+              Create
+            </Button>
+          </ColumnForm>
+        </Modal>
       )}
     </>
   );

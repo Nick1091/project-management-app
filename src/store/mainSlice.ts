@@ -17,7 +17,6 @@ const mainSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(getBoards.rejected, (state, action) => {
-      console.log(action);
       state.error = action.payload as string;
       state.isLoading = false;
     });

@@ -1,6 +1,6 @@
 import { BoardState, ColumnState, BoardPreview } from './../types/storeTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getBoardById, editBoard } from '../requests';
+import { getBoardById, editBoard, createBoardColumn } from '../requests';
 
 const initialState: BoardState = {
   columns: [],
@@ -12,7 +12,11 @@ const initialState: BoardState = {
 const boardSlice = createSlice({
   name: 'board',
   initialState,
-  reducers: {},
+  reducers: {
+    removeAllColumns: (state) => {
+      state.columns = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getBoardById.pending, (state) => {
       state.isLoading = true;
@@ -28,7 +32,12 @@ const boardSlice = createSlice({
     builder.addCase(editBoard.fulfilled, (state, action) => {
       state.boardTitle = action.payload;
     });
+    builder.addCase(createBoardColumn.fulfilled, (state, action) => {
+      state.columns.push(action.payload);
+    });
   },
 });
+
+export const { removeAllColumns } = boardSlice.actions;
 
 export default boardSlice.reducer;
