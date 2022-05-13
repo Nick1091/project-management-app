@@ -9,6 +9,7 @@ import { MainBoards } from './pages/MainBoards';
 import { NotFound } from './pages/NotFound';
 import { RegisterPage } from './pages/RegisterPage';
 import { Welcome } from './pages/Welcome';
+import { getUserId } from './requests';
 import { setUserCredentials } from './store/authSlice';
 
 function App() {
@@ -26,9 +27,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    token && localStorage.setItem('token', token);
+    if (token) {
+      localStorage.setItem('token', token);
+      dispatch(getUserId(token));
+    }
     login && localStorage.setItem('login', login);
-  }, [token, login]);
+  }, [token, login, dispatch]);
 
   return (
     <Routes>

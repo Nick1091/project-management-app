@@ -39,7 +39,7 @@ export const deleteUser = createAsyncThunk(
           Authorization: 'Bearer ' + token,
         },
       });
-      localStorage.clear();
+      localStorage.removeItem('token');
       return response.data;
     } catch (err) {
       let error = ((err as AxiosError).response?.data as { statusCode: string; message: string })

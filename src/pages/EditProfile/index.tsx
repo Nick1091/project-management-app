@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { Typography, Container, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SubComponentLogin, SubComponentName, SubComponentPassword } from '../../components/Auth';
 import { LoginFormWrapperStyle, SubTitle } from './styled';
-import { putCredentialsData, getUserId, deleteUser } from '../../requests';
+import { putCredentialsData, deleteUser } from '../../requests';
 import { ILoginObj } from '../../types';
 import { ConfirmModal } from '../../components/ConfirmModal';
 
@@ -26,11 +26,6 @@ export const EditProfile = () => {
   });
 
   const { handleSubmit } = methods;
-
-  useEffect(() => {
-    token && dispatch(getUserId(token));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const onSubmit: SubmitHandler<ILoginObj> = async (data, e) => {
     e?.preventDefault();
@@ -80,10 +75,9 @@ export const EditProfile = () => {
             <ConfirmModal
               isOpen={isOpenConfirmModalDelete}
               handleSubmit={() => {
-                console.log(id);
                 token && id && dispatch(deleteUser({ token, id }));
               }}
-              alertText={`Do you really want to delete profile?`}
+              alertText="Do you really want to delete profile?"
               closeModal={() => {
                 setIsOpenConfirmModalDelete(false);
               }}
