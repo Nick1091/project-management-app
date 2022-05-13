@@ -1,0 +1,9 @@
+{
+  "400": "bad request",
+  "401": "user unauthorized",
+  "403": "User was not founded!",
+  "404": "User was not founded!",
+  "409": "User login already exists!",
+  "500": "The server is not available at the moment, please try again later",
+  "noServerResponse" : "no server response"
+}

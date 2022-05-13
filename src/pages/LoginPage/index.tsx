@@ -10,7 +10,7 @@ import { fetchToken } from '../../requests';
 import { ILoginObj } from '../../types';
 
 export const LoginPage = () => {
-  const { t } = useTranslation(['profile']);
+  const { t } = useTranslation(['profile', 'errors']);
 
   const dispatch = useAppDispatch();
   const {
@@ -38,7 +38,7 @@ export const LoginPage = () => {
           {t('Login')}
         </Typography>
         {error ? (
-          <SubTitle color="#d40000">{error}</SubTitle>
+          <SubTitle color="#d40000">{t(error, { ns: 'errors' })}</SubTitle>
         ) : (
           <SubTitle color="#80808081">{t('JustLogin')}</SubTitle>
         )}

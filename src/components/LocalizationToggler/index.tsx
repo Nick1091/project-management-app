@@ -3,7 +3,7 @@ import { Grid, Switch } from '@mui/material';
 import { Toggler } from './styled';
 
 export const LocalizationToggler = () => {
-  const { i18n, t } = useTranslation(['common']);
+  const { i18n } = useTranslation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.checked ? i18n.changeLanguage('ru') : i18n.changeLanguage('en');
@@ -12,7 +12,7 @@ export const LocalizationToggler = () => {
   return (
     <Toggler>
       <Grid component="label" container alignItems="center" spacing={0.5}>
-        <Grid item>{t('en')}</Grid>
+        <Grid item>en</Grid>
         <Grid item>
           <Switch
             checked={localStorage.getItem('i18nextLng') !== 'en'}
@@ -20,7 +20,7 @@ export const LocalizationToggler = () => {
             color="default"
           />
         </Grid>
-        <Grid item>{t('ru')}</Grid>
+        <Grid item>ru</Grid>
       </Grid>
     </Toggler>
   );

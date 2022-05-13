@@ -21,7 +21,9 @@ export const fetchLogin = createAsyncThunk('post/fetchLogin', async (data: ILogi
       .message;
     if (axios.isAxiosError(err)) {
       if (!err?.response) {
-        error = 'no server response';
+        error = 'noServerResponse';
+      } else {
+        error = err.response?.status.toString();
       }
     }
     return thunkApi.rejectWithValue(error);
@@ -46,7 +48,9 @@ export const fetchToken = createAsyncThunk('post/fetchToken', async (data: ILogi
       .message;
     if (axios.isAxiosError(err)) {
       if (!err?.response) {
-        error = 'no server response';
+        error = 'noServerResponse';
+      } else {
+        error = err.response?.status.toString();
       }
     }
     return thunkApi.rejectWithValue(error);
@@ -62,12 +66,9 @@ export const getBoards = createAsyncThunk(
       });
       return response.data;
     } catch (e) {
-      let error = 'Server Error';
-      if (e instanceof AxiosError) {
-        const errorData = e.response?.data;
-        if (errorData.hasOwnProperty('message')) {
-          error = errorData.message;
-        }
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
       }
       return rejectWithValue(error);
     }
@@ -87,7 +88,11 @@ export const createBoard = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
@@ -101,7 +106,11 @@ export const deleteBoard = createAsyncThunk(
       });
       return id;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );

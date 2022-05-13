@@ -2,14 +2,12 @@ import { AppBar, Container, Toolbar } from '@mui/material';
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
 
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { Typography } from './styled';
 import { UserBar } from '../UserBar';
 import { GuestBar } from '../GuestBar';
 
 export const Header = () => {
-  const { t } = useTranslation(['common']);
   //this is for checking until authorization functionality is implemented
   const token = '1';
   const [scroll, setScroll] = useState(0);
@@ -33,7 +31,7 @@ export const Header = () => {
         <Container>
           <Toolbar>
             <AppRegistrationOutlinedIcon sx={{ fontSize: 30 }}></AppRegistrationOutlinedIcon>
-            <Typography>{t('ProjectManagementApp')}</Typography>
+            <Typography>Project Management App</Typography>
             {token ? <UserBar /> : <GuestBar />}
           </Toolbar>
         </Container>
