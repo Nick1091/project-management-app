@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal as ModalMUI, Box } from '@mui/material';
-import { modalStyles } from './styled';
+import CloseIcon from '@mui/icons-material/Close';
+import { Close, modalStyles } from './styled';
 
 type ConfirmModalProps = {
   isOpen: boolean;
@@ -11,7 +12,12 @@ type ConfirmModalProps = {
 export const Modal = ({ isOpen, closeModal, children }: ConfirmModalProps) => {
   return (
     <ModalMUI open={isOpen} onClose={closeModal}>
-      <Box sx={modalStyles}>{children}</Box>
+      <Box sx={modalStyles}>
+        <Close onClick={closeModal}>
+          <CloseIcon />
+        </Close>
+        {children}
+      </Box>
     </ModalMUI>
   );
 };

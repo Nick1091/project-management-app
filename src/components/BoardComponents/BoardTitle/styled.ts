@@ -26,14 +26,17 @@ export const Form = styled.form`
 `;
 
 export const Title = styled.h1`
-  display: ${(props: { isTitleHidden: boolean }) =>
-    props.isTitleHidden ? 'none' : 'inline-block'};
+  display: ${(props: { isTitleHidden: boolean }) => (props.isTitleHidden ? 'none' : '-webkit-box')};
   ${titleText};
   border-color: transparent;
   padding: 0;
   margin: 0;
   background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
   padding: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 `;
 
 export const Actions = styled.div`

@@ -56,3 +56,10 @@ export const boardFormSchema = yup.object({
     .required('This field is required')
     .max(60, 'Field should be 60 characters maximum'),
 });
+
+export const columnFormSchema = yup.object({
+  title: yup
+    .string()
+    .required('This field is required')
+    .max(120, 'Field should be 60 characters maximum'),
+});

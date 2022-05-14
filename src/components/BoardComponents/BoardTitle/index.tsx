@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import { BoardInputs } from '../../../types/boardTypes';
@@ -10,18 +10,11 @@ import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Button } from '@mui/material';
 import { Actions, Form, Title, TitleContainer } from './styled';
 
-export const BoardTitle = ({
-  boardTitle,
-  token,
-  id,
-}: {
-  boardTitle: string;
-  token: string | null;
-  id?: string;
-}) => {
+export const BoardTitle = ({ token, id }: { token: string | null; id?: string }) => {
+  const { boardTitle } = useAppSelector((state) => state.boardState);
+  const dispatch = useAppDispatch();
   const [newTitle, setNewTitle] = useState(boardTitle);
   const [isTitleHidden, setIsTitleHidden] = useState(false);
-  const dispatch = useAppDispatch();
   const {
     control,
     handleSubmit,

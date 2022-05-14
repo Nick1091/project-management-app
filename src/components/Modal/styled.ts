@@ -1,3 +1,6 @@
+import { styled as styles } from '@mui/material/styles';
+import { IconButton } from '@mui/material';
+
 export const modalStyles = {
   position: 'absolute',
   display: 'flex',
@@ -12,5 +15,11 @@ export const modalStyles = {
   color: '#000',
   fontSize: '18px',
   borderRadius: '4px',
-  p: '24px',
+  p: '32px 24px 24px 24px',
 };
+
+export const Close = styles(IconButton)`
+  position: absolute;
+  right: 4px;
+  top: 4px;
+`;
