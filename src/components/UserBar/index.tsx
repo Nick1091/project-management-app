@@ -3,14 +3,17 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import { Link as RouterLink } from 'react-router-dom';
 import { LocalizationToggler } from '../LocalizationToggler';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { deleteUser } from '../../requests';
+import { useAppDispatch } from '../../hooks';
+import { removeUser } from '../../store/authSlice';
 
 export const UserBar = () => {
   const dispatch = useAppDispatch();
-  const {
-    authUser: { id, token },
-  } = useAppSelector((state) => state.authUser);
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('login');
+    dispatch(removeUser());
+  };
 
   return (
     <>
@@ -23,13 +26,7 @@ export const UserBar = () => {
           <ManageAccountsIcon sx={{ fontSize: 30, mr: '15px' }}></ManageAccountsIcon>
         </Link>
       </IconButton>
-      <Button
-        onClick={() => {
-          token && id && dispatch(deleteUser({ token, id }));
-        }}
-        color="secondary"
-        variant="contained"
-      >
+      <Button onClick={logout} color="secondary" variant="contained">
         Logout
       </Button>
     </>
