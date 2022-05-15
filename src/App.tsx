@@ -10,27 +10,33 @@ import { MainBoards } from './pages/MainBoards';
 import { NotFound } from './pages/NotFound';
 import { RegisterPage } from './pages/RegisterPage';
 import { Welcome } from './pages/Welcome';
-import { setToken } from './store/authSlice';
+import { getUserId } from './requests';
+import { setUserCredentials } from './store/authSlice';
 
 function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const { i18n } = useTranslation();
   const {
-    authUser: { token },
+    authUser: { token, login },
   } = useAppSelector((state) => state.authUser);
 
   useEffect(() => {
     const lang = localStorage.getItem('i18nextLng');
     i18n.changeLanguage(lang ? lang : 'en');
-    const tokenStor = localStorage.getItem('token');
-    tokenStor && dispatch(setToken(tokenStor));
+    const token = localStorage.getItem('token');
+    const login = localStorage.getItem('login');
+    token && login && dispatch(setUserCredentials({ token, login }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    token && localStorage.setItem('token', token);
-  }, [token]);
+    if (token) {
+      localStorage.setItem('token', token);
+      dispatch(getUserId(token));
+    }
+    login && localStorage.setItem('login', login);
+  }, [token, login, dispatch]);
 
   return (
     <Routes>
@@ -46,7 +52,10 @@ function App() {
           element={token ? <Navigate to="/main" state={{ from: location }} /> : <RegisterPage />}
         />
         <Route path="/board" element={<Board />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route
+          path="/edit-profile"
+          element={!token ? <Navigate to="/" state={{ from: location }} /> : <EditProfile />}
+        />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

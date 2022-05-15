@@ -24,7 +24,7 @@ export const SubComponentPassword = () => {
           type="password"
           size="medium"
           margin="dense"
-          fullWidth={true}
+          fullWidth
           onChange={field.onChange}
           value={field.value}
           error={!!errors.password?.message}

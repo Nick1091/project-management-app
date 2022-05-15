@@ -4,9 +4,19 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import { Link as RouterLink } from 'react-router-dom';
 import { LocalizationToggler } from '../LocalizationToggler';
+import { useAppDispatch } from '../../hooks';
+import { removeUser } from '../../store/authSlice';
 
 export const UserBar = () => {
   const { t } = useTranslation(['common']);
+  const dispatch = useAppDispatch();
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('login');
+    dispatch(removeUser());
+  };
+
   return (
     <>
       <LocalizationToggler />
@@ -18,7 +28,7 @@ export const UserBar = () => {
           <ManageAccountsIcon sx={{ fontSize: 30, mr: '15px' }}></ManageAccountsIcon>
         </Link>
       </IconButton>
-      <Button color="secondary" variant="contained">
+      <Button onClick={logout} color="secondary" variant="contained">
         {t('logout')}
       </Button>
     </>

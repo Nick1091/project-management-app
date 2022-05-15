@@ -24,7 +24,7 @@ export const SubComponentLogin = () => {
           type="login"
           size="medium"
           margin="dense"
-          fullWidth={true}
+          fullWidth
           onChange={field.onChange}
           value={field.value}
           error={!!errors.login?.message}
