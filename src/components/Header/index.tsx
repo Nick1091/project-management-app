@@ -1,15 +1,15 @@
 import { AppBar, Container, Toolbar } from '@mui/material';
-import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
-
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import { useEffect, useState } from 'react';
-
-import { Typography } from './styled';
+import { useAppSelector } from '../../hooks';
 import { UserBar } from '../UserBar';
 import { GuestBar } from '../GuestBar';
+import { Typography } from './styled';
 
 export const Header = () => {
-  //this is for checking until authorization functionality is implemented
-  const token = '1';
+  const {
+    authUser: { token },
+  } = useAppSelector((state) => state.authUser);
   const [scroll, setScroll] = useState(0);
   const appBarTopStyle = token && scroll > 0 ? 0 : '-100px';
 
@@ -30,8 +30,8 @@ export const Header = () => {
       >
         <Container>
           <Toolbar>
-            <AppRegistrationOutlinedIcon sx={{ fontSize: 30 }}></AppRegistrationOutlinedIcon>
-            <Typography>Project Management App</Typography>
+            <RocketLaunchIcon sx={{ fontSize: 30 }}></RocketLaunchIcon>
+            <Typography>Reactive Area</Typography>
             {token ? <UserBar /> : <GuestBar />}
           </Toolbar>
         </Container>
