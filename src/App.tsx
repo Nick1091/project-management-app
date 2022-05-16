@@ -9,19 +9,24 @@ import { MainBoards } from './pages/MainBoards';
 import { NotFound } from './pages/NotFound';
 import { RegisterPage } from './pages/RegisterPage';
 import { Welcome } from './pages/Welcome';
-import { setToken } from './store/authSlice';
+import { getUserId } from './requests';
+import { setUserCredentials } from './store/authSlice';
 
 function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.authUser.authUser.token);
   const [newToken, setNewToken] = useState(localStorage.getItem('token'));
 
+  const {
+    authUser: { token, login },
+  } = useAppSelector((state) => state.authUser);
+
   useEffect(() => {
-    const tokenStor = localStorage.getItem('token');
-    if (tokenStor) {
-      dispatch(setToken(tokenStor));
-      setNewToken(tokenStor);
+    const token = localStorage.getItem('token');
+    const login = localStorage.getItem('login');
+    if (token && login) {
+      dispatch(setUserCredentials({ token, login }));
+      setNewToken(token);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -29,9 +34,13 @@ function App() {
   useEffect(() => {
     if (token) {
       localStorage.setItem('token', token);
+      dispatch(getUserId(token));
       setNewToken(token);
     }
-  }, [token]);
+    if (login) {
+      localStorage.setItem('login', login);
+    }
+  }, [token, login, dispatch]);
 
   return (
     <Routes>
@@ -50,7 +59,10 @@ function App() {
           element={newToken ? <Navigate to="/main" state={{ from: location }} /> : <RegisterPage />}
         />
         <Route path="/main/board/:id" element={<Board />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route
+          path="/edit-profile"
+          element={!token ? <Navigate to="/" state={{ from: location }} /> : <EditProfile />}
+        />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
