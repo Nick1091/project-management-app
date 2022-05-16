@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Button, IconButton, Link } from '@mui/material';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
@@ -7,6 +8,7 @@ import { useAppDispatch } from '../../hooks';
 import { removeUser } from '../../store/authSlice';
 
 export const UserBar = () => {
+  const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
 
   const logout = () => {
@@ -27,7 +29,7 @@ export const UserBar = () => {
         </Link>
       </IconButton>
       <Button onClick={logout} color="secondary" variant="contained">
-        Logout
+        {t('logout')}
       </Button>
     </>
   );

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppLayout } from './components/AppLayout';
 import { useAppDispatch, useAppSelector } from './hooks';
@@ -15,11 +16,14 @@ import { setUserCredentials } from './store/authSlice';
 function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const { i18n } = useTranslation();
   const {
     authUser: { token, login },
   } = useAppSelector((state) => state.authUser);
 
   useEffect(() => {
+    const lang = localStorage.getItem('i18nextLng');
+    i18n.changeLanguage(lang ? lang : 'en');
     const token = localStorage.getItem('token');
     const login = localStorage.getItem('login');
     token && login && dispatch(setUserCredentials({ token, login }));
