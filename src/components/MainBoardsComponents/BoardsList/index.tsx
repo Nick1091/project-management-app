@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getBoards } from '../../../requests';
 import { CircularProgress } from '@mui/material';
 import { BoardItem } from '../BoardItem';
+import { NewBoard } from '../NewBoard';
 
 export const BoardsList = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ export const BoardsList = () => {
 
   return (
     <>
+      <NewBoard />
       {boards.map((board) => (
         <BoardItem title={board.title} id={board.id} key={board.id} />
       ))}

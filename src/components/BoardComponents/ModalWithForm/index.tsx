@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { Controller } from 'react-hook-form';
 import { ModalInputState } from '../../../types/boardTypes';
 import { Modal } from '../../../components/Modal';
@@ -9,7 +10,7 @@ type ModalWithFormProps<T> = {
   titleText: string;
   handleCloseModal: () => void;
   handleSubmit: () => void;
-  inputs: ModalInputState<T>[] | [];
+  inputs: ModalInputState<T>[];
 };
 
 export const ModalWithForm = <T,>({
@@ -19,6 +20,8 @@ export const ModalWithForm = <T,>({
   handleSubmit,
   inputs,
 }: ModalWithFormProps<T>) => {
+  const idPrefix = useId();
+
   return (
     <Modal isOpen={isModalOpened} closeModal={handleCloseModal}>
       <Typography align="center" variant="h5" sx={{ color: '#000', paddingBottom: '8px' }}>
@@ -28,7 +31,7 @@ export const ModalWithForm = <T,>({
         {inputs.length > 0 &&
           inputs.map((inputState) => (
             <Controller
-              key={Math.random()}
+              key={idPrefix + inputState.name}
               render={({ field: { value, onChange } }) => (
                 <TextField {...inputState.textFieldProps} value={value} onChange={onChange} />
               )}
