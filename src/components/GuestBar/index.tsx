@@ -1,16 +1,18 @@
 import { Box, Button, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { LocalizationToggler } from '../LocalizationToggler';
 
 export const GuestBar = () => {
+  const { t } = useTranslation(['common']);
   return (
     <>
       <LocalizationToggler />
       <Box mr={3}>
         <Link color="inherit" style={{ textDecoration: 'none' }} component={RouterLink} to="/login">
           <Button color="inherit" variant="outlined">
-            Sign In
+            {t('SignIn')}
           </Button>
         </Link>
       </Box>
@@ -21,7 +23,7 @@ export const GuestBar = () => {
         to="/register"
       >
         <Button color="secondary" variant="contained">
-          Sign up
+          {t('SignUp')}
         </Button>
       </Link>
     </>

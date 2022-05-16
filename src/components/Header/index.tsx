@@ -1,10 +1,13 @@
-import { AppBar, Container, Toolbar } from '@mui/material';
+import { AppBar, Container, Link, Toolbar } from '@mui/material';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks';
+
+import { Typography } from './styled';
 import { UserBar } from '../UserBar';
 import { GuestBar } from '../GuestBar';
-import { Typography } from './styled';
 
 export const Header = () => {
   const {
@@ -31,7 +34,16 @@ export const Header = () => {
         <Container>
           <Toolbar>
             <RocketLaunchIcon sx={{ fontSize: 30 }}></RocketLaunchIcon>
-            <Typography>Reactive Area</Typography>
+            <Typography>
+              <Link
+                color="inherit"
+                style={{ textDecoration: 'none' }}
+                component={RouterLink}
+                to="/"
+              >
+                Reactive Area{' '}
+              </Link>
+            </Typography>
             {token ? <UserBar /> : <GuestBar />}
           </Toolbar>
         </Container>

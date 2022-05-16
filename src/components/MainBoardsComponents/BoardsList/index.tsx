@@ -3,10 +3,11 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getBoards } from '../../../requests';
 import { CircularProgress } from '@mui/material';
 import { BoardItem } from '../BoardItem';
+import { NewBoard } from '../NewBoard';
 
 export const BoardsList = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, error, boards } = useAppSelector((state) => state.boardsState);
+  const { isLoading, error, boards } = useAppSelector((state) => state.mainBoards);
   const {
     authUser: { token },
   } = useAppSelector((state) => state.authUser);
@@ -20,6 +21,7 @@ export const BoardsList = () => {
 
   return (
     <>
+      <NewBoard />
       {boards.map((board) => (
         <BoardItem title={board.title} id={board.id} key={board.id} />
       ))}
