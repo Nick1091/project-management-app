@@ -10,7 +10,7 @@ export const ColumnContainer = styled.ul`
   overflow-y: auto;
   margin: 0;
   padding: 0;
-  height: calc(100vh - 159px); // header + title
+  height: calc(100vh - 256px); // 64 + 96 + 72 + 24 header + title + footer + footer margin
 `;
 
 export const Column = styled.li`

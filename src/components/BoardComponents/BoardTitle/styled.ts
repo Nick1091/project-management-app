@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const TitleContainer = styled.div`
-  margin: 16px 0 40px 0;
+  padding: 16px 0 40px 0;
 `;
 
 const titleText = css`
