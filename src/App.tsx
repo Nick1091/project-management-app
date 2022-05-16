@@ -31,6 +31,8 @@ function App() {
     if (token && login) {
       dispatch(setUserCredentials({ token, login }));
       setNewToken(token);
+    } else {
+      setNewToken(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -40,6 +42,8 @@ function App() {
       localStorage.setItem('token', token);
       dispatch(getUserId(token));
       setNewToken(token);
+    } else {
+      setNewToken(null);
     }
     if (login) {
       localStorage.setItem('login', login);
@@ -49,7 +53,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
-        <Route index element={<Welcome />} />
+        <Route
+          index
+          element={!newToken ? <Welcome /> : <Navigate to="/main" state={{ from: location }} />}
+        />
         <Route
           path="/main"
           element={newToken ? <MainBoards /> : <Navigate to="/" state={{ from: location }} />}

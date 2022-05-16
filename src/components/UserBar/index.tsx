@@ -33,11 +33,9 @@ export const UserBar = () => {
           {t('GoToMainPage')}
         </Button>
       </Link>
-      <Link color="inherit" style={{ textDecoration: 'none' }} component={RouterLink} to="/">
-        <Button onClick={logout} color="secondary" variant="contained">
-          {t('SignOut')}
-        </Button>
-      </Link>
+      <Button onClick={logout} color="secondary" variant="contained">
+        {t('SignOut')}
+      </Button>
     </>
   );
 };

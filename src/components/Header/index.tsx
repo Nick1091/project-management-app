@@ -31,7 +31,7 @@ export const Header = () => {
         position={token ? 'sticky' : 'static'}
         sx={{ top: appBarTopStyle, transition: 'top 0.5s ease-in-out' }}
       >
-        <Container>
+        <Container maxWidth={false}>
           <Toolbar>
             <RocketLaunchIcon sx={{ fontSize: 30 }}></RocketLaunchIcon>
             <Typography>
