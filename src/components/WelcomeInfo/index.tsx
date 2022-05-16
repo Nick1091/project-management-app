@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material';
-import { MainWelcomeContent, Wave } from './styled';
-
 import welcomeImg from '../../assets/img/welcomeImg.png';
+import { MainWelcomeContent, Wave } from './styled';
 
 export const WelcomeInfo = () => {
   return (
