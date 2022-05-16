@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { deleteBoard } from '../../../requests';
-import { DeleteForever } from '@mui/icons-material';
 import { ConfirmModal } from '../../ConfirmModal';
-import { Board, BoardLink, DeleteBtn } from './styled';
+import { Board, BoardLink, DeleteBtnContainer } from './styled';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { DeleteButton } from '../../DeleteButton';
 
 type BoardItemProps = {
   title: string;
@@ -27,9 +27,9 @@ export const BoardItem = ({ title, id }: BoardItemProps) => {
         <span>{title}</span>
       </BoardLink>
       {isVisibleRemoveBtn && (
-        <DeleteBtn size="small" onClick={() => setIsOpenConfirmModal(true)}>
-          <DeleteForever fontSize="small" />
-        </DeleteBtn>
+        <DeleteBtnContainer>
+          <DeleteButton handleClick={() => setIsOpenConfirmModal(true)} />
+        </DeleteBtnContainer>
       )}
       {isOpenConfirmModal && (
         <ConfirmModal

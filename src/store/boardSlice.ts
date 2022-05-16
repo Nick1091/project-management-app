@@ -1,6 +1,6 @@
 import { BoardState, ColumnState, BoardPreview } from './../types/storeTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getBoardById, editBoard, createBoardColumn } from '../requests';
+import { getBoardById, editBoard, createBoardColumn, deleteBoardColumn } from '../requests';
 
 const initialState: BoardState = {
   columns: [],
@@ -34,6 +34,9 @@ const boardSlice = createSlice({
     });
     builder.addCase(createBoardColumn.fulfilled, (state, action) => {
       state.columns.push(action.payload);
+    });
+    builder.addCase(deleteBoardColumn.fulfilled, (state, action) => {
+      state.columns = state.columns.filter((column) => column.id !== action.payload);
     });
   },
 });

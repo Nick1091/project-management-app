@@ -28,7 +28,7 @@ export const Board = () => {
   return (
     <>
       <BoardTitle token={token} id={id} />
-      <ColumnList token={token} id={id} />
+      <ColumnList token={token} boardId={id} />
     </>
   );
 };

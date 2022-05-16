@@ -5,15 +5,16 @@ import { ColumnInputs, ModalInputState } from '../../../types/boardTypes';
 import { createBoardColumn } from '../../../requests';
 import { columnFormSchema } from '../../../validation';
 import { useForm } from 'react-hook-form';
-import { Column, ColumnContainer, CreateColumnBtn } from './styled';
+import { ColumnListContainer, CreateColumnBtn, ColumnBtn } from './styled';
 import { ModalWithForm } from '../ModalWithForm';
+import { ColumnItem } from '../ColumnItem';
 
 type ColumnListProps = {
   token: string | null;
-  id?: string;
+  boardId?: string;
 };
 
-export const ColumnList = ({ token, id }: ColumnListProps) => {
+export const ColumnList = ({ token, boardId }: ColumnListProps) => {
   const { columns } = useAppSelector((state) => state.boardState);
   const dispatch = useAppDispatch();
 
@@ -55,8 +56,8 @@ export const ColumnList = ({ token, id }: ColumnListProps) => {
   }, [columns]);
 
   const createColumnHandler = ({ title }: ColumnInputs) => {
-    if (token && id)
-      dispatch(createBoardColumn({ token, boardId: id, columnTitle: title, order: columnOrder }));
+    if (token && boardId)
+      dispatch(createBoardColumn({ token, boardId, columnTitle: title, order: columnOrder }));
     setColumnOrder((prevNumber) => (prevNumber = prevNumber + additionNumNextColumnOrder));
     reset();
     setIsModalOpened(false);
@@ -69,15 +70,26 @@ export const ColumnList = ({ token, id }: ColumnListProps) => {
 
   return (
     <>
-      <ColumnContainer>
+      <ColumnListContainer>
         {columns.length > 0 &&
           [...columns]
             .sort((columnA, columnB) => columnA.order - columnB.order)
-            .map((column) => <Column key={column.id}>{column.title}</Column>)}
-        <Column>
+            .map(
+              (column) =>
+                boardId && (
+                  <ColumnItem
+                    key={column.id}
+                    token={token}
+                    boardId={boardId}
+                    columnId={column.id}
+                    title={column.title}
+                  />
+                )
+            )}
+        <ColumnBtn>
           <CreateColumnBtn onClick={() => setIsModalOpened(true)}>Create Column</CreateColumnBtn>
-        </Column>
-      </ColumnContainer>
+        </ColumnBtn>
+      </ColumnListContainer>
 
       {isModalOpened && (
         <ModalWithForm<ColumnInputs>
