@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Typography, Container } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -9,6 +10,8 @@ import { LoginFormWrapperStyle, SubTitle } from './styled';
 import { ILoginObj } from '../../types';
 
 export const RegisterPage = () => {
+  const { t } = useTranslation(['profile', 'errors']);
+
   const dispatch = useAppDispatch();
   const {
     authUser: { error, isLoading },
@@ -32,14 +35,12 @@ export const RegisterPage = () => {
     <Container sx={{ marginTop: '10vh' }} maxWidth="xs">
       <LoginFormWrapperStyle>
         <Typography variant="h6" component="h6">
-          Registration
+          {t('registration')}
         </Typography>
         {error ? (
-          <SubTitle color={'#d40000'}>{error}</SubTitle>
+          <SubTitle color={'#d40000'}>{t(error, { ns: 'errors' })}</SubTitle>
         ) : (
-          <SubTitle color={'#80808081'}>
-            If you don&apos;t have an account yet, create one here
-          </SubTitle>
+          <SubTitle color={'#80808081'}>{t('haveAccount')}</SubTitle>
         )}
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -55,7 +56,7 @@ export const RegisterPage = () => {
               type="submit"
               variant="contained"
             >
-              register
+              {t('register')}
             </LoadingButton>
           </form>
         </FormProvider>
