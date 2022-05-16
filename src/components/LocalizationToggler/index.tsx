@@ -16,7 +16,7 @@ export const LocalizationToggler = () => {
         <Grid item>
           <Switch
             checked={localStorage.getItem('i18nextLng') !== 'en'}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
             color="default"
           />
         </Grid>
