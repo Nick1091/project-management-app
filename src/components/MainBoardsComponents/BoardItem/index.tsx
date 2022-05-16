@@ -5,7 +5,12 @@ import { ConfirmModal } from '../../ConfirmModal';
 import { Board, BoardLink, DeleteBtn } from './styled';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 
-export const BoardItem = ({ title, id }: { title: string; id: string }) => {
+type BoardItemProps = {
+  title: string;
+  id: string;
+};
+
+export const BoardItem = ({ title, id }: BoardItemProps) => {
   const [isVisibleRemoveBtn, setIsVisibleRemoveBtn] = useState(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
   const dispatch = useAppDispatch();
@@ -18,7 +23,7 @@ export const BoardItem = ({ title, id }: { title: string; id: string }) => {
       onMouseOver={() => setIsVisibleRemoveBtn(true)}
       onMouseOut={() => setIsVisibleRemoveBtn(false)}
     >
-      <BoardLink to={'/board/' + id}>
+      <BoardLink to={'/main/board/' + id}>
         <span>{title}</span>
       </BoardLink>
       {isVisibleRemoveBtn && (

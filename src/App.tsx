@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppLayout } from './components/AppLayout';
@@ -16,7 +16,9 @@ import { setUserCredentials } from './store/authSlice';
 function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const [newToken, setNewToken] = useState(localStorage.getItem('token'));
   const { i18n } = useTranslation();
+
   const {
     authUser: { token, login },
   } = useAppSelector((state) => state.authUser);
@@ -26,7 +28,10 @@ function App() {
     i18n.changeLanguage(lang ? lang : 'en');
     const token = localStorage.getItem('token');
     const login = localStorage.getItem('login');
-    token && login && dispatch(setUserCredentials({ token, login }));
+    if (token && login) {
+      dispatch(setUserCredentials({ token, login }));
+      setNewToken(token);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -34,24 +39,30 @@ function App() {
     if (token) {
       localStorage.setItem('token', token);
       dispatch(getUserId(token));
+      setNewToken(token);
     }
-    login && localStorage.setItem('login', login);
+    if (login) {
+      localStorage.setItem('login', login);
+    }
   }, [token, login, dispatch]);
 
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
         <Route index element={<Welcome />} />
-        <Route path="/main" element={<MainBoards />} />
+        <Route
+          path="/main"
+          element={newToken ? <MainBoards /> : <Navigate to="/" state={{ from: location }} />}
+        />
         <Route
           path="/login"
-          element={token ? <Navigate to="/main" state={{ from: location }} /> : <LoginPage />}
+          element={newToken ? <Navigate to="/main" state={{ from: location }} /> : <LoginPage />}
         />
         <Route
           path="/register"
-          element={token ? <Navigate to="/main" state={{ from: location }} /> : <RegisterPage />}
+          element={newToken ? <Navigate to="/main" state={{ from: location }} /> : <RegisterPage />}
         />
-        <Route path="/board" element={<Board />} />
+        <Route path="/main/board/:id" element={<Board />} />
         <Route
           path="/edit-profile"
           element={!token ? <Navigate to="/" state={{ from: location }} /> : <EditProfile />}

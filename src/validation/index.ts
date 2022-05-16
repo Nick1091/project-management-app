@@ -1,3 +1,5 @@
+import * as yup from 'yup';
+
 const minNameLength = 2;
 const minPasswordLength = 6;
 const maxPasswordLength = 18;
@@ -47,3 +49,17 @@ export const loginValidation = {
     return true;
   },
 };
+
+export const boardFormSchema = yup.object({
+  title: yup
+    .string()
+    .required('This field is required')
+    .max(60, 'Field should be 60 characters maximum'),
+});
+
+export const columnFormSchema = yup.object({
+  title: yup
+    .string()
+    .required('This field is required')
+    .max(60, 'Field should be 60 characters maximum'),
+});
