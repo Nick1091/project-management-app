@@ -1,20 +1,22 @@
+import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
-import { MainWelcomeContent } from '../WelcomeInfo/styled';
-import { AboutAppContainer } from './styled';
 import BuildIcon from '@mui/icons-material/Build';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import LanguageIcon from '@mui/icons-material/Language';
 import PeopleIcon from '@mui/icons-material/People';
-
 import appSrc from '../../assets/img/laptop.svg';
+import { MainWelcomeContent } from '../WelcomeInfo/styled';
+import { AboutAppContainer } from './styled';
 
 export const AboutAppInfo = () => {
+  const { t } = useTranslation(['common']);
+
   return (
     <Box
       sx={{
         maxWidth: 1920,
-        minHeight: 700,
-        paddingTop: 28,
+        minHeight: 630,
+        paddingTop: 20,
       }}
     >
       <MainWelcomeContent>
@@ -36,9 +38,11 @@ export const AboutAppInfo = () => {
             }}
           >
             <BuildIcon sx={{ height: '30px', width: '30px', color: '#139CFF' }} />
-            <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>Simple interface</Typography>
+            <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>
+              {t('SimpleInterface')}
+            </Typography>
             <Typography sx={{ fontSize: '16px', color: '#7E7878' }}>
-              Register in a couple of clicks and try all the features of the application.
+              {t('SimpleInterfaceInfo')}
             </Typography>
           </Box>
           <Box
@@ -48,9 +52,11 @@ export const AboutAppInfo = () => {
             }}
           >
             <AttachMoneyIcon sx={{ height: '30px', width: '30px', color: '#139CFF' }} />
-            <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>Absolutely free</Typography>
+            <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>
+              {t('AbsolutelyFree')}
+            </Typography>
             <Typography sx={{ fontSize: '16px', color: '#7E7878' }}>
-              All features of the application are available without payment.
+              {t('AbsolutelyFreeInfo')}
             </Typography>
           </Box>
           <Box
@@ -60,11 +66,9 @@ export const AboutAppInfo = () => {
             }}
           >
             <LanguageIcon sx={{ height: '30px', width: '30px', color: '#139CFF' }} />
-            <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>
-              Dual language support
-            </Typography>
+            <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>{t('DualLanguage')}</Typography>
             <Typography sx={{ fontSize: '16px', color: '#7E7878' }}>
-              Use the functionality of the application by choosing a language convenient for you.
+              {t('DualLanguageInfo')}
             </Typography>
           </Box>
           <Box
@@ -75,11 +79,10 @@ export const AboutAppInfo = () => {
           >
             <PeopleIcon sx={{ height: '30px', width: '30px', color: '#139CFF' }} />
             <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>
-              Manage projects with a team
+              {t('ManageProjects')}
             </Typography>
             <Typography sx={{ fontSize: '16px', color: '#7E7878' }}>
-              Use different workspaces for personal tasks and team projects. Delegate management to
-              colleagues.
+              {t('ManageProjectsInfo')}
             </Typography>
           </Box>
         </AboutAppContainer>
