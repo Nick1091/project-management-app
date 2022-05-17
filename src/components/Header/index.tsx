@@ -41,7 +41,7 @@ export const Header = () => {
                 component={RouterLink}
                 to="/"
               >
-                Reactive Area{' '}
+                Reactive Area
               </Link>
             </Typography>
             {token ? <UserBar /> : <GuestBar />}
