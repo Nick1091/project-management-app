@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import PaidIcon from '@mui/icons-material/Paid';
 import courseImg from '../../assets/img/course.png';
@@ -27,7 +27,9 @@ export const AboutCourseInfo = () => {
         <CourseInfoContainer>
           <Typography sx={{ fontSize: '26px', color: '#5f5b5b' }}>
             {t('AboutCourse')}
-            <NameCourse>{t('ReactDevelopment')}</NameCourse>
+            <Link sx={{ textDecoration: 'none' }} href="https://rs.school/react/">
+              <NameCourse>{t('ReactDevelopment')}</NameCourse>
+            </Link>
             {t('Course')}
           </Typography>
           <Subtitle>{t('FreeCourse')}</Subtitle>
