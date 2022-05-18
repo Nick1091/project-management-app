@@ -4,7 +4,6 @@ export const FooterContainer = styled.div`
   width: 100%;
   height: 72px;
   box-shadow: 0px -7px 25px 0px rgba(34, 60, 80, 0.2);
-  bottom: 0;
 `;
 
 export const DevsContainer = styled.div`

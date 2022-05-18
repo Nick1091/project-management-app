@@ -6,5 +6,6 @@ export const BoardsContainer = styled.ul`
   flex-wrap: wrap;
   list-style-type: none;
   justify-content: flex-start;
-  padding: 0;
+  padding: 20px;
+  margin: 0;
 `;
