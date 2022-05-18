@@ -1,8 +1,5 @@
-{
-  "ProjectManagementApp": "Приложение управления проектами",
-  "SignOut": "Выйти",
-  "en": "ан",
-  "ru": "ру",
+{  
+  "SignOut": "Выйти",  
   "SignIn": "Вход",
   "SignUp": "Регистрация",
   "GoToMainPage": "Перейти на главную",
