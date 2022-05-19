@@ -44,12 +44,12 @@ export const AboutTeamInfo = () => {
         {t('AboutTeam')}
       </Typography>
       <CardsContainer>
-        {contacts.map((item, index) => (
+        {contacts.map((item) => (
           <DevCard
             key={item.id}
-            name={devChangingInformation[index].name}
+            name={devChangingInformation[item.id].name}
             gh={item.link}
-            info={devChangingInformation[index].info}
+            info={devChangingInformation[item.id].info}
             linkedIn={item.linkedIn}
             photo={item.photo}
           />
