@@ -44,7 +44,7 @@ export const ModalWithForm = <T,>({
             Cancel
           </Button>
           <Button type="submit" variant="outlined">
-            Create
+            {titleText.split(' ')[0]}
           </Button>
         </div>
       </ColumnForm>

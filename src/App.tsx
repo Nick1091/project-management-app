@@ -20,7 +20,7 @@ function App() {
   const { i18n } = useTranslation();
 
   const {
-    authUser: { token, login },
+    authUser: { token, login, id },
   } = useAppSelector((state) => state.authUser);
 
   useEffect(() => {
@@ -28,9 +28,12 @@ function App() {
     i18n.changeLanguage(lang ? lang : 'en');
     const token = localStorage.getItem('token');
     const login = localStorage.getItem('login');
-    if (token && login) {
-      dispatch(setUserCredentials({ token, login }));
+    const id = localStorage.getItem('id');
+    if (token && login && id) {
+      dispatch(setUserCredentials({ token, login, id }));
       setNewToken(token);
+    } else {
+      setNewToken(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -40,11 +43,16 @@ function App() {
       localStorage.setItem('token', token);
       dispatch(getUserId(token));
       setNewToken(token);
+    } else {
+      setNewToken(null);
     }
     if (login) {
       localStorage.setItem('login', login);
     }
-  }, [token, login, dispatch]);
+    if (id) {
+      localStorage.setItem('id', id);
+    }
+  }, [token, login, id, dispatch]);
 
   return (
     <Routes>
@@ -65,7 +73,7 @@ function App() {
         <Route path="/main/board/:id" element={<Board />} />
         <Route
           path="/edit-profile"
-          element={!token ? <Navigate to="/" state={{ from: location }} /> : <EditProfile />}
+          element={!newToken ? <Navigate to="/" state={{ from: location }} /> : <EditProfile />}
         />
         <Route path="*" element={<NotFound />} />
       </Route>

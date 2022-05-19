@@ -7,6 +7,7 @@ import { columnFormSchema } from '../../../validation';
 import { useForm } from 'react-hook-form';
 import { Column, ColumnContainer, CreateColumnBtn } from './styled';
 import { ModalWithForm } from '../ModalWithForm';
+import { ColumnOfBoard } from '../../ColumnComponent';
 
 type ColumnListProps = {
   token: string | null;
@@ -52,7 +53,8 @@ export const ColumnList = ({ token, id }: ColumnListProps) => {
       0
     );
     setColumnOrder(topColumnOrder + additionNumNextColumnOrder);
-  }, [columns]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const createColumnHandler = ({ title }: ColumnInputs) => {
     if (token && id)
@@ -73,7 +75,7 @@ export const ColumnList = ({ token, id }: ColumnListProps) => {
         {columns.length > 0 &&
           [...columns]
             .sort((columnA, columnB) => columnA.order - columnB.order)
-            .map((column) => <Column key={column.id}>{column.title}</Column>)}
+            .map((column) => <ColumnOfBoard key={column.id} column={column} />)}
         <Column>
           <CreateColumnBtn onClick={() => setIsModalOpened(true)}>Create Column</CreateColumnBtn>
         </Column>

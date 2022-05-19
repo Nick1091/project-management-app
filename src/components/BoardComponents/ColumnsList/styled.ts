@@ -7,7 +7,7 @@ export const ColumnContainer = styled.ul`
   gap: 8px;
   align-items: flex-start;
   list-style-type: none;
-  overflow-y: auto;
+  overflow-x: auto;
   margin: 0;
   padding: 0;
   height: calc(100vh - 256px); // 64 + 96 + 72 + 24 header + title + footer + footer margin
@@ -15,13 +15,13 @@ export const ColumnContainer = styled.ul`
 
 export const Column = styled.li`
   width: 272px;
-  background-color: #091e420a;
+  background-color: #ebecf0;
   flex-shrink: 0;
   border-radius: 4px;
 `;
 
 export const CreateColumnBtn = styles(Button)`
-width: 100%;
+  width: 100%;
 `;
 
 export const ColumnForm = styled.form`

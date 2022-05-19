@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { REQUEST_URLS } from '../constants';
 import { ILoginObj, ILoginObjWithID } from '../types';
+import { CreateTaskTypes, DeleteTaskTypes } from '../types/requestTypes';
 
 export const fetchLogin = createAsyncThunk('post/fetchLogin', async (data: ILoginObj, thunkApi) => {
   try {
@@ -247,6 +248,78 @@ export const createBoardColumn = createAsyncThunk(
         }
       );
       return response.data;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
+    }
+  }
+);
+
+export const createTask = createAsyncThunk(
+  'task/createTask',
+  async (
+    { token, boardId, columnId, taskTitle, order, userId, description }: CreateTaskTypes,
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post(
+        `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns/${columnId}/tasks`,
+        { title: taskTitle, order, description, userId },
+        {
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
+    }
+  }
+);
+
+export const editTask = createAsyncThunk(
+  'task/editTask',
+  async (
+    { token, boardId, columnId, taskId, taskTitle, order, userId, description }: CreateTaskTypes,
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.put(
+        `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        { title: taskTitle, order, description, userId, boardId, columnId },
+        {
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
+    }
+  }
+);
+
+export const deleteTask = createAsyncThunk(
+  'task/deleteTask',
+  async ({ token, boardId, columnId, taskId }: DeleteTaskTypes, { rejectWithValue }) => {
+    try {
+      await axios.delete(
+        `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        {
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const data = { columnId, taskId };
+      return data;
     } catch (e) {
       if (e instanceof Error) return rejectWithValue(e.message);
     }
