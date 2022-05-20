@@ -28,8 +28,13 @@ export const UserBar = () => {
           <ManageAccountsIcon sx={{ fontSize: 30, mr: '15px' }}></ManageAccountsIcon>
         </Link>
       </IconButton>
+      <Link color="inherit" style={{ textDecoration: 'none' }} component={RouterLink} to="/main">
+        <Button color="inherit" variant="outlined" sx={{ mr: '15px' }}>
+          {t('GoToMainPage')}
+        </Button>
+      </Link>
       <Button onClick={logout} color="secondary" variant="contained">
-        {t('logout')}
+        {t('SignOut')}
       </Button>
     </>
   );

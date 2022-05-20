@@ -32,7 +32,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <Container sx={{ marginTop: '10vh' }} maxWidth="xs">
+    <Container sx={{ paddingTop: '10vh' }} maxWidth="xs">
       <LoginFormWrapperStyle>
         <Typography variant="h6" component="h6">
           {t('Login')}

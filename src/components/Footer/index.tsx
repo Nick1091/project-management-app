@@ -1,8 +1,6 @@
 import { Link } from '@mui/material';
-
 import { DevContact } from '../DevContact';
 import rssLogo from '../../assets/icons/rs-school-logo.svg';
-
 import { DevsContainer, FooterContainer } from './styled';
 import { contacts } from '../../constants';
 

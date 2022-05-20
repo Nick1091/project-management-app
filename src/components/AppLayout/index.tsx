@@ -8,7 +8,7 @@ export const AppLayout = () => {
     <>
       <Header />
       <main>
-        <Container>
+        <Container maxWidth={false}>
           <Outlet />
         </Container>
       </main>
