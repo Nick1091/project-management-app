@@ -260,3 +260,29 @@ export const deleteBoardColumn = createAsyncThunk(
     }
   }
 );
+
+export const updateBoardColumn = createAsyncThunk(
+  'board/updateBoardColumn',
+  async (
+    {
+      token,
+      boardId,
+      column,
+    }: { token: string; boardId: string; column: { id: string; title: string; order: number } },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { id, title, order } = column;
+      const response = await axios.put(
+        `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns/${id}`,
+        { title, order },
+        {
+          headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
+    }
+  }
+);
