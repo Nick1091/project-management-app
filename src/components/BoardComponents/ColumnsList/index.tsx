@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ColumnInputs, ModalInputState } from '../../../types/boardTypes';
+import { ColumnInputs, ModalInputStates } from '../../../types/boardTypes';
 import { createBoardColumn } from '../../../requests';
 import { columnFormSchema } from '../../../validation';
 import { useForm } from 'react-hook-form';
 import { Column, ColumnContainer, CreateColumnBtn } from './styled';
 import { ModalWithForm } from '../ModalWithForm';
 import { ColumnOfBoard } from '../../ColumnComponent';
+import { useTranslation } from 'react-i18next';
 
 type ColumnListProps = {
   token: string | null;
@@ -15,6 +16,7 @@ type ColumnListProps = {
 };
 
 export const ColumnList = ({ token, id }: ColumnListProps) => {
+  const { t } = useTranslation(['common']);
   const { columns } = useAppSelector((state) => state.boardState);
   const dispatch = useAppDispatch();
 
@@ -32,16 +34,16 @@ export const ColumnList = ({ token, id }: ColumnListProps) => {
     defaultValues: { title: '' },
   });
 
-  const inputsOptions: ModalInputState<ColumnInputs>[] = [
+  const inputsOptions: ModalInputStates<ColumnInputs>[] = [
     {
       textFieldProps: {
         size: 'small',
         id: 'outlined-basic',
-        label: 'Column Title',
         variant: 'outlined',
         error: Boolean(errors.title),
         helperText: errors.title?.message,
       },
+      label: 'Column Title',
       name: 'title',
       control,
     },
@@ -77,13 +79,15 @@ export const ColumnList = ({ token, id }: ColumnListProps) => {
             .sort((columnA, columnB) => columnA.order - columnB.order)
             .map((column) => <ColumnOfBoard key={column.id} column={column} />)}
         <Column>
-          <CreateColumnBtn onClick={() => setIsModalOpened(true)}>Create Column</CreateColumnBtn>
+          <CreateColumnBtn onClick={() => setIsModalOpened(true)}>
+            {t('Create column')}
+          </CreateColumnBtn>
         </Column>
       </ColumnContainer>
 
       {isModalOpened && (
         <ModalWithForm<ColumnInputs>
-          titleText="Create column"
+          titleText={t('Create column')}
           inputs={inputsOptions}
           handleSubmit={handleSubmit(createColumnHandler)}
           isModalOpened={isModalOpened}

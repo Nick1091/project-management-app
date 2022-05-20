@@ -13,7 +13,7 @@ i18n
     },
     fallbackLng: 'en',
     debug: false,
-    ns: ['common', 'errors', 'home', 'profile'],
+    ns: ['common', 'errors', 'home', 'profile', 'task'],
     interpolation: {
       escapeValue: false,
       formatSeparator: ',',

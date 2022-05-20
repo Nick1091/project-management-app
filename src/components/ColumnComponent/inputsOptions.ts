@@ -1,5 +1,5 @@
 import { Control, FieldError } from 'react-hook-form';
-import { ModalInputState, TaskInputs } from '../../types';
+import { ModalInputStates, TaskInputs } from '../../types';
 
 type TypeError = {
   title?: FieldError | undefined;
@@ -7,16 +7,16 @@ type TypeError = {
 };
 
 export const getInputs = (errors: TypeError, control: Control<TaskInputs>) => {
-  const inputsOptions: ModalInputState<TaskInputs>[] = [
+  const inputsOptions: ModalInputStates<TaskInputs>[] = [
     {
       textFieldProps: {
         size: 'small',
         id: 'outlined-basic',
-        label: 'Task title',
         variant: 'outlined',
         error: Boolean(errors.title),
         helperText: errors.title?.message,
       },
+      label: 'Task title',
       name: 'title',
       control,
     },
@@ -26,11 +26,11 @@ export const getInputs = (errors: TypeError, control: Control<TaskInputs>) => {
         multiline: true,
         size: 'small',
         id: 'outlined-basic',
-        label: 'Task description',
         variant: 'outlined',
         error: Boolean(errors.description),
         helperText: errors.description?.message,
       },
+      label: 'Task description',
       name: 'description',
       control,
     },

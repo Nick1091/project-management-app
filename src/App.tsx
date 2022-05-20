@@ -57,7 +57,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
-        <Route index element={<Welcome />} />
+        <Route
+          index
+          element={!newToken ? <Welcome /> : <Navigate to="/main" state={{ from: location }} />}
+        />
         <Route
           path="/main"
           element={newToken ? <MainBoards /> : <Navigate to="/" state={{ from: location }} />}

@@ -14,3 +14,9 @@ export type ModalInputState<T> = {
   control: Control<T>;
   textFieldProps: TextFieldProps;
 };
+export type ModalInputStates<T> = {
+  name: Path<T>;
+  control: Control<T>;
+  label: string;
+  textFieldProps: TextFieldProps;
+};

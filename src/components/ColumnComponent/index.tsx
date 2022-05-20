@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { TaskState } from '../../types';
 import { useEffect, useState } from 'react';
@@ -15,6 +16,7 @@ import { ColumnTitle, CreateTask, ColumnContainer } from './styled';
 export const ColumnOfBoard = (props: {
   column: { tasks: TaskState[]; title: string; id: string };
 }) => {
+  const { t } = useTranslation(['task']);
   const { id } = useParams();
   const boardId = id ?? '';
   const columnId = props.column.id;
@@ -83,11 +85,13 @@ export const ColumnOfBoard = (props: {
             .map((task) => (
               <TaskContainer key={task.id} {...task} columnId={columnId} boardId={boardId} />
             ))}
-        <CreateTask onClick={() => setIsModalOpened(true)}>＋ add task</CreateTask>
+        <CreateTask onClick={() => setIsModalOpened(true)}>
+          ＋ {t('add task', { ns: 'task' })}
+        </CreateTask>
       </ColumnContainer>
       {isModalOpened && (
         <ModalWithForm<TaskInputs>
-          titleText="Create task"
+          titleText={t('Create task')}
           inputs={getInputs(errors, control)}
           handleSubmit={handleSubmit(createTaskHandler)}
           isModalOpened={isModalOpened}

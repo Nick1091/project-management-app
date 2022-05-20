@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Typography } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { DeleteForever } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { editTask, deleteTask } from '../../requests';
@@ -13,6 +14,8 @@ import { getInputs } from '../ColumnComponent/inputsOptions';
 import { DeleteBtn, Task, TaskButton } from './styled';
 
 export const TaskContainer = (props: TaskState) => {
+  const { t } = useTranslation(['task']);
+
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isVisibleRemoveBtn, setIsVisibleRemoveBtn] = useState(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
@@ -91,7 +94,7 @@ export const TaskContainer = (props: TaskState) => {
       </Task>
       {isModalOpened && (
         <ModalWithForm<TaskInputs>
-          titleText="Edit task"
+          titleText={t('EditTask')}
           inputs={getInputs(errors, control)}
           handleSubmit={handleSubmit(editTaskHandler)}
           isModalOpened={isModalOpened}
@@ -112,7 +115,7 @@ export const TaskContainer = (props: TaskState) => {
                 })
               );
           }}
-          alertText={`Do you really want to delete "${props.title}" task?`}
+          alertText={`${t('DeleteAsk')} "${props.title}" ${t('task')}`}
           closeModal={() => {
             setIsOpenConfirmModal(false);
             setIsVisibleRemoveBtn(false);

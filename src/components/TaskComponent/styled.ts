@@ -14,6 +14,7 @@ export const Task = styled.li`
   transition: 0.1s;
   box-shadow: 0 1px 0 #091e4240;
   white-space: normal;
+  overflow: hidden;
   &:hover {
     background-color: #ffffff80;
   }
