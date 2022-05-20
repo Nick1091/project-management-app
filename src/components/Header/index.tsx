@@ -1,15 +1,18 @@
-import { AppBar, Container, Toolbar } from '@mui/material';
-import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
+import { AppBar, Container, Link, Toolbar } from '@mui/material';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
+import { useAppSelector } from '../../hooks';
 
 import { Typography } from './styled';
 import { UserBar } from '../UserBar';
 import { GuestBar } from '../GuestBar';
 
 export const Header = () => {
-  //this is for checking until authorization functionality is implemented
-  const token = '1';
+  const {
+    authUser: { token },
+  } = useAppSelector((state) => state.authUser);
   const [scroll, setScroll] = useState(0);
   const appBarTopStyle = token && scroll > 0 ? 0 : '-100px';
 
@@ -28,10 +31,19 @@ export const Header = () => {
         position={token ? 'sticky' : 'static'}
         sx={{ top: appBarTopStyle, transition: 'top 0.5s ease-in-out' }}
       >
-        <Container>
+        <Container maxWidth={false}>
           <Toolbar>
-            <AppRegistrationOutlinedIcon sx={{ fontSize: 30 }}></AppRegistrationOutlinedIcon>
-            <Typography>Project Management App</Typography>
+            <RocketLaunchIcon sx={{ fontSize: 30 }}></RocketLaunchIcon>
+            <Typography>
+              <Link
+                color="inherit"
+                style={{ textDecoration: 'none' }}
+                component={RouterLink}
+                to="/"
+              >
+                Reactive Area
+              </Link>
+            </Typography>
             {token ? <UserBar /> : <GuestBar />}
           </Toolbar>
         </Container>
