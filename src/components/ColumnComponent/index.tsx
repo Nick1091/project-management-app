@@ -42,12 +42,12 @@ export const ColumnOfBoard = (props: {
   });
 
   useEffect(() => {
-    const topTaskOrder =
-      props.column.tasks &&
-      props.column.tasks.reduce(
-        (biggestOrder, task) => (biggestOrder > task.order ? biggestOrder : task.order),
-        0
-      );
+    const topTaskOrder = props.column.tasks
+      ? props.column.tasks.reduce(
+          (biggestOrder, task) => (biggestOrder > task.order ? biggestOrder : task.order),
+          0
+        )
+      : 0;
     setTaskOrder(topTaskOrder + additionNumNextTaskOrder);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

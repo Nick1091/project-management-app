@@ -73,7 +73,10 @@ function App() {
           path="/register"
           element={newToken ? <Navigate to="/main" state={{ from: location }} /> : <RegisterPage />}
         />
-        <Route path="/main/board/:id" element={<Board />} />
+        <Route
+          path="/main/board/:id"
+          element={newToken ? <Board /> : <Navigate to="/" state={{ from: location }} />}
+        />
         <Route
           path="/edit-profile"
           element={!newToken ? <Navigate to="/" state={{ from: location }} /> : <EditProfile />}

@@ -44,7 +44,7 @@ const boardSlice = createSlice({
     });
     builder.addCase(createTask.fulfilled, (state, action: PayloadAction<TaskState>) => {
       const column = state.columns.filter((column) => column.id === action.payload.columnId)[0];
-      column?.tasks.push(action.payload);
+      column.tasks ? column.tasks.push(action.payload) : (column.tasks = [action.payload]);
       state.columns = [
         ...state.columns.filter((column) => column.id !== action.payload.columnId),
         column,

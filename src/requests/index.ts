@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { REQUEST_URLS } from '../constants';
 import { ILoginObj, ILoginObjWithID } from '../types';
-import { CreateTaskTypes, DeleteTaskTypes } from '../types/requestTypes';
+import { CreateTaskTypes, DeleteTaskTypes } from '../types';
 
 export const fetchLogin = createAsyncThunk('post/fetchLogin', async (data: ILoginObj, thunkApi) => {
   try {

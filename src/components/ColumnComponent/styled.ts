@@ -22,6 +22,7 @@ export const ColumnTask = styled.li`
 export const CreateTask = styles(Button)`
   background-color: #091e4200;
   padding-right: 25px;
+  margin-right: 5px;
   &:hover {
     background-color: #091e4222;
   }

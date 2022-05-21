@@ -6,8 +6,6 @@ export const CourseContainer = styled.div`
   flex-direction: row;
   flex-wrap: nowrap;
   gap: 55px;
-  max-width: 750px;
-  max-height: 390px;
 `;
 
 export const CourseInfoContainer = styled.div`
