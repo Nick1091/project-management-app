@@ -26,6 +26,7 @@
     "react-hook-form": "^7.30.0",
     "react-i18next": "^11.16.9",
     "react-input-autosize": "^3.0.0",
+    "react-lazy-load-image-component": "^1.5.4",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
@@ -63,6 +64,7 @@
   },
   "devDependencies": {
     "@types/react-input-autosize": "^2.2.1",
+    "@types/react-lazy-load-image-component": "^1.5.2",
     "@types/styled-components": "^5.1.25",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",

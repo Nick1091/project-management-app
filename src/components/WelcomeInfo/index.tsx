@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Box, Typography } from '@mui/material';
 import welcomeImg from '../../assets/img/welcome.png';
 import { MainWelcomeContent, Wave } from './styled';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const WelcomeInfo = () => {
   const { t } = useTranslation(['common']);
@@ -29,15 +31,14 @@ export const WelcomeInfo = () => {
           <Typography sx={{ fontSize: '18px', color: '#7E7878' }}>{t('AppDescription')}</Typography>
         </Box>
         <Box
-          component="img"
           sx={{
             maxHeight: 630,
             maxWidth: 820,
             marginTop: 8,
           }}
-          alt="welcome image"
-          src={welcomeImg}
-        />
+        >
+          <LazyLoadImage effect="blur" height={650} src={welcomeImg} width={670} />
+        </Box>
       </MainWelcomeContent>
       <Wave />
     </Box>

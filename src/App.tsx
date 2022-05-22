@@ -57,7 +57,6 @@ function App() {
           index
           element={!newToken ? <Welcome /> : <Navigate to="/main" state={{ from: location }} />}
         />
-        <Route index element={<Welcome />} />
         <Route
           path="/main"
           element={newToken ? <MainBoards /> : <Navigate to="/" state={{ from: location }} />}
