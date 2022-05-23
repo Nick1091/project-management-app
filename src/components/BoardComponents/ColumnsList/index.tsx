@@ -1,10 +1,11 @@
-import React, { useState, useEffect, DragEvent } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDrop } from 'react-dnd';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { ItemTypes } from '../../../constants';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ColumnInputs, ModalInputState, ColumnState } from '../../../types';
-import { createBoardColumn, updateBoardColumn } from '../../../requests';
+import { createBoardColumn, getBoardColumns, updateBoardColumn } from '../../../requests';
 import { columnFormSchema } from '../../../validation';
-import { getBiggestListOrder, updateGrabbedColumn } from '../../../utils';
 import { useForm } from 'react-hook-form';
 import { ModalWithForm } from '../ModalWithForm';
 import { ColumnItem } from '../ColumnItem';
@@ -15,14 +16,54 @@ type ColumnListProps = {
   boardId?: string;
 };
 
+const sortArray = <T extends { order: number }>(array: T[]) => {
+  return [...array].sort((columnA, columnB) => columnA.order - columnB.order);
+};
+
 export const ColumnList = ({ token, boardId }: ColumnListProps) => {
   const { columns } = useAppSelector((state) => state.boardState);
   const dispatch = useAppDispatch();
-
+  const [, drop] = useDrop({ accept: ItemTypes.COLUMN });
+  const [columnsList, setColumnsList] = useState(sortArray(columns));
+  const [draggedColumn, setDraggedColumn] = useState<undefined | ColumnState>();
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [columnOrder, setColumnOrder] = useState(0);
-  const [currentColumn, setCurrentColumn] = useState<ColumnState | undefined>();
-  const additionNumNextColumnOrder = 1;
+
+  useEffect(() => {
+    setColumnsList(sortArray(columns));
+  }, [columns]);
+
+  const moveColumn = async (id: string, atIndex: number, movedId?: string) => {
+    const temporaryColumnsList = [...columnsList];
+    const columnData = findColumn(id);
+    if (movedId) {
+      setDraggedColumn(findColumn(movedId)?.column);
+      if (columnData) {
+        temporaryColumnsList.splice(columnData.index, 1);
+        temporaryColumnsList.splice(atIndex, 0, columnData.column);
+      }
+      setColumnsList(temporaryColumnsList);
+    } else {
+      if (columnData && draggedColumn && boardId && token) {
+        await dispatch(
+          updateBoardColumn({
+            token,
+            boardId,
+            column: { ...columnData.column, order: draggedColumn.order },
+          })
+        );
+        await dispatch(getBoardColumns({ token, id: boardId }));
+      }
+    }
+  };
+
+  const findColumn = (id: string) => {
+    const column = columnsList.find((column) => column.id === id);
+    if (column)
+      return {
+        column,
+        index: columnsList.indexOf(column),
+      };
+  };
 
   const {
     control,
@@ -49,14 +90,8 @@ export const ColumnList = ({ token, boardId }: ColumnListProps) => {
     },
   ];
 
-  useEffect(() => {
-    const topColumnOrder = getBiggestListOrder(columns);
-    setColumnOrder(topColumnOrder + additionNumNextColumnOrder);
-  }, [columns]);
-
   const createColumnHandler = ({ title }: ColumnInputs) => {
-    if (token && boardId)
-      dispatch(createBoardColumn({ token, boardId, columnTitle: title, order: columnOrder }));
+    if (token && boardId) dispatch(createBoardColumn({ token, boardId, columnTitle: title }));
     reset();
     setIsModalOpened(false);
   };
@@ -66,109 +101,23 @@ export const ColumnList = ({ token, boardId }: ColumnListProps) => {
     reset();
   };
 
-  const handleDragStartColumn = (e: DragEvent<HTMLLIElement>, columnStart: ColumnState) => {
-    setCurrentColumn(columnStart);
-  };
-
-  const handleDropColumn = async (e: DragEvent<HTMLLIElement>, columnDrop: ColumnState) => {
-    e.preventDefault();
-    const drop = columns.find((columnItem) => columnItem.id === columnDrop.id);
-    const cur = columns.find((columnItem) => columnItem.id === currentColumn?.id);
-    const topOrder = getBiggestListOrder(columns) + additionNumNextColumnOrder;
-
-    if (drop && cur && token && boardId) {
-      const dropOrder = drop.order;
-      const curOrder = cur.order;
-
-      updateGrabbedColumn(e, 'remove');
-
-      const sortedColumns = [...columns].sort((columnA, columnB) => columnA.order - columnB.order);
-      const dropColumnIndex = sortedColumns.findIndex((column) => column.order === dropOrder);
-
-      const columnsToUpdate = sortedColumns
-        .splice(dropColumnIndex)
-        .filter((column) => column.order !== dropOrder && column.order !== curOrder);
-
-      columnsToUpdate.forEach(async (column, index) => {
-        await dispatch(
-          updateBoardColumn({
-            token,
-            boardId,
-            column: { ...column, order: topOrder + index + additionNumNextColumnOrder },
-          })
-        );
-      });
-
-      await dispatch(
-        updateBoardColumn({
-          token,
-          boardId,
-          column: { ...drop, order: topOrder },
-        })
-      );
-      await dispatch(
-        updateBoardColumn({
-          token,
-          boardId,
-          column: { ...cur, order: dropOrder },
-        })
-      );
-
-      const nextDropColumnOrder = dropOrder + additionNumNextColumnOrder;
-
-      await dispatch(
-        updateBoardColumn({
-          token,
-          boardId,
-          column: { ...drop, order: nextDropColumnOrder },
-        })
-      );
-
-      columnsToUpdate.forEach(async (column, index) => {
-        await dispatch(
-          updateBoardColumn({
-            token,
-            boardId,
-            column: {
-              ...column,
-              order: nextDropColumnOrder + index + additionNumNextColumnOrder,
-            },
-          })
-        );
-      });
-    }
-  };
-
-  const handleDragOverColumn = (e: DragEvent<HTMLLIElement>) => {
-    e.preventDefault();
-    updateGrabbedColumn(e, 'add');
-  };
-
-  const handleDragEndColumn = (e: DragEvent<HTMLLIElement>) => {
-    updateGrabbedColumn(e, 'remove');
-  };
-
   return (
     <>
-      <ColumnListContainer>
-        {columns.length > 0 &&
-          [...columns]
-            .sort((columnA, columnB) => columnA.order - columnB.order)
-            .map(
-              (column) =>
-                boardId && (
-                  <ColumnItem
-                    handleDragEndColumn={handleDragEndColumn}
-                    handleDragOverColumn={handleDragOverColumn}
-                    handleDragStartColumn={handleDragStartColumn}
-                    handleDropColumn={handleDropColumn}
-                    column={column}
-                    key={column.id}
-                    token={token}
-                    boardId={boardId}
-                  />
-                )
-            )}
+      <ColumnListContainer ref={drop}>
+        {columnsList.length > 0 &&
+          columnsList.map(
+            (column) =>
+              boardId && (
+                <ColumnItem
+                  moveColumn={moveColumn}
+                  findColumn={findColumn}
+                  column={column}
+                  key={column.id}
+                  token={token}
+                  boardId={boardId}
+                />
+              )
+          )}
         <ColumnBtn>
           <CreateColumnBtn onClick={() => setIsModalOpened(true)}>Create Column</CreateColumnBtn>
         </ColumnBtn>

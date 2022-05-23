@@ -10,11 +10,12 @@ export const ColumnContainer = styled.div`
   padding: 8px 32px 8px 8px;
   min-height: 45px;
   position: relative;
-  cursor: grab;
 
-  &.active {
-    background-color: lightgray;
-  }
+  ${(props: { isDragging: boolean }) => {
+    if (props.isDragging) {
+      return { backgroundColor: '#091e42d6', color: 'transparent' };
+    }
+  }}
 `;
 
 export const DeleteButtonContainer = styled.div`

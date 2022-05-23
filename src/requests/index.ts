@@ -153,11 +153,14 @@ export const getBoards = createAsyncThunk(
 
 export const createBoard = createAsyncThunk(
   'boards/createBoard',
-  async ({ token, title }: { token: string; title: string }, { rejectWithValue }) => {
+  async (
+    { token, title, description }: { token: string; title: string; description: string },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await axios.post(
         REQUEST_URLS.BOARDS_URL,
-        { title },
+        { title, description },
         {
           headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
         }
@@ -200,13 +203,18 @@ export const getBoardById = createAsyncThunk(
 export const editBoard = createAsyncThunk(
   'boards/editBoard',
   async (
-    { token, id, title }: { token: string; id: string; title: string },
+    {
+      token,
+      id,
+      title,
+      description,
+    }: { token: string; id: string; title: string; description: string },
     { rejectWithValue }
   ) => {
     try {
       const response = await axios.put(
         `${REQUEST_URLS.BOARDS_URL}/${id}`,
-        { title },
+        { title, description },
         {
           headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
         }
@@ -221,18 +229,13 @@ export const editBoard = createAsyncThunk(
 export const createBoardColumn = createAsyncThunk(
   'board/createColumn',
   async (
-    {
-      token,
-      boardId,
-      columnTitle,
-      order,
-    }: { token: string; boardId: string; columnTitle: string; order: number },
+    { token, boardId, columnTitle }: { token: string; boardId: string; columnTitle: string },
     { rejectWithValue }
   ) => {
     try {
       const response = await axios.post(
         `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns`,
-        { title: columnTitle, order },
+        { title: columnTitle },
         {
           headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
         }
@@ -280,6 +283,20 @@ export const updateBoardColumn = createAsyncThunk(
           headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
         }
       );
+      return response.data;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
+    }
+  }
+);
+
+export const getBoardColumns = createAsyncThunk(
+  'boards/getBoardColumns',
+  async ({ token, id }: { token: string; id: string }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${REQUEST_URLS.BOARDS_URL}/${id}`, {
+        headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      });
       return response.data;
     } catch (e) {
       if (e instanceof Error) return rejectWithValue(e.message);

@@ -1,58 +1,66 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import { BoardInputs } from '../../../types/boardTypes';
 import { boardFormSchema } from '../../../validation';
 import { editBoard } from '../../../requests';
-import AutosizeInput from 'react-input-autosize';
 import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Button } from '@mui/material';
-import { Actions, Form, Title, TitleContainer } from './styled';
+import {
+  Actions,
+  Form,
+  Title,
+  TitleContainer,
+  TextContainer,
+  Description,
+  DescriptionInput,
+  TitleInput,
+} from './styled';
 
 export const BoardTitle = ({ token, id }: { token: string | null; id?: string }) => {
-  const { boardTitle } = useAppSelector((state) => state.boardState);
+  const { boardTitle, boardDescription } = useAppSelector((state) => state.boardState);
   const dispatch = useAppDispatch();
   const [newTitle, setNewTitle] = useState(boardTitle);
-  const [isTitleHidden, setIsTitleHidden] = useState(false);
+  const [newDescription, setNewDescription] = useState(boardDescription);
+  const [isTextHidden, setIsTextHidden] = useState(false);
   const {
     control,
     handleSubmit,
     formState: { errors },
     setValue,
-    getValues,
   } = useForm<BoardInputs>({
     resolver: yupResolver(boardFormSchema),
-    defaultValues: { title: boardTitle },
+    defaultValues: { title: boardTitle, description: boardDescription },
   });
 
-  useEffect(() => {
-    if (getValues('title') !== boardTitle) {
-      setValue('title', boardTitle);
-    }
-    if (newTitle !== boardTitle) {
-      setNewTitle(boardTitle);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boardTitle]);
-
   const titleSubmitHandler = (formState: BoardInputs) => {
-    if (formState.title !== newTitle) {
+    if (formState.title !== newTitle || formState.description !== newDescription) {
       setNewTitle(formState.title);
-      if (token && id) dispatch(editBoard({ token, id, title: formState.title }));
+      setNewDescription(formState.description);
+      if (token && id)
+        dispatch(
+          editBoard({ token, id, title: formState.title, description: formState.description })
+        );
     }
-    setIsTitleHidden(false);
+    setIsTextHidden(false);
   };
 
   return (
     <TitleContainer>
-      <Title isTitleHidden={isTitleHidden} onClick={() => setIsTitleHidden(true)}>
-        {newTitle}
-      </Title>
-      <Form onSubmit={handleSubmit(titleSubmitHandler)} isTitleHidden={isTitleHidden}>
+      <TextContainer isTextHidden={isTextHidden} onClick={() => setIsTextHidden(true)}>
+        <Title>{newTitle}</Title>
+        <Description>{newDescription}</Description>
+      </TextContainer>
+      <Form onSubmit={handleSubmit(titleSubmitHandler)} isTitleHidden={isTextHidden}>
         <Controller
-          render={({ field }) => <AutosizeInput {...field} />}
+          render={({ field }) => <TitleInput {...field} />}
           name="title"
+          control={control}
+        />
+        <Controller
+          render={({ field }) => <DescriptionInput {...field} />}
+          name="description"
           control={control}
         />
         <Actions>
@@ -61,8 +69,9 @@ export const BoardTitle = ({ token, id }: { token: string | null; id?: string })
             color="error"
             size="small"
             onClick={() => {
-              setIsTitleHidden(false);
+              setIsTextHidden(false);
               setValue('title', newTitle);
+              setValue('description', newDescription);
             }}
           >
             Cancel

@@ -18,6 +18,7 @@ export type UserIDPassword = {
 export type BoardPreview = {
   id: string;
   title: string;
+  description: string;
 };
 
 type BasicComponentsState = {
@@ -53,4 +54,5 @@ export type ColumnState = {
 export type BoardState = {
   columns: ColumnState[];
   boardTitle: string;
+  boardDescription: string;
 } & BasicComponentsState;

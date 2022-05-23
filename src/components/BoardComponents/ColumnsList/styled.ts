@@ -11,7 +11,7 @@ export const ColumnListContainer = styled.ul`
   overflow-y: auto;
   margin: 0;
   padding: 0;
-  height: calc(100vh - 256px); // 64 + 96 + 72 + 24 header + title + footer + footer margin
+  height: calc(100vh - 300px); // 64 + 140 + 72 + 24 header + title + footer + footer margin
 `;
 
 export const ColumnBtn = styled.li`
