@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Button } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { BoardInputs } from '../../../types/boardTypes';
 import { boardFormSchema } from '../../../validation';
 import { editBoard } from '../../../requests';
 import { ErrorMessage } from '../../../components/ErrorMessage';
-import { Button } from '@mui/material';
 import {
   Actions,
   Form,

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { ItemTypes } from '../../../constants';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { ColumnInputs, ModalInputState, ColumnState } from '../../../types';
+import { sortArray } from '../../../utils';
 import { createBoardColumn, getBoardColumns, updateBoardColumn } from '../../../requests';
 import { columnFormSchema } from '../../../validation';
-import { useForm } from 'react-hook-form';
 import { ModalWithForm } from '../ModalWithForm';
 import { ColumnItem } from '../ColumnItem';
 import { ColumnListContainer, CreateColumnBtn, ColumnBtn } from './styled';
@@ -14,10 +15,6 @@ import { ColumnListContainer, CreateColumnBtn, ColumnBtn } from './styled';
 type ColumnListProps = {
   token: string | null;
   boardId?: string;
-};
-
-const sortArray = <T extends { order: number }>(array: T[]) => {
-  return [...array].sort((columnA, columnB) => columnA.order - columnB.order);
 };
 
 export const ColumnList = ({ token, boardId }: ColumnListProps) => {

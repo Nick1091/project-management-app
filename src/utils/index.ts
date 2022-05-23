@@ -1,17 +1,7 @@
-import { DragEvent } from 'react';
 import { ColumnState } from '../types';
 
-export const updateGrabbedColumn = (e: DragEvent<HTMLLIElement>, action: 'add' | 'remove') => {
-  const targetColumn = e.target;
-  if (targetColumn instanceof HTMLElement && targetColumn.classList.contains('column-container')) {
-    targetColumn.classList[action]('active');
-  } else {
-    if (targetColumn instanceof HTMLLIElement) {
-      const columnTargetContainer = targetColumn.firstChild;
-      if (columnTargetContainer && columnTargetContainer instanceof HTMLElement)
-        columnTargetContainer.classList[action]('active');
-    }
-  }
+export const sortArray = <T extends { order: number }>(array: T[]) => {
+  return [...array].sort((columnA, columnB) => columnA.order - columnB.order);
 };
 
 export const getBiggestListOrder = (columnsList: ColumnState[]) => {

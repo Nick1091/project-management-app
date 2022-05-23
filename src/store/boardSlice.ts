@@ -1,5 +1,5 @@
-import { BoardState, ColumnState, BoardPreview } from './../types/storeTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { BoardState, ColumnState, BoardPreview } from './../types/storeTypes';
 import {
   getBoardById,
   editBoard,

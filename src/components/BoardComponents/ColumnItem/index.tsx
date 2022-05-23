@@ -34,8 +34,8 @@ export const ColumnItem = ({ moveColumn, findColumn, column, token, boardId }: C
     end: (dropResult, monitor) => {
       const { id: droppedId, originalIndex } = monitor.getItem();
       const didDrop = monitor.didDrop();
-      if (!didDrop && originalIndex) {
-        moveColumn(droppedId, originalIndex);
+      if (!didDrop && originalIndex !== undefined) {
+        moveColumn(droppedId, originalIndex, id);
       }
       const columnData = findColumn(droppedId);
       if (
