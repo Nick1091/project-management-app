@@ -12,6 +12,7 @@ import { ModalWithForm } from '../BoardComponents/ModalWithForm';
 import { getInputs } from './inputsOptions';
 import { TaskContainer } from '../TaskComponent';
 import { ColumnTitle, CreateTask, ColumnContainer } from './styled';
+import { ContainerTask } from './styled';
 
 export const ColumnOfBoard = (props: {
   column: { tasks: TaskState[]; title: string; id: string };
@@ -79,12 +80,17 @@ export const ColumnOfBoard = (props: {
     <div>
       <ColumnContainer>
         <ColumnTitle>{props.column.title}</ColumnTitle>
-        {props.column.tasks &&
-          [...props.column.tasks]
-            .sort((taskA, taskB) => taskA.order - taskB.order)
-            .map((task) => (
-              <TaskContainer key={task.id} {...task} columnId={columnId} boardId={boardId} />
-            ))}
+        {props.column.tasks && (
+          <>
+            <ContainerTask>
+              {[...props.column.tasks]
+                .sort((taskA, taskB) => taskA.order - taskB.order)
+                .map((task) => (
+                  <TaskContainer key={task.id} {...task} columnId={columnId} boardId={boardId} />
+                ))}
+            </ContainerTask>
+          </>
+        )}
         <CreateTask onClick={() => setIsModalOpened(true)}>
           ＋ {t('add task', { ns: 'task' })}
         </CreateTask>

@@ -5,7 +5,7 @@ import { styled as styles } from '@mui/material/styles';
 export const Task = styled.li`
   position: relative;
   background-color: #ffffff;
-  width: 267px;
+  width: 100%;
   flex-shrink: 0;
   border-radius: 4px;
   padding: 10px;

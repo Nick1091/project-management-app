@@ -22,7 +22,7 @@ export const ColumnTask = styled.li`
 export const CreateTask = styles(Button)`
   background-color: #091e4200;
   padding-right: 25px;
-  margin-right: 5px;
+  margin: 5px;
   &:hover {
     background-color: #091e4222;
   }
@@ -32,10 +32,17 @@ export const ColumnContainer = styled.div`
   width: 292px;
   display: flex;
   flex-direction: column;
-  padding: 10px 5px 10px 10px;
+  background-color: #ebecf0;
+`;
+
+export const ContainerTask = styled.div`
+  width: 287px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 10px 10px;
   background-color: #ebecf0;
   overflow-x: hidden;
-  height: calc(100vh - 276px);
+  max-height: calc(100vh - 380px);
   scrollbar-width: 6px;
   scrollbar-color: #666666a0 #555555;
   ::-webkit-scrollbar {
