@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { columnStyles } from '../styles/columnStyles';
+import { columnStyles } from '../styles';
 
 export const ColumnListItem = styled.li`
   height: 100%;

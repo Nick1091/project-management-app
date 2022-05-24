@@ -63,9 +63,7 @@ export const ColumnItem = ({ moveColumn, findColumn, column, token, boardId }: C
   return (
     <ColumnListItem ref={(node) => drop(node)}>
       <ColumnContainer
-        onMouseOver={() =>
-          !isDragging ? setIsVisibleRemoveBtn(true) : setIsVisibleRemoveBtn(false)
-        }
+        onMouseOver={() => setIsVisibleRemoveBtn(!isDragging)}
         onMouseOut={() => setIsVisibleRemoveBtn(false)}
         className="column-container"
         isDragging={isDragging}

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { styled as styles } from '@mui/material/styles';
 import { Button } from '@mui/material';
-import { columnStyles } from '../styles/columnStyles';
+import { columnStyles } from '../styles';
 
 export const ColumnListContainer = styled.ul`
   display: flex;
