@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppLayout } from './components/AppLayout';
 import { useAppDispatch, useAppSelector } from './hooks';
@@ -16,17 +17,22 @@ function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const [newToken, setNewToken] = useState(localStorage.getItem('token'));
+  const { i18n } = useTranslation();
 
   const {
     authUser: { token, login },
   } = useAppSelector((state) => state.authUser);
 
   useEffect(() => {
+    const lang = localStorage.getItem('i18nextLng');
+    i18n.changeLanguage(lang ? lang : 'en');
     const token = localStorage.getItem('token');
     const login = localStorage.getItem('login');
     if (token && login) {
       dispatch(setUserCredentials({ token, login }));
       setNewToken(token);
+    } else {
+      setNewToken(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -36,6 +42,8 @@ function App() {
       localStorage.setItem('token', token);
       dispatch(getUserId(token));
       setNewToken(token);
+    } else {
+      setNewToken(null);
     }
     if (login) {
       localStorage.setItem('login', login);
@@ -45,6 +53,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
+        <Route
+          index
+          element={!newToken ? <Welcome /> : <Navigate to="/main" state={{ from: location }} />}
+        />
         <Route index element={<Welcome />} />
         <Route
           path="/main"
