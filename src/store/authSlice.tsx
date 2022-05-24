@@ -15,6 +15,7 @@ type InitType = {
 type AuthType = {
   authUser: InitType;
 };
+
 const initialState: AuthType = {
   authUser: {
     name: null,
