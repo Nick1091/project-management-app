@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch } from '../../../hooks';
 import { BoardInputs } from '../../../types/boardTypes';
 import { boardFormSchema } from '../../../validation';
 import { editBoard } from '../../../requests';
@@ -18,11 +18,17 @@ import {
   TitleInput,
 } from './styled';
 
-export const BoardTitle = ({ token, id }: { token: string | null; id?: string }) => {
-  const { boardTitle, boardDescription } = useAppSelector((state) => state.boardState);
+type BoardTitleProps = {
+  token: string | null;
+  title: string;
+  description: string;
+  id?: string;
+};
+
+export const BoardTitle = ({ token, id, title, description }: BoardTitleProps) => {
   const dispatch = useAppDispatch();
-  const [newTitle, setNewTitle] = useState(boardTitle);
-  const [newDescription, setNewDescription] = useState(boardDescription);
+  const [newTitle, setNewTitle] = useState(title);
+  const [newDescription, setNewDescription] = useState(description);
   const [isTextHidden, setIsTextHidden] = useState(false);
   const {
     control,
@@ -31,7 +37,7 @@ export const BoardTitle = ({ token, id }: { token: string | null; id?: string })
     setValue,
   } = useForm<BoardInputs>({
     resolver: yupResolver(boardFormSchema),
-    defaultValues: { title: boardTitle, description: boardDescription },
+    defaultValues: { title, description },
   });
 
   const titleSubmitHandler = (formState: BoardInputs) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch } from '../../../hooks';
 import { ItemTypes } from '../../../constants';
 import { ColumnInputs, ModalInputState, ColumnState } from '../../../types';
 import { sortArray } from '../../../utils';
@@ -13,12 +13,12 @@ import { ColumnItem } from '../ColumnItem';
 import { ColumnListContainer, CreateColumnBtn, ColumnBtn } from './styled';
 
 type ColumnListProps = {
+  columns: ColumnState[];
   token: string | null;
   boardId?: string;
 };
 
-export const ColumnList = ({ token, boardId }: ColumnListProps) => {
-  const { columns } = useAppSelector((state) => state.boardState);
+export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
   const dispatch = useAppDispatch();
   const [, drop] = useDrop({ accept: ItemTypes.COLUMN });
   const [columnsList, setColumnsList] = useState(sortArray(columns));
