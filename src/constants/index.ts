@@ -10,6 +10,7 @@ export const REQUEST_URLS = {
   BOARDS_URL: `${URL}/boards`,
   USERS: `${URL}/users`,
 };
+
 export const contacts = [
   {
     name: 'Igor Alyanoy',
@@ -33,6 +34,7 @@ export const contacts = [
     photo: `${annPhoto}`,
   },
 ];
+
 export const size = {
   mobileS: 320,
   mobileM: 375,

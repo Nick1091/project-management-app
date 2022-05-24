@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from '../../constants';
 
 export const FooterContainer = styled.div`
   width: 100%;
@@ -13,10 +14,38 @@ export const DevsContainer = styled.div`
   max-width: 1900px;
   height: 72px;
   width: 100%;
-  padding-left: 34px;
-  padding-right: 34px;
+
+  @media ${device.mobileS} {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  @media ${device.laptop} {
+    padding-left: 34px;
+    padding-right: 34px;
+  }
 `;
 
 export const DevContainer = styled.span`
-  margin: 0 16px;
+  @media ${device.mobileS} {
+    margin: 0 8px;
+  }
+
+  @media ${device.laptop} {
+    margin: 0 16px;
+  }
+`;
+
+export const RSSImg = styled.img`
+  src: url(${(props) => props.src});
+
+  @media ${device.mobileS} {
+    width: 60px;
+    height: 30px;
+  }
+
+  @media ${device.laptop} {
+    width: 90px;
+    height: 40px;
+  }
 `;
