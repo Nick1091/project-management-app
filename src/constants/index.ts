@@ -1,6 +1,6 @@
 import { ItemTypesType } from '../types';
 
-const URL = 'https://shielded-temple-84073.herokuapp.com';
+const URL = 'https://project-management-app-65.herokuapp.com';
 
 export const REQUEST_URLS = {
   SING_UP_URL: `${URL}/signup`,
