@@ -26,5 +26,10 @@
   "ForEveryone": "For Everyone",
   "EveryoneCan": "Everyone can study at RS School, regardless of age, professional employment and place of residence. However, for successful learning it is necessary to have a solid  knowledge of HTML, CSS and Javascript.",
   "FreeEducation": "Free Education",
-  "PayItForward": "The principle of «Pay it forward» works at RS School. Teachers share their knowledge with students for free now, hoping that in the future they will return as mentors and pass on their knowledge to the next generation of students in the same way."
+  "PayItForward": "The principle of «Pay it forward» works at RS School. Teachers share their knowledge with students for free now, hoping that in the future they will return as mentors and pass on their knowledge to the next generation of students in the same way.",
+  "EditProfile": "Edit Profile",
+  "NewUserDetails": "Please enter your new user details",
+  "Edit": "Edit",
+  "DeleteProfile": "click here to delete your profile",
+  "DoYouReallyWantToDelete": "Do you really want to delete profile?"
 }
