@@ -1,25 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useDrop } from 'react-dnd';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ColumnInputs, ModalInputState } from '../../../types/boardTypes';
-import { createBoardColumn } from '../../../requests';
-import { columnFormSchema } from '../../../validation';
 import { useForm } from 'react-hook-form';
-import { Column, ColumnContainer, CreateColumnBtn } from './styled';
+import { useAppDispatch } from '../../../hooks';
+import { ItemTypes } from '../../../constants';
+import { ColumnInputs, ModalInputState, ColumnState } from '../../../types';
+import { sortArray } from '../../../utils';
+import { createBoardColumn, getBoardColumns, updateBoardColumn } from '../../../requests';
+import { columnFormSchema } from '../../../validation';
 import { ModalWithForm } from '../ModalWithForm';
+import { ColumnItem } from '../ColumnItem';
+import { ColumnListContainer, CreateColumnBtn, ColumnBtn } from './styled';
 
 type ColumnListProps = {
+  columns: ColumnState[];
   token: string | null;
-  id?: string;
+  boardId?: string;
 };
 
-export const ColumnList = ({ token, id }: ColumnListProps) => {
-  const { columns } = useAppSelector((state) => state.boardState);
+export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
   const dispatch = useAppDispatch();
-
+  const [, drop] = useDrop({ accept: ItemTypes.COLUMN });
+  const [columnsList, setColumnsList] = useState(sortArray(columns));
+  const [draggedColumn, setDraggedColumn] = useState<undefined | ColumnState>();
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [columnOrder, setColumnOrder] = useState(0);
-  const additionNumNextColumnOrder = 1;
+
+  useEffect(() => {
+    setColumnsList(sortArray(columns));
+  }, [columns]);
+
+  const moveColumn = async (id: string, atIndex: number, movedId?: string) => {
+    const temporaryColumnsList = [...columnsList];
+    const columnData = findColumn(id);
+    if (movedId) {
+      setDraggedColumn(findColumn(movedId)?.column);
+      if (columnData) {
+        temporaryColumnsList.splice(columnData.index, 1);
+        temporaryColumnsList.splice(atIndex, 0, columnData.column);
+      }
+      setColumnsList(temporaryColumnsList);
+    } else {
+      if (columnData && draggedColumn && boardId && token) {
+        await dispatch(
+          updateBoardColumn({
+            token,
+            boardId,
+            column: { ...columnData.column, order: draggedColumn.order },
+          })
+        );
+        await dispatch(getBoardColumns({ token, id: boardId }));
+      }
+    }
+  };
+
+  const findColumn = (id: string) => {
+    const column = columnsList.find((column) => column.id === id);
+    if (column)
+      return {
+        column,
+        index: columnsList.indexOf(column),
+      };
+  };
 
   const {
     control,
@@ -46,18 +87,8 @@ export const ColumnList = ({ token, id }: ColumnListProps) => {
     },
   ];
 
-  useEffect(() => {
-    const topColumnOrder = columns.reduce(
-      (biggestOrder, column) => (biggestOrder > column.order ? biggestOrder : column.order),
-      0
-    );
-    setColumnOrder(topColumnOrder + additionNumNextColumnOrder);
-  }, [columns]);
-
   const createColumnHandler = ({ title }: ColumnInputs) => {
-    if (token && id)
-      dispatch(createBoardColumn({ token, boardId: id, columnTitle: title, order: columnOrder }));
-    setColumnOrder((prevNumber) => (prevNumber = prevNumber + additionNumNextColumnOrder));
+    if (token && boardId) dispatch(createBoardColumn({ token, boardId, columnTitle: title }));
     reset();
     setIsModalOpened(false);
   };
@@ -69,15 +100,25 @@ export const ColumnList = ({ token, id }: ColumnListProps) => {
 
   return (
     <>
-      <ColumnContainer>
-        {columns.length > 0 &&
-          [...columns]
-            .sort((columnA, columnB) => columnA.order - columnB.order)
-            .map((column) => <Column key={column.id}>{column.title}</Column>)}
-        <Column>
+      <ColumnListContainer ref={drop}>
+        {columnsList.length > 0 &&
+          columnsList.map(
+            (column) =>
+              boardId && (
+                <ColumnItem
+                  moveColumn={moveColumn}
+                  findColumn={findColumn}
+                  column={column}
+                  key={column.id}
+                  token={token}
+                  boardId={boardId}
+                />
+              )
+          )}
+        <ColumnBtn>
           <CreateColumnBtn onClick={() => setIsModalOpened(true)}>Create Column</CreateColumnBtn>
-        </Column>
-      </ColumnContainer>
+        </ColumnBtn>
+      </ColumnListContainer>
 
       {isModalOpened && (
         <ModalWithForm<ColumnInputs>
