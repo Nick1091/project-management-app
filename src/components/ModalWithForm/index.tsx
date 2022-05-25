@@ -1,9 +1,9 @@
 import { useId } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ModalInputStates } from '../../../types/boardTypes';
-import { Modal } from '../../../components/Modal';
+import { ModalInputStates } from '../../types/boardTypes';
 import { Button, TextField, Typography } from '@mui/material';
+import { Modal } from '../Modal';
 import { ColumnForm } from './styled';
 
 type ModalWithFormProps<T> = {
@@ -37,8 +37,8 @@ export const ModalWithForm = <T,>({
               render={({ field: { value, onChange } }) => (
                 <TextField
                   {...inputState.textFieldProps}
-                  label={t(inputState.label, { ns: 'task' })}
                   value={value}
+                  label={t(inputState.label, { ns: 'task' })}
                   onChange={onChange}
                 />
               )}

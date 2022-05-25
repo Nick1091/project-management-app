@@ -3,6 +3,15 @@ export type CreateTaskTypes = {
   boardId: string;
   columnId: string;
   taskTitle: string;
+  userId: string;
+  description: string;
+  taskId?: string;
+};
+export type EditTaskTypes = {
+  token: string;
+  boardId: string;
+  columnId: string;
+  taskTitle: string;
   order: number;
   userId: string;
   description: string;

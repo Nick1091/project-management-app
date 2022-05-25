@@ -6,5 +6,6 @@
   "Task description": "Task description",
   "Column Title": "Column Title",
   "DeleteAsk": "Do you really want to delete",
-  "task": "task?"
+  "task": "task?",
+  "column": "column?"
 }

@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { styled as styles } from '@mui/material/styles';
 import { Button } from '@mui/material';
+import { columnStyles } from '../styles';
 
-export const ColumnTitle = styled.li`
-  width: 272px;
-  background-color: #091e4200;
+export const ColumnTitle = styled.p`
   flex-shrink: 0;
   border-radius: 4px;
   padding: 10px;
+  margin: 0px;
 `;
 export const ColumnTask = styled.li`
-  background-color: #dee2e3;
+  background-color: #091e420a;
   width: 272px;
   flex-shrink: 0;
   border-radius: 4px;
@@ -28,21 +28,13 @@ export const CreateTask = styles(Button)`
   }
 `;
 
-export const ColumnContainer = styled.div`
-  width: 292px;
+export const ContainerTask = styled.ul`
   display: flex;
   flex-direction: column;
-  background-color: #ebecf0;
-`;
-
-export const ContainerTask = styled.div`
-  width: 287px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px 10px 10px 10px;
-  background-color: #ebecf0;
+  margin-right: 5px;
+  padding: 10px;
   overflow-x: hidden;
-  max-height: calc(100vh - 380px);
+  max-height: calc(100vh - 390px);
   scrollbar-width: 6px;
   scrollbar-color: #666666a0 #555555;
   ::-webkit-scrollbar {
@@ -57,4 +49,30 @@ export const ContainerTask = styled.div`
     border-radius: 6px;
     border: 3px solid #555555;
   }
+`;
+
+export const ColumnListItem = styled.li`
+  height: 100%;
+  position: relative;
+`;
+
+export const ColumnContainer = styled.div`
+  ${columnStyles};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 45px;
+  position: relative;
+
+  ${(props: { isDragging: boolean }) => {
+    if (props.isDragging) {
+      return { backgroundColor: '#091e42d6', color: 'transparent' };
+    }
+  }}
+`;
+
+export const DeleteButtonContainer = styled.div`
+  position: absolute;
+  right: 4px;
+  top: 4px;
 `;

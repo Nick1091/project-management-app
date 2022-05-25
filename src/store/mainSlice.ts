@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getBoards, createBoard, deleteBoard } from '../requests';
 import { BoardPreview, MainBoards } from '../types/storeTypes';
 
-const initialState: MainBoards = { boards: [], isLoading: false, error: null };
+const initialState: MainBoards = { boards: [], isLoading: true, error: null };
 
 const mainSlice = createSlice({
   name: 'main',

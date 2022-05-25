@@ -1,5 +1,5 @@
 import { Control, FieldError } from 'react-hook-form';
-import { ModalInputStates, TaskInputs } from '../../types';
+import { ModalInputStates, TaskInputs } from '../../../types';
 
 type TypeError = {
   title?: FieldError | undefined;

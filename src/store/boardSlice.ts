@@ -1,5 +1,6 @@
 import { BoardState, ColumnState, BoardPreview, TaskState } from './../types/storeTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import {
   getBoardById,
   editBoard,
@@ -7,11 +8,14 @@ import {
   createTask,
   editTask,
   deleteTask,
+  deleteBoardColumn,
+  getBoardColumns,
 } from '../requests';
 
 const initialState: BoardState = {
   columns: [],
   boardTitle: '',
+  boardDescription: '',
   isLoading: false,
   error: null,
 };
@@ -33,6 +37,7 @@ const boardSlice = createSlice({
       (state, action: PayloadAction<BoardPreview & { columns: ColumnState[] }>) => {
         state.columns = action.payload.columns;
         state.boardTitle = action.payload.title;
+        state.boardDescription = action.payload.description;
         state.isLoading = false;
       }
     );
@@ -42,6 +47,7 @@ const boardSlice = createSlice({
     builder.addCase(createBoardColumn.fulfilled, (state, action) => {
       state.columns.push(action.payload);
     });
+
     builder.addCase(createTask.fulfilled, (state, action: PayloadAction<TaskState>) => {
       const column = state.columns.filter((column) => column.id === action.payload.columnId)[0];
       column.tasks ? column.tasks.push(action.payload) : (column.tasks = [action.payload]);
@@ -70,6 +76,13 @@ const boardSlice = createSlice({
         ...state.columns.filter((column) => column.id !== action.payload?.columnId),
         columnTarget,
       ];
+    });
+
+    builder.addCase(deleteBoardColumn.fulfilled, (state, action) => {
+      state.columns = state.columns.filter((column) => column.id !== action.payload);
+    });
+    builder.addCase(getBoardColumns.fulfilled, (state, action) => {
+      state.columns = action.payload.columns;
     });
   },
 });

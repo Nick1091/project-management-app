@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DeleteForever } from '@mui/icons-material';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { editTask, deleteTask } from '../../requests';
-import { TaskInputs, TaskState } from '../../types';
-import { taskFormSchema } from '../../validation';
-import { ModalWithForm } from '../BoardComponents/ModalWithForm';
-import { ConfirmModal } from '../ConfirmModal';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { editTask, deleteTask } from '../../../requests';
+import { TaskInputs, TaskState } from '../../../types';
+import { taskFormSchema } from '../../../validation';
+import { ConfirmModal } from '../../ConfirmModal';
+import { ModalWithForm } from '../../ModalWithForm';
 import { getInputs } from '../ColumnComponent/inputsOptions';
 import { DeleteBtn, Task, TaskButton } from './styled';
 
@@ -17,8 +17,8 @@ export const TaskContainer = (props: TaskState) => {
   const { t } = useTranslation(['task']);
 
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [isVisibleRemoveBtn, setIsVisibleRemoveBtn] = useState(false);
-  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
+  const [isVisibleRemoveBt, setIsVisibleRemoveBt] = useState(false);
+  const [isOpenConfirmWindow, setIsOpenConfirmWindow] = useState(false);
   const dispatch = useAppDispatch();
   const {
     authUser: { token },
@@ -41,8 +41,8 @@ export const TaskContainer = (props: TaskState) => {
           boardId: props.boardId,
           columnId: props.columnId,
           taskId: props.id,
-          taskTitle: title,
           order: props.order,
+          taskTitle: title,
           userId: props.userId,
           description,
         })
@@ -56,8 +56,8 @@ export const TaskContainer = (props: TaskState) => {
   return (
     <>
       <Task
-        onMouseOver={() => setIsVisibleRemoveBtn(true)}
-        onMouseOut={() => setIsVisibleRemoveBtn(false)}
+        onMouseOver={() => setIsVisibleRemoveBt(true)}
+        onMouseOut={() => setIsVisibleRemoveBt(false)}
       >
         <TaskButton
           onClick={() => {
@@ -81,11 +81,11 @@ export const TaskContainer = (props: TaskState) => {
             {props.description}
           </Typography>
         </TaskButton>
-        {isVisibleRemoveBtn && (
+        {isVisibleRemoveBt && (
           <DeleteBtn
             size="small"
             onClick={() => {
-              setIsOpenConfirmModal(true);
+              setIsOpenConfirmWindow(true);
             }}
           >
             <DeleteForever fontSize="small" />
@@ -101,9 +101,9 @@ export const TaskContainer = (props: TaskState) => {
           handleCloseModal={handleCloseModal}
         />
       )}
-      {isOpenConfirmModal && (
+      {isOpenConfirmWindow && (
         <ConfirmModal
-          isOpen={isOpenConfirmModal}
+          isOpen={isOpenConfirmWindow}
           handleSubmit={() => {
             token &&
               dispatch(
@@ -117,8 +117,8 @@ export const TaskContainer = (props: TaskState) => {
           }}
           alertText={`${t('DeleteAsk')} "${props.title}" ${t('task')}`}
           closeModal={() => {
-            setIsOpenConfirmModal(false);
-            setIsVisibleRemoveBtn(false);
+            setIsOpenConfirmWindow(false);
+            setIsVisibleRemoveBt(false);
           }}
         />
       )}

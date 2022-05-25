@@ -3,6 +3,7 @@ import { TextFieldProps } from '@mui/material';
 
 export type BoardInputs = {
   title: string;
+  description: string;
 };
 
 export type ColumnInputs = {
@@ -19,4 +20,7 @@ export type ModalInputStates<T> = {
   control: Control<T>;
   label: string;
   textFieldProps: TextFieldProps;
+};
+export type ItemTypesType = {
+  COLUMN: 'column';
 };
