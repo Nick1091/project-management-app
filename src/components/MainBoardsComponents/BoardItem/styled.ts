@@ -1,8 +1,6 @@
 import { styledBoard } from '../styles/styledBoard';
-import { IconButton } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { styled as styles } from '@mui/material/styles';
 
 export const Board = styled.li`
   ${styledBoard};
@@ -26,7 +24,7 @@ export const BoardLink = styled(NavLink)`
   color: #111111;
 `;
 
-export const DeleteBtn = styles(IconButton)`
+export const DeleteBtnContainer = styled.div`
   position: absolute;
   right: 4px;
   top: 4px;

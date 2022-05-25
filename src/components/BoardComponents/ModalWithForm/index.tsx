@@ -1,8 +1,8 @@
 import { useId } from 'react';
 import { Controller } from 'react-hook-form';
+import { Button, TextField, Typography } from '@mui/material';
 import { ModalInputState } from '../../../types/boardTypes';
 import { Modal } from '../../../components/Modal';
-import { Button, TextField, Typography } from '@mui/material';
 import { ColumnForm } from './styled';
 
 type ModalWithFormProps<T> = {

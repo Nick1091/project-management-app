@@ -1,3 +1,4 @@
+import { ItemTypesType } from '../types';
 import igorPhoto from '../assets/img/igor.png';
 import nickPhoto from '../assets/img/nick.png';
 import annPhoto from '../assets/img/ann.png';
@@ -10,6 +11,7 @@ export const REQUEST_URLS = {
   BOARDS_URL: `${URL}/boards`,
   USERS: `${URL}/users`,
 };
+
 export const contacts = [
   {
     name: 'Igor Alyanoy',
@@ -33,3 +35,7 @@ export const contacts = [
     photo: `${annPhoto}`,
   },
 ];
+
+export const ItemTypes: ItemTypesType = {
+  COLUMN: 'column',
+};
