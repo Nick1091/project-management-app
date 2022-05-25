@@ -5,6 +5,6 @@ export const AboutAppContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 55px;
-  max-width: 750px,
-  max-height: 390px,  
+  max-width: 750px;
+  max-height: 390px;
 `;

@@ -20,7 +20,7 @@ function App() {
   const { i18n } = useTranslation();
 
   const {
-    authUser: { token, login },
+    authUser: { token, login, id },
   } = useAppSelector((state) => state.authUser);
 
   useEffect(() => {
@@ -28,8 +28,9 @@ function App() {
     i18n.changeLanguage(lang ? lang : 'en');
     const token = localStorage.getItem('token');
     const login = localStorage.getItem('login');
-    if (token && login) {
-      dispatch(setUserCredentials({ token, login }));
+    const id = localStorage.getItem('id');
+    if (token && login && id) {
+      dispatch(setUserCredentials({ token, login, id }));
       setNewToken(token);
     } else {
       setNewToken(null);
@@ -48,7 +49,10 @@ function App() {
     if (login) {
       localStorage.setItem('login', login);
     }
-  }, [token, login, dispatch]);
+    if (id) {
+      localStorage.setItem('id', id);
+    }
+  }, [token, login, id, dispatch]);
 
   return (
     <Routes>
@@ -69,10 +73,13 @@ function App() {
           path="/register"
           element={newToken ? <Navigate to="/main" state={{ from: location }} /> : <RegisterPage />}
         />
-        <Route path="/main/board/:id" element={<Board />} />
+        <Route
+          path="/main/board/:id"
+          element={newToken ? <Board /> : <Navigate to="/" state={{ from: location }} />}
+        />
         <Route
           path="/edit-profile"
-          element={!token ? <Navigate to="/" state={{ from: location }} /> : <EditProfile />}
+          element={!newToken ? <Navigate to="/" state={{ from: location }} /> : <EditProfile />}
         />
         <Route path="*" element={<NotFound />} />
       </Route>

@@ -42,9 +42,13 @@ const authSlice = createSlice({
         isLoading: false,
       };
     },
-    setUserCredentials: (state, action: PayloadAction<{ token: string; login: string }>) => {
+    setUserCredentials: (
+      state,
+      action: PayloadAction<{ token: string; login: string; id: string }>
+    ) => {
       state.authUser.token = action.payload.token;
       state.authUser.login = action.payload.login;
+      state.authUser.id = action.payload.id;
     },
   },
   extraReducers: {

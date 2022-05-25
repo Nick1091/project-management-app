@@ -1,8 +1,9 @@
 import { useId } from 'react';
 import { Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { ModalInputState } from '../../types/boardTypes';
 import { Button, TextField, Typography } from '@mui/material';
-import { ModalInputState } from '../../../types/boardTypes';
-import { Modal } from '../../../components/Modal';
+import { Modal } from '../Modal';
 import { ColumnForm } from './styled';
 
 type ModalWithFormProps<T> = {
@@ -21,7 +22,8 @@ export const ModalWithForm = <T,>({
   inputs,
 }: ModalWithFormProps<T>) => {
   const idPrefix = useId();
-
+  const { t } = useTranslation(['common', 'task']);
+  const firstWord = 0;
   return (
     <Modal isOpen={isModalOpened} closeModal={handleCloseModal}>
       <Typography align="center" variant="h5" sx={{ color: '#000', paddingBottom: '8px' }}>
@@ -33,7 +35,12 @@ export const ModalWithForm = <T,>({
             <Controller
               key={idPrefix + inputState.name}
               render={({ field: { value, onChange } }) => (
-                <TextField {...inputState.textFieldProps} value={value} onChange={onChange} />
+                <TextField
+                  {...inputState.textFieldProps}
+                  value={value}
+                  label={t(inputState.label, { ns: 'task' })}
+                  onChange={onChange}
+                />
               )}
               name={inputState.name}
               control={inputState.control}
@@ -41,10 +48,10 @@ export const ModalWithForm = <T,>({
           ))}
         <div>
           <Button type="button" color="error" onClick={handleCloseModal}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button type="submit" variant="outlined">
-            Create
+            {titleText.split(' ')[firstWord]}
           </Button>
         </div>
       </ColumnForm>
