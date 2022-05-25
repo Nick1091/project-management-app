@@ -63,13 +63,21 @@ export const ColumnItem = ({ moveColumn, findColumn, column, token, boardId }: C
   return (
     <ColumnListItem ref={(node) => drop(node)}>
       <ColumnContainer
-        onMouseOver={() => setIsVisibleRemoveBtn(!isDragging)}
+        onMouseOver={() => {
+          setIsVisibleRemoveBtn(!isDragging);
+        }}
         onMouseOut={() => setIsVisibleRemoveBtn(false)}
-        className="column-container"
         isDragging={isDragging}
         ref={(node) => drag(drop(node))}
       >
-        <span>{title}</span>
+        <span
+          onMouseOver={(e) => {
+            e.stopPropagation();
+            setIsVisibleRemoveBtn(!isDragging);
+          }}
+        >
+          {title}
+        </span>
         {isVisibleRemoveBtn && (
           <DeleteButtonContainer>
             <DeleteButton handleClick={() => setIsOpenConfirmModal(true)} />
@@ -78,7 +86,10 @@ export const ColumnItem = ({ moveColumn, findColumn, column, token, boardId }: C
         {isOpenConfirmModal && (
           <ConfirmModal
             isOpen={isOpenConfirmModal}
-            closeModal={() => setIsOpenConfirmModal(false)}
+            closeModal={() => {
+              setIsOpenConfirmModal(false);
+              setIsVisibleRemoveBtn(false);
+            }}
             alertText={`Do you really want to delete "${title}" column?`}
             handleSubmit={handleDeleteColumn}
           />

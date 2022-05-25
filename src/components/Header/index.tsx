@@ -8,6 +8,7 @@ import { useAppSelector } from '../../hooks';
 import { Typography } from './styled';
 import { UserBar } from '../UserBar';
 import { GuestBar } from '../GuestBar';
+import { COLORS } from '../../constants';
 
 export const Header = () => {
   const {
@@ -29,7 +30,11 @@ export const Header = () => {
     <>
       <AppBar
         position={token ? 'sticky' : 'static'}
-        sx={{ top: appBarTopStyle, transition: 'top 0.5s ease-in-out' }}
+        sx={{
+          top: appBarTopStyle,
+          transition: 'top 0.5s ease-in-out',
+          background: `linear-gradient(45deg, ${COLORS.MAIN.lighter}, ${COLORS.MAIN.light}, ${COLORS.MAIN.normal})`,
+        }}
       >
         <Container maxWidth={false}>
           <Toolbar>

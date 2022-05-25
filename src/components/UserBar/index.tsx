@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { styled as styles } from '@mui/material/styles';
 import { Button, IconButton, Link } from '@mui/material';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
@@ -6,6 +7,13 @@ import { Link as RouterLink } from 'react-router-dom';
 import { LocalizationToggler } from '../LocalizationToggler';
 import { useAppDispatch } from '../../hooks';
 import { removeUser } from '../../store/authSlice';
+
+const CustomButton = styles(Button)(({ theme }) => ({
+  backgroundColor: theme.status.violet.normal,
+  '&:hover': {
+    backgroundColor: theme.status.violet.dark,
+  },
+}));
 
 export const UserBar = () => {
   const { t } = useTranslation(['common']);
@@ -33,9 +41,9 @@ export const UserBar = () => {
           {t('GoToMainPage')}
         </Button>
       </Link>
-      <Button onClick={logout} color="secondary" variant="contained">
+      <CustomButton onClick={logout} color="secondary" variant="contained">
         {t('SignOut')}
-      </Button>
+      </CustomButton>
     </>
   );
 };
