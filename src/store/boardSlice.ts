@@ -52,7 +52,7 @@ const boardSlice = createSlice({
       const columnIndex = state.columns.findIndex(
         (column) => column.id === action.payload.columnId
       );
-      if (columnIndex >= 0) {
+      if (columnIndex !== -1) {
         state.columns[columnIndex]
           ? state.columns[columnIndex].tasks.push(action.payload)
           : (state.columns[columnIndex].tasks = [action.payload]);
@@ -62,11 +62,11 @@ const boardSlice = createSlice({
       const columnIndex = state.columns.findIndex(
         (column) => column.id === action.payload.columnId
       );
-      if (columnIndex >= 0) {
+      if (columnIndex !== -1) {
         const taskIndex = state.columns[columnIndex].tasks.findIndex(
           (task) => task.id === action.payload.id
         );
-        if (taskIndex >= 0) {
+        if (taskIndex !== -1) {
           state.columns[columnIndex].tasks[taskIndex] = action.payload;
         }
       }
@@ -75,7 +75,7 @@ const boardSlice = createSlice({
       const columnIndex = state.columns.findIndex(
         (column) => column.id === action.payload?.columnId
       );
-      if (columnIndex) {
+      if (columnIndex !== -1) {
         state.columns[columnIndex].tasks = state.columns[columnIndex].tasks.filter(
           (task) => task.id !== action.payload?.taskId
         );
