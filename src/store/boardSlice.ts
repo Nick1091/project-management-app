@@ -49,34 +49,36 @@ const boardSlice = createSlice({
     });
 
     builder.addCase(createTask.fulfilled, (state, action: PayloadAction<TaskState>) => {
-      const column = state.columns.find((column) => column.id === action.payload.columnId);
-      if (column) {
-        column.tasks ? column.tasks.push(action.payload) : (column.tasks = [action.payload]);
-        state.columns = [
-          ...state.columns.filter((column) => column.id !== action.payload.columnId),
-          column,
-        ];
+      const columnIndex = state.columns.findIndex(
+        (column) => column.id === action.payload.columnId
+      );
+      if (columnIndex >= 0) {
+        state.columns[columnIndex]
+          ? state.columns[columnIndex].tasks.push(action.payload)
+          : (state.columns[columnIndex].tasks = [action.payload]);
       }
     });
     builder.addCase(editTask.fulfilled, (state, action: PayloadAction<TaskState>) => {
-      const columnTarget = state.columns.find((column) => column.id === action.payload.columnId);
-      if (columnTarget) {
-        const tasks = columnTarget.tasks.filter((task) => task.id !== action.payload.id);
-        tasks.push(action.payload);
-        state.columns = [
-          ...state.columns.filter((column) => column.id !== action.payload.columnId),
-          { ...columnTarget, tasks },
-        ];
+      const columnIndex = state.columns.findIndex(
+        (column) => column.id === action.payload.columnId
+      );
+      if (columnIndex >= 0) {
+        const taskIndex = state.columns[columnIndex].tasks.findIndex(
+          (task) => task.id === action.payload.id
+        );
+        if (taskIndex >= 0) {
+          state.columns[columnIndex].tasks[taskIndex] = action.payload;
+        }
       }
     });
     builder.addCase(deleteTask.fulfilled, (state, action) => {
-      const columnTarget = state.columns.find((column) => column.id === action.payload?.columnId);
-      if (columnTarget) {
-        const tasks = columnTarget.tasks.filter((task) => task.id !== action.payload?.taskId);
-        state.columns = [
-          ...state.columns.filter((column) => column.id !== action.payload?.columnId),
-          { ...columnTarget, tasks },
-        ];
+      const columnIndex = state.columns.findIndex(
+        (column) => column.id === action.payload?.columnId
+      );
+      if (columnIndex) {
+        state.columns[columnIndex].tasks = state.columns[columnIndex].tasks.filter(
+          (task) => task.id !== action.payload?.taskId
+        );
       }
     });
 
