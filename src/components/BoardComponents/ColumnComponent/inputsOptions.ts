@@ -1,13 +1,13 @@
 import { Control, FieldError } from 'react-hook-form';
-import { ModalInputStates, TaskInputs } from '../../../types';
+import { ModalInputState, TaskInput } from '../../../types';
 
 type TypeError = {
   title?: FieldError | undefined;
   description?: FieldError | undefined;
 };
 
-export const getInputs = (errors: TypeError, control: Control<TaskInputs>) => {
-  const inputsOptions: ModalInputStates<TaskInputs>[] = [
+export const getInputs = (errors: TypeError, control: Control<TaskInput>) => {
+  const inputsOptions: ModalInputState<TaskInput>[] = [
     {
       textFieldProps: {
         size: 'small',

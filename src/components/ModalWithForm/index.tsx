@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ModalInputStates } from '../../types/boardTypes';
+import { ModalInputState } from '../../types/boardTypes';
 import { Button, TextField, Typography } from '@mui/material';
 import { Modal } from '../Modal';
 import { ColumnForm } from './styled';
@@ -11,7 +11,7 @@ type ModalWithFormProps<T> = {
   titleText: string;
   handleCloseModal: () => void;
   handleSubmit: () => void;
-  inputs: ModalInputStates<T>[];
+  inputs: ModalInputState<T>[];
 };
 
 export const ModalWithForm = <T,>({
@@ -23,7 +23,7 @@ export const ModalWithForm = <T,>({
 }: ModalWithFormProps<T>) => {
   const idPrefix = useId();
   const { t } = useTranslation(['common', 'task']);
-
+  const firstWord = 0;
   return (
     <Modal isOpen={isModalOpened} closeModal={handleCloseModal}>
       <Typography align="center" variant="h5" sx={{ color: '#000', paddingBottom: '8px' }}>
@@ -51,7 +51,7 @@ export const ModalWithForm = <T,>({
             {t('Cancel')}
           </Button>
           <Button type="submit" variant="outlined">
-            {titleText.split(' ')[0]}
+            {titleText.split(' ')[firstWord]}
           </Button>
         </div>
       </ColumnForm>

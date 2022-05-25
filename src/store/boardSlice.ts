@@ -49,33 +49,35 @@ const boardSlice = createSlice({
     });
 
     builder.addCase(createTask.fulfilled, (state, action: PayloadAction<TaskState>) => {
-      const column = state.columns.filter((column) => column.id === action.payload.columnId)[0];
-      column.tasks ? column.tasks.push(action.payload) : (column.tasks = [action.payload]);
-      state.columns = [
-        ...state.columns.filter((column) => column.id !== action.payload.columnId),
-        column,
-      ];
+      const column = state.columns.find((column) => column.id === action.payload.columnId);
+      if (column) {
+        column.tasks ? column.tasks.push(action.payload) : (column.tasks = [action.payload]);
+        state.columns = [
+          ...state.columns.filter((column) => column.id !== action.payload.columnId),
+          column,
+        ];
+      }
     });
     builder.addCase(editTask.fulfilled, (state, action: PayloadAction<TaskState>) => {
-      let columnTarget = state.columns.filter((column) => column.id === action.payload.columnId)[0];
-      const tasks = columnTarget.tasks.filter((task) => task.id !== action.payload.id);
-      tasks.push(action.payload);
-      columnTarget = { ...columnTarget, tasks };
-      state.columns = [
-        ...state.columns.filter((column) => column.id !== action.payload.columnId),
-        columnTarget,
-      ];
+      const columnTarget = state.columns.find((column) => column.id === action.payload.columnId);
+      if (columnTarget) {
+        const tasks = columnTarget.tasks.filter((task) => task.id !== action.payload.id);
+        tasks.push(action.payload);
+        state.columns = [
+          ...state.columns.filter((column) => column.id !== action.payload.columnId),
+          { ...columnTarget, tasks },
+        ];
+      }
     });
     builder.addCase(deleteTask.fulfilled, (state, action) => {
-      let columnTarget = state.columns.filter(
-        (column) => column.id === action.payload?.columnId
-      )[0];
-      const tasks = columnTarget.tasks.filter((task) => task.id !== action.payload?.taskId);
-      columnTarget = { ...columnTarget, tasks };
-      state.columns = [
-        ...state.columns.filter((column) => column.id !== action.payload?.columnId),
-        columnTarget,
-      ];
+      const columnTarget = state.columns.find((column) => column.id === action.payload?.columnId);
+      if (columnTarget) {
+        const tasks = columnTarget.tasks.filter((task) => task.id !== action.payload?.taskId);
+        state.columns = [
+          ...state.columns.filter((column) => column.id !== action.payload?.columnId),
+          { ...columnTarget, tasks },
+        ];
+      }
     });
 
     builder.addCase(deleteBoardColumn.fulfilled, (state, action) => {

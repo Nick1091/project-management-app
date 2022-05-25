@@ -1,4 +1,4 @@
-export type CreateTaskTypes = {
+export type CreateTaskType = {
   token: string;
   boardId: string;
   columnId: string;
@@ -7,7 +7,7 @@ export type CreateTaskTypes = {
   description: string;
   taskId?: string;
 };
-export type EditTaskTypes = {
+export type EditTaskType = {
   token: string;
   boardId: string;
   columnId: string;
@@ -17,7 +17,7 @@ export type EditTaskTypes = {
   description: string;
   taskId?: string;
 };
-export type DeleteTaskTypes = {
+export type DeleteTaskType = {
   token: string;
   boardId: string;
   columnId: string;

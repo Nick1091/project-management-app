@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { createTask, deleteBoardColumn } from '../../../requests';
 import { ItemTypes } from '../../../constants';
 import { ColumnState } from '../../../types';
-import { TaskInputs } from '../../../types';
+import { TaskInput } from '../../../types';
 import { taskFormSchema } from '../../../validation';
 import { ConfirmModal } from '../../ConfirmModal';
 import { DeleteButton } from '../../DeleteButton';
@@ -93,12 +93,12 @@ export const ColumnOfBoard = ({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<TaskInputs>({
+  } = useForm<TaskInput>({
     resolver: yupResolver(taskFormSchema),
     defaultValues: { title: '', description: '' },
   });
 
-  const createTaskHandler = ({ title, description }: TaskInputs) => {
+  const createTaskHandler = ({ title, description }: TaskInput) => {
     if (token && boardId && id && userId) {
       dispatch(
         createTask({
@@ -129,7 +129,7 @@ export const ColumnOfBoard = ({
         ref={(node) => drag(drop(node))}
       >
         <ColumnTitle>{title}</ColumnTitle>
-        {tasks && (
+        {tasks && tasks.length > 0 && (
           <ContainerTask>
             {sortArray(tasks).map((task) => (
               <TaskContainer key={task.id} {...task} columnId={id} boardId={boardId} />
@@ -140,7 +140,7 @@ export const ColumnOfBoard = ({
           ＋ {t('add task', { ns: 'task' })}
         </CreateTask>
         {isModalOpened && (
-          <ModalWithForm<TaskInputs>
+          <ModalWithForm<TaskInput>
             titleText={t('Create task')}
             inputs={getInputs(errors, control)}
             handleSubmit={handleSubmit(createTaskHandler)}

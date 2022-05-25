@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ColumnInputs, ModalInputStates, ColumnState } from '../../../types';
+import { ColumnInputs, ModalInputState, ColumnState } from '../../../types';
 import { columnFormSchema } from '../../../validation';
 import { useAppDispatch } from '../../../hooks';
 import { ItemTypes } from '../../../constants';
@@ -74,7 +74,7 @@ export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
     defaultValues: { title: '' },
   });
 
-  const inputsOptions: ModalInputStates<ColumnInputs>[] = [
+  const inputsOptions: ModalInputState<ColumnInputs>[] = [
     {
       textFieldProps: {
         size: 'small',

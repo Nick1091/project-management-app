@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { REQUEST_URLS } from '../constants';
-import { EditTaskTypes, ILoginObj, ILoginObjWithID } from '../types';
-import { CreateTaskTypes, DeleteTaskTypes } from '../types';
+import { EditTaskType, ILoginObj, ILoginObjWithID } from '../types';
+import { CreateTaskType, DeleteTaskType } from '../types';
 
 export const fetchLogin = createAsyncThunk('post/fetchLogin', async (data: ILoginObj, thunkApi) => {
   try {
@@ -303,7 +303,7 @@ export const updateBoardColumn = createAsyncThunk(
 export const createTask = createAsyncThunk(
   'task/createTask',
   async (
-    { token, boardId, columnId, taskTitle, userId, description }: CreateTaskTypes,
+    { token, boardId, columnId, taskTitle, userId, description }: CreateTaskType,
     { rejectWithValue }
   ) => {
     try {
@@ -346,7 +346,7 @@ export const getBoardColumns = createAsyncThunk(
 export const editTask = createAsyncThunk(
   'task/editTask',
   async (
-    { token, boardId, columnId, taskId, taskTitle, order, userId, description }: EditTaskTypes,
+    { token, boardId, columnId, taskId, taskTitle, order, userId, description }: EditTaskType,
     { rejectWithValue }
   ) => {
     try {
@@ -377,7 +377,7 @@ export const editTask = createAsyncThunk(
 
 export const deleteTask = createAsyncThunk(
   'task/deleteTask',
-  async ({ token, boardId, columnId, taskId }: DeleteTaskTypes, { rejectWithValue }) => {
+  async ({ token, boardId, columnId, taskId }: DeleteTaskType, { rejectWithValue }) => {
     try {
       await axios.delete(
         `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns/${columnId}/tasks/${taskId}`,

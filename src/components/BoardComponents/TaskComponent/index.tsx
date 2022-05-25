@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { DeleteForever } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { editTask, deleteTask } from '../../../requests';
-import { TaskInputs, TaskState } from '../../../types';
+import { TaskInput, TaskState } from '../../../types';
 import { taskFormSchema } from '../../../validation';
 import { ConfirmModal } from '../../ConfirmModal';
 import { ModalWithForm } from '../../ModalWithForm';
@@ -28,12 +28,12 @@ export const TaskContainer = (props: TaskState) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<TaskInputs>({
+  } = useForm<TaskInput>({
     resolver: yupResolver(taskFormSchema),
     defaultValues: { title: props.title, description: props.description },
   });
 
-  const editTaskHandler = ({ title, description }: TaskInputs) => {
+  const editTaskHandler = ({ title, description }: TaskInput) => {
     token &&
       dispatch(
         editTask({
@@ -93,7 +93,7 @@ export const TaskContainer = (props: TaskState) => {
         )}
       </Task>
       {isModalOpened && (
-        <ModalWithForm<TaskInputs>
+        <ModalWithForm<TaskInput>
           titleText={t('EditTask')}
           inputs={getInputs(errors, control)}
           handleSubmit={handleSubmit(editTaskHandler)}
