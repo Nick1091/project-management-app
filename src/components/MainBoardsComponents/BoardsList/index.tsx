@@ -23,7 +23,12 @@ export const BoardsList = () => {
     <>
       <NewBoard />
       {boards.map((board) => (
-        <BoardItem title={board.title} id={board.id} key={board.id} />
+        <BoardItem
+          title={board.title}
+          description={board.description}
+          id={board.id}
+          key={board.id}
+        />
       ))}
     </>
   );

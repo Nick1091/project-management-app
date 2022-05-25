@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { deleteBoard } from '../../../requests';
 import { ConfirmModal } from '../../ConfirmModal';
-import { Board, BoardLink, DeleteBtnContainer } from './styled';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { DeleteButton } from '../../DeleteButton';
+import { Board, BoardLink, DeleteBtnContainer, Title, Description } from './styled';
 
 type BoardItemProps = {
   title: string;
+  description: string;
   id: string;
 };
 
-export const BoardItem = ({ title, id }: BoardItemProps) => {
+export const BoardItem = ({ title, description, id }: BoardItemProps) => {
   const [isVisibleRemoveBtn, setIsVisibleRemoveBtn] = useState(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
   const dispatch = useAppDispatch();
@@ -24,7 +25,8 @@ export const BoardItem = ({ title, id }: BoardItemProps) => {
       onMouseOut={() => setIsVisibleRemoveBtn(false)}
     >
       <BoardLink to={'/main/board/' + id}>
-        <span>{title}</span>
+        <Title>{title}</Title>
+        <Description>{description}</Description>
       </BoardLink>
       {isVisibleRemoveBtn && (
         <DeleteBtnContainer>
