@@ -1,25 +1,68 @@
 import React, { useState, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { ColumnInputs, ModalInputState } from '../../../types/boardTypes';
-import { createBoardColumn } from '../../../requests';
-import { columnFormSchema } from '../../../validation';
 import { useForm } from 'react-hook-form';
-import { Column, ColumnContainer, CreateColumnBtn } from './styled';
-import { ModalWithForm } from '../ModalWithForm';
+import { useDrop } from 'react-dnd';
+import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { ColumnInputs, ModalInputState, ColumnState } from '../../../types';
+import { columnFormSchema } from '../../../validation';
+import { useAppDispatch } from '../../../hooks';
+import { ItemTypes } from '../../../constants';
+import { sortArray } from '../../../utils';
+import { createBoardColumn, getBoardColumns, updateBoardColumn } from '../../../requests';
+import { ModalWithForm } from '../../ModalWithForm';
+import { ColumnOfBoard } from '../ColumnComponent';
+import { ColumnListContainer, CreateColumnBtn, ColumnBtn } from './styled';
 
 type ColumnListProps = {
+  columns: ColumnState[];
   token: string | null;
-  id?: string;
+  boardId?: string;
 };
 
-export const ColumnList = ({ token, id }: ColumnListProps) => {
-  const { columns } = useAppSelector((state) => state.boardState);
+export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
+  const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
-
+  const [, drop] = useDrop({ accept: ItemTypes.COLUMN });
+  const [columnsList, setColumnsList] = useState(sortArray(columns));
+  const [draggedColumn, setDraggedColumn] = useState<undefined | ColumnState>();
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [columnOrder, setColumnOrder] = useState(0);
-  const additionNumNextColumnOrder = 1;
+
+  useEffect(() => {
+    setColumnsList(sortArray(columns));
+  }, [columns]);
+
+  const moveColumn = async (id: string, atIndex: number, movedId?: string) => {
+    const temporaryColumnsList = [...columnsList];
+    const columnData = findColumn(id);
+    if (movedId) {
+      setDraggedColumn(findColumn(movedId)?.column);
+      if (columnData) {
+        temporaryColumnsList.splice(columnData.index, 1);
+        temporaryColumnsList.splice(atIndex, 0, columnData.column);
+      }
+      setColumnsList(temporaryColumnsList);
+    } else {
+      if (columnData && draggedColumn && boardId && token) {
+        await dispatch(
+          updateBoardColumn({
+            token,
+            boardId,
+            column: { ...columnData.column, order: draggedColumn.order },
+          })
+        );
+        await dispatch(getBoardColumns({ token, id: boardId }));
+      }
+    }
+  };
+
+  const findColumn = (id: string) => {
+    const column = columnsList.find((column) => column.id === id);
+    if (column)
+      return {
+        column,
+        index: columnsList.indexOf(column),
+      };
+  };
 
   const {
     control,
@@ -36,28 +79,18 @@ export const ColumnList = ({ token, id }: ColumnListProps) => {
       textFieldProps: {
         size: 'small',
         id: 'outlined-basic',
-        label: 'Column Title',
         variant: 'outlined',
         error: Boolean(errors.title),
         helperText: errors.title?.message,
       },
+      label: 'Column Title',
       name: 'title',
       control,
     },
   ];
 
-  useEffect(() => {
-    const topColumnOrder = columns.reduce(
-      (biggestOrder, column) => (biggestOrder > column.order ? biggestOrder : column.order),
-      0
-    );
-    setColumnOrder(topColumnOrder + additionNumNextColumnOrder);
-  }, [columns]);
-
   const createColumnHandler = ({ title }: ColumnInputs) => {
-    if (token && id)
-      dispatch(createBoardColumn({ token, boardId: id, columnTitle: title, order: columnOrder }));
-    setColumnOrder((prevNumber) => (prevNumber = prevNumber + additionNumNextColumnOrder));
+    if (token && boardId) dispatch(createBoardColumn({ token, boardId, columnTitle: title }));
     reset();
     setIsModalOpened(false);
   };
@@ -69,19 +102,30 @@ export const ColumnList = ({ token, id }: ColumnListProps) => {
 
   return (
     <>
-      <ColumnContainer>
-        {columns.length > 0 &&
-          [...columns]
-            .sort((columnA, columnB) => columnA.order - columnB.order)
-            .map((column) => <Column key={column.id}>{column.title}</Column>)}
-        <Column>
-          <CreateColumnBtn onClick={() => setIsModalOpened(true)}>Create Column</CreateColumnBtn>
-        </Column>
-      </ColumnContainer>
-
+      <ColumnListContainer ref={drop}>
+        {columnsList.length > 0 &&
+          columnsList.map(
+            (column) =>
+              boardId && (
+                <ColumnOfBoard
+                  moveColumn={moveColumn}
+                  findColumn={findColumn}
+                  column={column}
+                  key={column.id}
+                  token={token}
+                  boardId={boardId}
+                />
+              )
+          )}
+        <ColumnBtn>
+          <CreateColumnBtn onClick={() => setIsModalOpened(true)}>
+            {t('Create column')}
+          </CreateColumnBtn>
+        </ColumnBtn>
+      </ColumnListContainer>
       {isModalOpened && (
         <ModalWithForm<ColumnInputs>
-          titleText="Create column"
+          titleText={t('Create column')}
           inputs={inputsOptions}
           handleSubmit={handleSubmit(createColumnHandler)}
           isModalOpened={isModalOpened}

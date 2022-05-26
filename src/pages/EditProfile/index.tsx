@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { Typography, Container, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -10,6 +11,7 @@ import { ILoginObj } from '../../types';
 import { ConfirmModal } from '../../components/ConfirmModal';
 
 export const EditProfile = () => {
+  const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const {
     authUser: { error, isLoading, token, id },
@@ -37,12 +39,12 @@ export const EditProfile = () => {
     <Container sx={{ paddingTop: '10vh' }} maxWidth="xs">
       <LoginFormWrapperStyle>
         <Typography variant="h6" component="h6">
-          Edit Profile
+          {t('EditProfile')}
         </Typography>
         {error ? (
           <SubTitle color="#d40000">{error}</SubTitle>
         ) : (
-          <SubTitle color="#80808081">Please enter your new user details</SubTitle>
+          <SubTitle color="#80808081">{t('NewUserDetails')}</SubTitle>
         )}
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,7 +60,7 @@ export const EditProfile = () => {
               type="submit"
               variant="contained"
             >
-              Edit
+              {t('Edit')}
             </LoadingButton>
           </form>
           <Button
@@ -69,7 +71,7 @@ export const EditProfile = () => {
             sx={{ mt: '20px' }}
             variant="text"
           >
-            click here to delete your profile
+            {t('DeleteProfile')}
           </Button>
           {isOpenConfirmModalDelete && (
             <ConfirmModal
@@ -77,7 +79,7 @@ export const EditProfile = () => {
               handleSubmit={() => {
                 token && id && dispatch(deleteUser({ token, id }));
               }}
-              alertText="Do you really want to delete profile?"
+              alertText={t('DoYouReallyWantToDelete')}
               closeModal={() => {
                 setIsOpenConfirmModalDelete(false);
               }}

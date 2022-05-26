@@ -1,3 +1,4 @@
+import { ItemTypesType } from '../types';
 import igorPhoto from '../assets/img/igor.png';
 import nickPhoto from '../assets/img/nick.png';
 import annPhoto from '../assets/img/ann.png';
@@ -34,6 +35,10 @@ export const contacts = [
     photo: `${annPhoto}`,
   },
 ];
+
+export const ItemTypes: ItemTypesType = {
+  COLUMN: 'column',
+};
 
 export const size = {
   mobileS: 320,

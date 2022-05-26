@@ -27,7 +27,8 @@ export const NewBoardForm = ({ handleClosePopover }: { handleClosePopover: () =>
   } = useAppSelector((state) => state.authUser);
 
   const handleBoardFormSubmit = (formData: BoardInputs) => {
-    if (token) dispatch(createBoard({ token, title: formData.title }));
+    if (token)
+      dispatch(createBoard({ token, title: formData.title, description: formData.description }));
     reset();
     handleClosePopover();
   };
@@ -43,11 +44,19 @@ export const NewBoardForm = ({ handleClosePopover }: { handleClosePopover: () =>
       <CreateBoardForm onSubmit={handleSubmit(handleBoardFormSubmit)}>
         <TitleInput
           id="outlined-basic"
-          label="Board Title"
+          label="Title"
           variant="outlined"
           error={Boolean(errors.title)}
           helperText={errors.title?.message}
           {...register('title')}
+        />
+        <TitleInput
+          id="outlined-basic"
+          label="Description"
+          variant="outlined"
+          error={Boolean(errors.description)}
+          helperText={errors.description?.message}
+          {...register('description')}
         />
         <Button type="submit" variant="outlined" disabled={Boolean(errors.title)}>
           Create

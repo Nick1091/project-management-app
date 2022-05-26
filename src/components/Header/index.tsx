@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppBar, Container, Drawer, IconButton, Link, Toolbar } from '@mui/material';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MenuIcon from '@mui/icons-material/Menu';
 import useWindowDimensions, { useAppSelector } from '../../hooks';
 import { Typography } from './styled';
 import { UserBar } from '../UserBar';
 import { GuestBar } from '../GuestBar';
+import { UserBarMobile } from '../UserBar/UserBarMobile';
+import { GuestBarMobile } from '../GuestBar/GuestBarMobile';
 import { size } from '../../constants';
-import { GuestBarMobile } from '../GuestBarMobile';
 import { LocalizationToggler } from '../LocalizationToggler';
-import { UserBarMobile } from '../UserBarMobile';
 
 export const Header = () => {
   const {
@@ -45,22 +46,35 @@ export const Header = () => {
         <Container maxWidth={false}>
           <Toolbar>
             <RocketLaunchIcon sx={{ fontSize: 30 }}></RocketLaunchIcon>
-            <Typography>
-              {width >= size.mobileL && (
-                <Link
-                  color="inherit"
-                  style={{ textDecoration: 'none' }}
-                  component={RouterLink}
-                  to="/"
-                >
-                  Reactive Area
-                </Link>
-              )}
-            </Typography>
-            <LocalizationToggler />
-            {width >= size.laptop && <>{token ? <UserBar /> : <GuestBar />}</>}
+            {width >= size.laptop && (
+              <>
+                {token ? (
+                  <>
+                    <Typography>Reactive Area</Typography>
+                    <LocalizationToggler />
+                    <UserBar />
+                  </>
+                ) : (
+                  <>
+                    <Typography>
+                      <Link
+                        color="inherit"
+                        style={{ textDecoration: 'none' }}
+                        component={RouterLink}
+                        to="/"
+                      >
+                        Reactive Area
+                      </Link>
+                    </Typography>
+                    <LocalizationToggler />
+                    <GuestBar />
+                  </>
+                )}
+              </>
+            )}
             {width < size.laptop && (
               <>
+                <LocalizationToggler />
                 <IconButton
                   color="inherit"
                   aria-label="open drawer"
@@ -72,6 +86,7 @@ export const Header = () => {
               </>
             )}
             <Drawer anchor="right" open={open} onClose={handleDrawerClose}>
+              <ChevronRightIcon onClick={handleDrawerClose} />
               {token ? (
                 <UserBarMobile handleDrawerClose={handleDrawerClose} />
               ) : (

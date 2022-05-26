@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button } from '@mui/material';
 import { modalStyles, ModalOverlay } from './styled';
+import { useTranslation } from 'react-i18next';
 
 type ConfirmModalProps = {
   isOpen: boolean;
@@ -15,6 +16,7 @@ export const ConfirmModal = ({
   alertText,
   handleSubmit,
 }: ConfirmModalProps) => {
+  const { t } = useTranslation(['common']);
   return (
     <Modal open={isOpen} onClose={closeModal}>
       <ModalOverlay severity="warning" sx={modalStyles}>
@@ -26,9 +28,9 @@ export const ConfirmModal = ({
               closeModal();
             }}
           >
-            Ok
+            {t('Ok')}
           </Button>
-          <Button onClick={closeModal}>Cancel</Button>
+          <Button onClick={closeModal}>{t('Cancel')}</Button>
         </div>
       </ModalOverlay>
     </Modal>
