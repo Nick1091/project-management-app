@@ -63,15 +63,13 @@ export const UserBar = () => {
       <IconButton color="inherit" onClick={handleOpenModal}>
         <AddToQueueIcon sx={{ fontSize: 30, mr: '15px' }}></AddToQueueIcon>
       </IconButton>
-      {isModalBoardOpened && (
-        <ModalWithForm<BoardInputs>
-          titleText={t('CreateBoard')}
-          inputs={getBoardInputs(errors, control)}
-          handleSubmit={handleSubmit(handleBoardFormSubmit)}
-          isModalOpened={isModalBoardOpened}
-          handleCloseModal={handleCloseModal}
-        />
-      )}
+      <ModalWithForm<BoardInputs>
+        titleText={t('CreateBoard')}
+        inputs={getBoardInputs(errors, control)}
+        handleSubmit={handleSubmit(handleBoardFormSubmit)}
+        isModalOpened={isModalBoardOpened}
+        handleCloseModal={handleCloseModal}
+      />
       <IconButton color="inherit">
         <Link color="inherit" component={RouterLink} to="/edit-profile">
           <ManageAccountsIcon sx={{ fontSize: 30, mr: '15px' }}></ManageAccountsIcon>
