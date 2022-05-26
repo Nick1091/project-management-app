@@ -1,11 +1,10 @@
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { COLORS } from '../../../constants';
 import { styledBoard } from '../styles';
 
-export const Board = styled.li`
-  ${styledBoard};
-  background-color: ${COLORS.SECOND.lightest};
+export const Board = styled('li')`
+  ${styledBoard}
+  background-color: ${(props) => props.theme.palette.secondary.light + '59'};
   position: relative;
 `;
 

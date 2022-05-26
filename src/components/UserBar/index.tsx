@@ -1,19 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import { styled as styles } from '@mui/material/styles';
-import { Button, IconButton, Link } from '@mui/material';
+import { Button, IconButton, Link, Box } from '@mui/material';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import { Link as RouterLink } from 'react-router-dom';
 import { LocalizationToggler } from '../LocalizationToggler';
 import { useAppDispatch } from '../../hooks';
 import { removeUser } from '../../store/authSlice';
-
-const CustomButton = styles(Button)(({ theme }) => ({
-  backgroundColor: theme.status.violet.normal,
-  '&:hover': {
-    backgroundColor: theme.status.violet.dark,
-  },
-}));
 
 export const UserBar = () => {
   const { t } = useTranslation(['common']);
@@ -28,22 +20,24 @@ export const UserBar = () => {
   return (
     <>
       <LocalizationToggler />
-      <IconButton color="inherit">
-        <AddToQueueIcon sx={{ fontSize: 30, mr: '15px' }}></AddToQueueIcon>
-      </IconButton>
-      <IconButton color="inherit">
+      <Box sx={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+        <IconButton color="inherit">
+          <AddToQueueIcon sx={{ fontSize: 30 }} />
+        </IconButton>
         <Link color="inherit" component={RouterLink} to="/edit-profile">
-          <ManageAccountsIcon sx={{ fontSize: 30, mr: '15px' }}></ManageAccountsIcon>
+          <IconButton color="inherit">
+            <ManageAccountsIcon sx={{ fontSize: 30 }} />
+          </IconButton>
         </Link>
-      </IconButton>
-      <Link color="inherit" style={{ textDecoration: 'none' }} component={RouterLink} to="/main">
-        <Button color="inherit" variant="outlined" sx={{ mr: '15px' }}>
-          {t('GoToMainPage')}
+        <Link color="inherit" style={{ textDecoration: 'none' }} component={RouterLink} to="/main">
+          <Button color="inherit" variant="outlined">
+            {t('GoToMainPage')}
+          </Button>
+        </Link>
+        <Button color="info" onClick={logout} variant="contained">
+          {t('SignOut')}
         </Button>
-      </Link>
-      <CustomButton onClick={logout} color="secondary" variant="contained">
-        {t('SignOut')}
-      </CustomButton>
+      </Box>
     </>
   );
 };

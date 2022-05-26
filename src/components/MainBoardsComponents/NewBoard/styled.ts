@@ -2,7 +2,6 @@ import { styled as styles } from '@mui/material/styles';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
 import { styledBoard } from '../styles';
-import { COLORS } from '../../../constants';
 
 export const CreateBoardBtn = styles(Button)`
   padding: 8px;
@@ -12,7 +11,7 @@ export const CreateBoardBtn = styles(Button)`
 
 export const CreateBoardWrapper = styled.li`
   ${styledBoard};
-  background-color: ${COLORS.SECOND.light};
+  background-color: ${(props) => props.theme.palette.secondary.main};
   color: #fff;
 
   & button {

@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
 import welcomeImg from '../../assets/img/welcome.png';
 import { MainWelcomeContent, Wave } from './styled';
-import { COLORS } from '../../constants';
 
 export const WelcomeInfo = () => {
   const { t } = useTranslation(['common']);
@@ -26,8 +25,7 @@ export const WelcomeInfo = () => {
           <Typography
             sx={{
               fontSize: '24px',
-              textTransform: 'uppercase',
-              color: COLORS.GRAY.normal,
+              color: 'grey.400',
             }}
           >
             {t('Welcome')}
@@ -38,12 +36,12 @@ export const WelcomeInfo = () => {
               fontWeight: '700',
               lineHeight: 1,
               marginBottom: '16px',
-              color: COLORS.MAIN.light,
+              color: 'primary.main',
             }}
           >
             Reactive Area App
           </Typography>
-          <Typography sx={{ fontSize: '18px', color: COLORS.GRAY.normal }}>
+          <Typography sx={{ fontSize: '18px', color: 'grey.400' }}>
             {t('AppDescription')}
           </Typography>
         </Box>
