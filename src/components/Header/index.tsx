@@ -34,17 +34,26 @@ export const Header = () => {
         <Container maxWidth={false}>
           <Toolbar>
             <RocketLaunchIcon sx={{ fontSize: 30 }}></RocketLaunchIcon>
-            <Typography>
-              <Link
-                color="inherit"
-                style={{ textDecoration: 'none' }}
-                component={RouterLink}
-                to="/"
-              >
-                Reactive Area
-              </Link>
-            </Typography>
-            {token ? <UserBar /> : <GuestBar />}
+            {token ? (
+              <>
+                <Typography>Reactive Area</Typography>
+                <UserBar />
+              </>
+            ) : (
+              <>
+                <Typography>
+                  <Link
+                    color="inherit"
+                    style={{ textDecoration: 'none' }}
+                    component={RouterLink}
+                    to="/"
+                  >
+                    Reactive Area
+                  </Link>
+                </Typography>
+                <GuestBar />
+              </>
+            )}
           </Toolbar>
         </Container>
       </AppBar>

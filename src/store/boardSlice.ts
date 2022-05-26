@@ -53,7 +53,7 @@ const boardSlice = createSlice({
         (column) => column.id === action.payload.columnId
       );
       if (columnIndex !== -1) {
-        state.columns[columnIndex]
+        state.columns[columnIndex].tasks
           ? state.columns[columnIndex].tasks.push(action.payload)
           : (state.columns[columnIndex].tasks = [action.payload]);
       }
