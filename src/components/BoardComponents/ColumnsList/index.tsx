@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useDrop } from 'react-dnd';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import { useDrop } from 'react-dnd';
+import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { ColumnInputs, ModalInputState, ColumnState } from '../../../types';
+import { columnFormSchema } from '../../../validation';
 import { useAppDispatch } from '../../../hooks';
 import { ItemTypes } from '../../../constants';
-import { ColumnInputs, ModalInputState, ColumnState } from '../../../types';
 import { sortArray } from '../../../utils';
 import { createBoardColumn, getBoardColumns, updateBoardColumn } from '../../../requests';
-import { columnFormSchema } from '../../../validation';
 import { ModalWithForm } from '../../ModalWithForm';
-import { ColumnItem } from '../ColumnItem';
+import { ColumnOfBoard } from '../ColumnComponent';
 import { ColumnListContainer, CreateColumnBtn, ColumnBtn } from './styled';
 
 type ColumnListProps = {
@@ -19,6 +20,7 @@ type ColumnListProps = {
 };
 
 export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
+  const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const [, drop] = useDrop({ accept: ItemTypes.COLUMN });
   const [columnsList, setColumnsList] = useState(sortArray(columns));
@@ -77,11 +79,11 @@ export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
       textFieldProps: {
         size: 'small',
         id: 'outlined-basic',
-        label: 'Column Title',
         variant: 'outlined',
         error: Boolean(errors.title),
         helperText: errors.title?.message,
       },
+      label: 'Column Title',
       name: 'title',
       control,
     },
@@ -105,7 +107,7 @@ export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
           columnsList.map(
             (column) =>
               boardId && (
-                <ColumnItem
+                <ColumnOfBoard
                   moveColumn={moveColumn}
                   findColumn={findColumn}
                   column={column}
@@ -124,14 +126,13 @@ export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
             }}
             onClick={() => setIsModalOpened(true)}
           >
-            Create Column
+            {t('Create column')}
           </CreateColumnBtn>
         </ColumnBtn>
       </ColumnListContainer>
-
       {isModalOpened && (
         <ModalWithForm<ColumnInputs>
-          titleText="Create column"
+          titleText={t('Create column')}
           inputs={inputsOptions}
           handleSubmit={handleSubmit(createColumnHandler)}
           isModalOpened={isModalOpened}

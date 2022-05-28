@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { Modal } from '../Modal';
 import { ModalTitle } from '../ModalTitle';
 import { ModalBtn } from '../ModalCancelBtn';
+import { useTranslation } from 'react-i18next';
 
 type ConfirmModalProps = {
   isOpen: boolean;
@@ -17,6 +18,7 @@ export const ConfirmModal = ({
   alertText,
   handleSubmit,
 }: ConfirmModalProps) => {
+  const { t } = useTranslation(['common']);
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <ModalTitle>{alertText}</ModalTitle>
@@ -28,7 +30,7 @@ export const ConfirmModal = ({
           width="100px"
           handleClick={closeModal}
         >
-          Cancel
+          {t('Cancel')}
         </ModalBtn>
         <ModalBtn
           colorBg="secondary"
@@ -39,7 +41,7 @@ export const ConfirmModal = ({
             closeModal();
           }}
         >
-          Ok
+          {t('Ok')}
         </ModalBtn>
       </Box>
     </Modal>

@@ -6,16 +6,14 @@ export const CourseContainer = styled.div`
   flex-direction: row;
   flex-wrap: nowrap;
   gap: 55px;
-  max-width: 750px,
-  max-height: 390px,   
 `;
 
 export const CourseInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;  
-  max-width: 900px,
-  max-height: 610px,  
+  flex-wrap: nowrap;
+  max-width: 900px;
+  max-height: 610px;
 `;
 
 export const NameCourse = styled.span`
@@ -33,8 +31,8 @@ export const MainCourseInfo = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding-top: 18%;  
+  padding-top: 18%;
   gap: 14%;
-  max-width: 750px,
-  max-height: 390px, 
+  max-width: 750px;
+  max-height: 390px;
 `;

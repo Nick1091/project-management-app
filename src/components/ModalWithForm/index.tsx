@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Controller } from 'react-hook-form';
 import { TextField, Box } from '@mui/material';
 import { ModalInputState } from '../../types/boardTypes';
@@ -23,6 +24,8 @@ export const ModalWithForm = <T,>({
   inputs,
 }: ModalWithFormProps<T>) => {
   const idPrefix = useId();
+  const { t } = useTranslation(['common', 'task']);
+  const firstWord = 0;
 
   return (
     <Modal isOpen={isModalOpened} closeModal={handleCloseModal}>
@@ -37,6 +40,7 @@ export const ModalWithForm = <T,>({
                   <TextField
                     {...inputState.textFieldProps}
                     sx={{ width: '100%' }}
+                    label={t(inputState.label, { ns: 'task' })}
                     value={value}
                     onChange={onChange}
                   />
@@ -54,10 +58,10 @@ export const ModalWithForm = <T,>({
             width="100px"
             handleClick={handleCloseModal}
           >
-            Cancel
+            {t('Cancel')}
           </ModalBtn>
           <ModalBtn type="submit" colorBg="secondary" variant="contained" width="100px">
-            Create
+            {titleText.split(' ')[firstWord]}
           </ModalBtn>
         </Box>
       </ColumnForm>
