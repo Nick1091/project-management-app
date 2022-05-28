@@ -19,7 +19,7 @@ type ColumnListProps = {
   boardId?: string;
 };
 
-export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
+export const ColumnsList = ({ columns, token, boardId }: ColumnListProps) => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const [, drop] = useDrop({ accept: ItemTypes.COLUMN });

@@ -68,6 +68,7 @@ export const EditProfile = () => {
               setIsOpenConfirmModalDelete(true);
             }}
             size="small"
+            color="error"
             sx={{ mt: '20px' }}
             variant="text"
           >

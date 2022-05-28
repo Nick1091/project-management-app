@@ -15,6 +15,7 @@ export const ModalTitle = ({
         fontSize: '21px',
         lineHeight: '1.5',
         fontWeight: '500',
+        overflow: 'hidden',
         marginBottom,
       }}
     >

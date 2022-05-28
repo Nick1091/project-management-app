@@ -1,8 +1,9 @@
 {
   "Cancel": "Cancel",
   "Create column": "Create column",
+  "Save": "Save",
   "Ok": "Ok",
-  "SignOut": "Sign out",  
+  "SignOut": "Sign out",
   "SignIn": "Sign In",
   "SignUp": "Sign up",
   "GoToMainPage": "Go to main page",
@@ -37,6 +38,7 @@
   "DoYouReallyWantToDelete": "Do you really want to delete profile?",
   "Create": "Create",
   "CreateBoard": "Create board",
+  "CreateNewBoard": "Create new board",
   "Title": "Title",
-  "Description": "Description"  
+  "Description": "Description"
 }

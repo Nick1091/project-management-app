@@ -32,6 +32,7 @@ export const UserBar = () => {
   };
 
   const handleCloseModal = () => {
+    reset();
     setIsModalBoardOpened(false);
   };
 
@@ -40,7 +41,10 @@ export const UserBar = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<BoardInputs>({ resolver: yupResolver(boardFormSchema) });
+  } = useForm<BoardInputs>({
+    resolver: yupResolver(boardFormSchema),
+    defaultValues: { title: '', description: '' },
+  });
 
   const {
     authUser: { token },
@@ -51,7 +55,6 @@ export const UserBar = () => {
       const newBoard = dispatch(
         createBoard({ token, title: formData.title, description: formData.description })
       );
-      reset();
       handleCloseModal();
       navigate('/main/board/' + (await newBoard).payload.id);
     }

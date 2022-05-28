@@ -5,7 +5,7 @@ import { styledBoard } from '../styles';
 
 export const Board = styled('li')`
   ${styledBoard}
-  background-color: ${(props) => props.theme.palette.secondary.light + HEX_OPACITY['40']};
+  background-color: ${(props) => props.theme.palette.secondary.light + HEX_OPACITY['30']};
   position: relative;
 `;
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks';
@@ -31,6 +32,7 @@ export const BoardTitle = ({ token, id, title, description }: BoardTitleProps) =
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
   const [isTextHidden, setIsTextHidden] = useState(false);
+  const { t } = useTranslation(['common']);
   const {
     control,
     handleSubmit,
@@ -87,10 +89,10 @@ export const BoardTitle = ({ token, id, title, description }: BoardTitleProps) =
               setValue('description', newDescription);
             }}
           >
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button variant="contained" size="small" type="submit">
-            Submit
+            {t('Save')}
           </Button>
         </Actions>
       </Form>

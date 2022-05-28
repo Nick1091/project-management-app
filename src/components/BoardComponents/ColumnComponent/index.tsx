@@ -127,7 +127,6 @@ export const ColumnOfBoard = ({
           setIsVisibleRemoveBtn(!isDragging);
         }}
         onMouseOut={() => setIsVisibleRemoveBtn(false)}
-        isDragging={isDragging}
         ref={(node) => drag(drop(node))}
       >
         <ColumnTitle>{title}</ColumnTitle>

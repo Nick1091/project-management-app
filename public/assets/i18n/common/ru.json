@@ -1,6 +1,7 @@
 {
   "Cancel": "Отмена",
   "Create column": "Добавить колонку",
+  "Save": "Сохранить",
   "Ok": "Да",
   "SignOut": "Выйти",
   "SignIn": "Вход",
@@ -37,6 +38,7 @@
   "DoYouReallyWantToDelete": "Вы действительно хотите удалить профиль?",
   "Create": "Создать",
   "CreateBoard": "Создать доску",
+  "CreateNewBoard": "Создать новую доску",
   "Title": "Заголовок",
   "Description": "Описание"
 }

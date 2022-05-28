@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getBoards, createBoard, deleteBoard } from '../requests';
 import { BoardPreview, MainBoards } from '../types/storeTypes';
 
-const initialState: MainBoards = { boards: [], isLoading: true, error: null };
+const initialState: MainBoards = { isLoading: false, error: null };
 
 const mainSlice = createSlice({
   name: 'main',
@@ -21,10 +21,15 @@ const mainSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(createBoard.fulfilled, (state, action: PayloadAction<BoardPreview>) => {
+      if (!state.boards) {
+        state.boards = [];
+      }
       state.boards.push(action.payload);
     });
     builder.addCase(deleteBoard.fulfilled, (state, action) => {
-      state.boards = state.boards.filter((board) => board.id !== action.payload);
+      if (state.boards) {
+        state.boards = state.boards.filter((board) => board.id !== action.payload);
+      }
     });
   },
 });
