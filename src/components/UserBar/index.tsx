@@ -39,7 +39,10 @@ export const UserBar = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<BoardInputs>({ resolver: yupResolver(boardFormSchema) });
+  } = useForm<BoardInputs>({
+    resolver: yupResolver(boardFormSchema),
+    defaultValues: { title: '', description: '' },
+  });
 
   const {
     authUser: { token },

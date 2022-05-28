@@ -86,7 +86,7 @@ export const Header = () => {
               </>
             )}
             <Drawer anchor="right" open={open} onClose={handleDrawerClose}>
-              <ChevronRightIcon onClick={handleDrawerClose} />
+              <ChevronRightIcon onClick={handleDrawerClose} sx={{ margin: '10px 0 10px 10px' }} />
               {token ? (
                 <UserBarMobile handleDrawerClose={handleDrawerClose} />
               ) : (
