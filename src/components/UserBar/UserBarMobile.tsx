@@ -9,6 +9,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { removeUser } from '../../store/authSlice';
 import { ModalWithForm } from '../ModalWithForm';
@@ -69,6 +70,12 @@ export const UserBarMobile: React.FC<Props> = ({ handleDrawerClose }) => {
   return (
     <>
       <Divider sx={{ marginRight: '8px' }} />
+      <Link color="inherit" style={{ textDecoration: 'none' }} component={RouterLink} to="/search">
+        <MenuItem onClick={handleDrawerClose} sx={{ margin: '8px 0' }}>
+          <ManageSearchIcon color="action" sx={{ marginRight: '8px' }} />
+          {t('GlobalSearch')}
+        </MenuItem>
+      </Link>
       <MenuItem onClick={handleOpenModal} sx={{ margin: '8px 0' }}>
         <AddToQueueIcon color="action" sx={{ marginRight: '8px' }} />
         {t('CreateNewBoard')}

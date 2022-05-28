@@ -41,5 +41,6 @@
   "Description": "Description",
   "ToHomePage": "Go to homepage",
   "CreateNewBoard": "Create new board",
-  "EditProfileMobile": "Edit Profile"  
+  "EditProfileMobile": "Edit Profile",
+  "GlobalSearch": "Global search"  
 }

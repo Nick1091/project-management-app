@@ -41,5 +41,6 @@
   "Description": "Описание",
   "ToHomePage": "Домой",
   "CreateNewBoard": "Создать доску",
-  "EditProfileMobile": "Редактировать профиль" 
+  "EditProfileMobile": "Редактировать профиль",
+  "GlobalSearch": "Глобальный поиск"   
 }
