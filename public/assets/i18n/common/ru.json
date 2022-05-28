@@ -38,5 +38,9 @@
   "Create": "Создать",
   "CreateBoard": "Создать доску",
   "Title": "Заголовок",
-  "Description": "Описание" 
+  "Description": "Описание",
+  "ToHomePage": "Домой",
+  "CreateNewBoard": "Создать доску",
+  "EditProfileMobile": "Редактировать профиль",
+  "GlobalSearch": "Глобальный поиск"
 }

@@ -1,7 +1,7 @@
 import { Link } from '@mui/material';
 import { DevContact } from '../DevContact';
 import rssLogo from '../../assets/icons/rs-school-logo.svg';
-import { DevsContainer, FooterContainer } from './styled';
+import { DevsContainer, FooterContainer, RSSImg } from './styled';
 import { contacts } from '../../constants';
 
 export const Footer = () => {
@@ -15,7 +15,7 @@ export const Footer = () => {
           ))}
         </div>
         <Link color="inherit" href="https://rs.school/react/">
-          <img src={rssLogo} alt="RSS" />
+          <RSSImg src={rssLogo} alt="RSS" />
         </Link>
       </DevsContainer>
     </FooterContainer>

@@ -38,5 +38,9 @@
   "Create": "Create",
   "CreateBoard": "Create board",
   "Title": "Title",
-  "Description": "Description"  
+  "Description": "Description",
+  "ToHomePage": "Go to homepage",
+  "CreateNewBoard": "Create new board",
+  "EditProfileMobile": "Edit Profile",
+  "GlobalSearch": "Global search"  
 }

@@ -2,14 +2,15 @@ import { useTranslation } from 'react-i18next';
 import { Box, Link, Typography } from '@mui/material';
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import PaidIcon from '@mui/icons-material/Paid';
-import courseImg from '../../assets/img/course.png';
 import {
   CourseContainer,
+  CourseImage,
   CourseInfoContainer,
   MainCourseInfo,
   NameCourse,
   Subtitle,
 } from './styled';
+import { AboutAppText } from '../AboutAppInfo/styled';
 
 export const AboutCourseInfo = () => {
   const { t } = useTranslation(['common']);
@@ -37,41 +38,30 @@ export const AboutCourseInfo = () => {
             <Box
               sx={{
                 maxWidth: 290,
-                maxHeight: 150,
+                paddingTop: 3,
+                paddingBottom: 3,
               }}
             >
               <AccessibilityNewIcon sx={{ height: '30px', width: '30px', color: '#139CFF' }} />
               <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>{t('ForEveryone')}</Typography>
-              <Typography sx={{ fontSize: '16px', color: '#7E7878' }}>
-                {t('EveryoneCan')}
-              </Typography>
+              <AboutAppText>{t('EveryoneCan')}</AboutAppText>
             </Box>
             <Box
               sx={{
                 maxWidth: 290,
-                maxHeight: 150,
+                paddingTop: 3,
+                paddingBottom: 3,
               }}
             >
               <PaidIcon sx={{ height: '30px', width: '30px', color: '#139CFF' }} />
               <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>
                 {t('FreeEducation')}
               </Typography>
-              <Typography sx={{ fontSize: '16px', color: '#7E7878' }}>
-                {t('PayItForward')}
-              </Typography>
+              <AboutAppText>{t('PayItForward')}</AboutAppText>
             </Box>
           </MainCourseInfo>
         </CourseInfoContainer>
-        <Box
-          component="img"
-          sx={{
-            maxHeight: 630,
-            maxWidth: 460,
-            marginRight: 10,
-          }}
-          alt="course image"
-          src={courseImg}
-        />
+        <CourseImage />
       </CourseContainer>
     </Box>
   );
