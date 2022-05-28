@@ -1,12 +1,16 @@
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import BuildIcon from '@mui/icons-material/Build';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import LanguageIcon from '@mui/icons-material/Language';
 import PeopleIcon from '@mui/icons-material/People';
-import appSrc from '../../assets/img/laptop.svg';
-import { MainWelcomeContent } from '../WelcomeInfo/styled';
-import { AboutAppContainer } from './styled';
+import {
+  AboutAppContainer,
+  AboutAppHeader,
+  AboutAppText,
+  Laptop,
+  MainAboutAppContainer,
+} from './styled';
 
 export const AboutAppInfo = () => {
   const { t } = useTranslation(['common']);
@@ -15,78 +19,51 @@ export const AboutAppInfo = () => {
     <Box
       sx={{
         maxWidth: 1920,
-        minHeight: 630,
-        paddingTop: 20,
+        minHeight: 480,
+        paddingBottom: 4,
       }}
     >
-      <MainWelcomeContent>
-        <Box
-          component="img"
-          sx={{
-            maxHeight: 460,
-            maxWidth: 460,
-            marginRight: 10,
-          }}
-          alt="laptop image"
-          src={appSrc}
-        />
+      <MainAboutAppContainer>
+        <Laptop />
         <AboutAppContainer>
           <Box
             sx={{
               maxWidth: 278,
-              maxHeight: 136,
             }}
           >
             <BuildIcon sx={{ height: '30px', width: '30px', color: '#139CFF' }} />
-            <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>
-              {t('SimpleInterface')}
-            </Typography>
-            <Typography sx={{ fontSize: '16px', color: '#7E7878' }}>
-              {t('SimpleInterfaceInfo')}
-            </Typography>
+            <AboutAppHeader>{t('SimpleInterface')}</AboutAppHeader>
+            <AboutAppText>{t('SimpleInterfaceInfo')}</AboutAppText>
           </Box>
           <Box
             sx={{
               maxWidth: 278,
-              maxHeight: 136,
             }}
           >
             <AttachMoneyIcon sx={{ height: '30px', width: '30px', color: '#139CFF' }} />
-            <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>
-              {t('AbsolutelyFree')}
-            </Typography>
-            <Typography sx={{ fontSize: '16px', color: '#7E7878' }}>
-              {t('AbsolutelyFreeInfo')}
-            </Typography>
+            <AboutAppHeader>{t('AbsolutelyFree')}</AboutAppHeader>
+            <AboutAppText>{t('AbsolutelyFreeInfo')}</AboutAppText>
           </Box>
           <Box
             sx={{
               maxWidth: 278,
-              maxHeight: 136,
             }}
           >
             <LanguageIcon sx={{ height: '30px', width: '30px', color: '#139CFF' }} />
-            <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>{t('DualLanguage')}</Typography>
-            <Typography sx={{ fontSize: '16px', color: '#7E7878' }}>
-              {t('DualLanguageInfo')}
-            </Typography>
+            <AboutAppHeader>{t('DualLanguage')}</AboutAppHeader>
+            <AboutAppText>{t('DualLanguageInfo')}</AboutAppText>
           </Box>
           <Box
             sx={{
               maxWidth: 278,
-              maxHeight: 136,
             }}
           >
             <PeopleIcon sx={{ height: '30px', width: '30px', color: '#139CFF' }} />
-            <Typography sx={{ fontSize: '20px', color: '0E2A4B' }}>
-              {t('ManageProjects')}
-            </Typography>
-            <Typography sx={{ fontSize: '16px', color: '#7E7878' }}>
-              {t('ManageProjectsInfo')}
-            </Typography>
+            <AboutAppHeader>{t('ManageProjects')}</AboutAppHeader>
+            <AboutAppText>{t('ManageProjectsInfo')}</AboutAppText>
           </Box>
         </AboutAppContainer>
-      </MainWelcomeContent>
+      </MainAboutAppContainer>
     </Box>
   );
 };
