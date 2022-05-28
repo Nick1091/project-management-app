@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { deleteBoard } from '../../../requests';
 import { ConfirmModal } from '../../ConfirmModal';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -14,6 +15,7 @@ type BoardItemProps = {
 export const BoardItem = ({ title, description, id }: BoardItemProps) => {
   const [isVisibleRemoveBtn, setIsVisibleRemoveBtn] = useState(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
+  const { t } = useTranslation(['task']);
   const dispatch = useAppDispatch();
   const {
     authUser: { token },
@@ -39,7 +41,7 @@ export const BoardItem = ({ title, description, id }: BoardItemProps) => {
           handleSubmit={() => {
             if (token) dispatch(deleteBoard({ token, id }));
           }}
-          alertText={`Do you really want to delete "${title}" board?`}
+          alertText={`${t('DeleteAsk')} "${title}" ${t('board')}`}
           closeModal={() => {
             setIsOpenConfirmModal(false);
             setIsVisibleRemoveBtn(false);
