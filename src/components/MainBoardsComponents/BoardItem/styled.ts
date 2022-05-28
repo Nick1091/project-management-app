@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { HEX_OPACITY } from '../../../constants';
 import { styledBoard } from '../styles';
 
 export const Board = styled('li')`
   ${styledBoard}
-  background-color: ${(props) => props.theme.palette.secondary.light + '59'};
+  background-color: ${(props) => props.theme.palette.secondary.light + HEX_OPACITY['40']};
   position: relative;
 `;
 
@@ -37,7 +38,7 @@ export const BoardLink = styled(NavLink)`
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  padding: 8px 24px 8px 8px;
+  padding: 8px 32px 8px 8px;
   color: #111111;
 `;
 

@@ -1,6 +1,8 @@
 import React from 'react';
-import { Modal, Button } from '@mui/material';
-import { modalStyles, ModalOverlay } from './styled';
+import { Box } from '@mui/material';
+import { Modal } from '../Modal';
+import { ModalTitle } from '../ModalTitle';
+import { ModalBtn } from '../ModalCancelBtn';
 
 type ConfirmModalProps = {
   isOpen: boolean;
@@ -16,21 +18,30 @@ export const ConfirmModal = ({
   handleSubmit,
 }: ConfirmModalProps) => {
   return (
-    <Modal open={isOpen} onClose={closeModal}>
-      <ModalOverlay severity="warning" sx={modalStyles}>
-        <span>{alertText}</span>
-        <div>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              closeModal();
-            }}
-          >
-            Ok
-          </Button>
-          <Button onClick={closeModal}>Cancel</Button>
-        </div>
-      </ModalOverlay>
+    <Modal isOpen={isOpen} closeModal={closeModal}>
+      <ModalTitle>{alertText}</ModalTitle>
+      <Box sx={{ display: 'flex', width: '100%', justifyContent: 'flex-end', gap: '8px' }}>
+        <ModalBtn
+          color="grey.500"
+          hoverColor="grey.700"
+          variant="outlined"
+          width="100px"
+          handleClick={closeModal}
+        >
+          Cancel
+        </ModalBtn>
+        <ModalBtn
+          colorBg="secondary"
+          variant="contained"
+          width="100px"
+          handleClick={() => {
+            handleSubmit();
+            closeModal();
+          }}
+        >
+          Ok
+        </ModalBtn>
+      </Box>
     </Modal>
   );
 };

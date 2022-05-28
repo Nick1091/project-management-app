@@ -6,7 +6,7 @@ import { ItemTypes } from '../../../constants';
 import { ColumnState } from '../../../types/storeTypes';
 import { ConfirmModal } from '../../ConfirmModal';
 import { DeleteButton } from '../../DeleteButton';
-import { ColumnContainer, DeleteButtonContainer, ColumnListItem } from './styled';
+import { ColumnContainer, DeleteButtonContainer, ColumnListItem, ColumnTitle } from './styled';
 
 type ColumnItemProps = {
   column: ColumnState;
@@ -70,14 +70,14 @@ export const ColumnItem = ({ moveColumn, findColumn, column, token, boardId }: C
         isDragging={isDragging}
         ref={(node) => drag(drop(node))}
       >
-        <span
+        <ColumnTitle
           onMouseOver={(e) => {
             e.stopPropagation();
             setIsVisibleRemoveBtn(!isDragging);
           }}
         >
           {title}
-        </span>
+        </ColumnTitle>
         {isVisibleRemoveBtn && (
           <DeleteButtonContainer>
             <DeleteButton handleClick={() => setIsOpenConfirmModal(true)} />

@@ -8,7 +8,7 @@ import { ColumnInputs, ModalInputState, ColumnState } from '../../../types';
 import { sortArray } from '../../../utils';
 import { createBoardColumn, getBoardColumns, updateBoardColumn } from '../../../requests';
 import { columnFormSchema } from '../../../validation';
-import { ModalWithForm } from '../ModalWithForm';
+import { ModalWithForm } from '../../ModalWithForm';
 import { ColumnItem } from '../ColumnItem';
 import { ColumnListContainer, CreateColumnBtn, ColumnBtn } from './styled';
 
@@ -116,7 +116,16 @@ export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
               )
           )}
         <ColumnBtn>
-          <CreateColumnBtn onClick={() => setIsModalOpened(true)}>Create Column</CreateColumnBtn>
+          <CreateColumnBtn
+            variant="contained"
+            sx={{
+              backgroundColor: 'primary.light',
+              '&:hover': { backgroundColor: 'primary.main' },
+            }}
+            onClick={() => setIsModalOpened(true)}
+          >
+            Create Column
+          </CreateColumnBtn>
         </ColumnBtn>
       </ColumnListContainer>
 
