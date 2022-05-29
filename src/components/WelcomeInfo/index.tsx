@@ -1,63 +1,49 @@
 import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Box, Typography } from '@mui/material';
+import useWindowDimensions from '../../hooks';
 import welcomeImg from '../../assets/img/welcome.png';
-import { MainWelcomeContent, Wave } from './styled';
+import {
+  AppName,
+  Description,
+  LeftBox,
+  MainBox,
+  MainWelcomeContent,
+  RightBox,
+  Welcome,
+} from './styled';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { size } from '../../constants';
 
 export const WelcomeInfo = () => {
   const { t } = useTranslation(['common']);
+  const { width } = useWindowDimensions();
 
   return (
-    <Box
-      sx={{
-        maxWidth: 1920,
-        maxHeight: 760,
-      }}
-    >
+    <MainBox>
       <MainWelcomeContent>
-        <Box
-          sx={{
-            maxWidth: 700,
-            maxHeight: 800,
-            paddingLeft: '34px',
-            paddingRight: '34px',
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: '24px',
-              color: 'grey.400',
-            }}
-          >
-            {t('Welcome')}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: '56px',
-              fontWeight: '700',
-              lineHeight: 1,
-              marginBottom: '16px',
-              color: 'primary.main',
-            }}
-          >
-            Reactive Area App
-          </Typography>
-          <Typography sx={{ fontSize: '18px', color: 'grey.400' }}>
-            {t('AppDescription')}
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            maxHeight: 630,
-            maxWidth: 820,
-            marginTop: 8,
-          }}
-        >
-          <LazyLoadImage effect="blur" height={650} src={welcomeImg} width={670} />
-        </Box>
+        <LeftBox>
+          <Welcome>{t('Welcome')}</Welcome>
+          <AppName>Reactive Area App</AppName>
+          <Description>{t('AppDescription')}</Description>
+        </LeftBox>
+        <RightBox>
+          {width >= size.laptopL && width <= size.desktopL && (
+            <LazyLoadImage effect="blur" height={660} width={670} src={welcomeImg} />
+          )}
+          {width >= size.laptop && width < size.laptopL && (
+            <LazyLoadImage effect="blur" height={590} width={590} src={welcomeImg} />
+          )}
+          {width >= size.tablet && width < size.laptop && (
+            <LazyLoadImage effect="blur" height={470} width={430} src={welcomeImg} />
+          )}
+          {width >= size.mobileL && width < size.tablet && (
+            <LazyLoadImage effect="blur" height={390} width={380} src={welcomeImg} />
+          )}
+          {width >= size.mobileS && width < size.mobileL && (
+            <LazyLoadImage effect="blur" height={290} width={280} src={welcomeImg} />
+          )}
+        </RightBox>
       </MainWelcomeContent>
-      <Wave />
-    </Box>
+    </MainBox>
   );
 };

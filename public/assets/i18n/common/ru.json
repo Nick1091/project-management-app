@@ -38,7 +38,10 @@
   "DoYouReallyWantToDelete": "Вы действительно хотите удалить профиль?",
   "Create": "Создать",
   "CreateBoard": "Создать доску",
-  "CreateNewBoard": "Создать новую доску",
   "Title": "Заголовок",
-  "Description": "Описание"
+  "Description": "Описание",
+  "ToHomePage": "Домой",
+  "CreateNewBoard": "Создать новую доску",
+  "EditProfileMobile": "Редактировать профиль",
+  "GlobalSearch": "Глобальный поиск"
 }

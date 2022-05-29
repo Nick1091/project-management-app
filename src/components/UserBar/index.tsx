@@ -6,8 +6,8 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Button, IconButton, Link, Box } from '@mui/material';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { LocalizationToggler } from '../LocalizationToggler';
 import { removeUser } from '../../store/authSlice';
 import { ModalWithForm } from '../ModalWithForm';
 import { BoardInputs } from '../../types';
@@ -61,33 +61,35 @@ export const UserBar = () => {
   };
 
   return (
-    <>
-      <LocalizationToggler />
-      <Box sx={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-        <IconButton color="inherit" onClick={handleOpenModal}>
-          <AddToQueueIcon sx={{ fontSize: 30 }} />
+    <Box sx={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+      <Link color="inherit" component={RouterLink} to="/search">
+        <IconButton color="inherit">
+          <ManageSearchIcon sx={{ fontSize: 35 }} />
         </IconButton>
-        <ModalWithForm<BoardInputs>
-          titleText={t('CreateBoard')}
-          inputs={getBoardInputs(errors, control)}
-          handleSubmit={handleSubmit(handleBoardFormSubmit)}
-          isModalOpened={isModalBoardOpened}
-          handleCloseModal={handleCloseModal}
-        />
-        <Link color="inherit" component={RouterLink} to="/edit-profile">
-          <IconButton color="inherit">
-            <ManageAccountsIcon sx={{ fontSize: 30 }} />
-          </IconButton>
-        </Link>
-        <Link color="inherit" style={{ textDecoration: 'none' }} component={RouterLink} to="/main">
-          <Button color="inherit" variant="outlined">
-            {t('GoToMainPage')}
-          </Button>
-        </Link>
-        <Button color="info" onClick={logout} variant="contained">
-          {t('SignOut')}
+      </Link>
+      <IconButton size="large" color="inherit" onClick={handleOpenModal}>
+        <AddToQueueIcon sx={{ fontSize: 29 }} />
+      </IconButton>
+      <ModalWithForm<BoardInputs>
+        titleText={t('CreateBoard')}
+        inputs={getBoardInputs(errors, control)}
+        handleSubmit={handleSubmit(handleBoardFormSubmit)}
+        isModalOpened={isModalBoardOpened}
+        handleCloseModal={handleCloseModal}
+      />
+      <Link color="inherit" component={RouterLink} to="/edit-profile">
+        <IconButton color="inherit">
+          <ManageAccountsIcon sx={{ fontSize: 35 }} />
+        </IconButton>
+      </Link>
+      <Link color="inherit" style={{ textDecoration: 'none' }} component={RouterLink} to="/main">
+        <Button color="inherit" variant="outlined">
+          {t('GoToMainPage')}
         </Button>
-      </Box>
-    </>
+      </Link>
+      <Button onClick={logout} color="secondary" variant="contained">
+        {t('SignOut')}
+      </Button>
+    </Box>
   );
 };

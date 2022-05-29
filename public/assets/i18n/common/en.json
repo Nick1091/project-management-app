@@ -38,7 +38,10 @@
   "DoYouReallyWantToDelete": "Do you really want to delete profile?",
   "Create": "Create",
   "CreateBoard": "Create board",
-  "CreateNewBoard": "Create new board",
   "Title": "Title",
-  "Description": "Description"
+  "Description": "Description",
+  "ToHomePage": "Go to homepage",
+  "CreateNewBoard": "Create new board",
+  "EditProfileMobile": "Edit Profile",
+  "GlobalSearch": "Global search"
 }
