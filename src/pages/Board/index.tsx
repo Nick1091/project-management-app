@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getBoardById } from '../../requests';
 import { removeAllColumns } from '../../store/boardSlice';
 import { BoardTitle } from '../../components/BoardComponents/BoardTitle';
-import { ColumnList } from '../../components/BoardComponents/ColumnsList';
+import { ColumnsList } from '../../components/BoardComponents/ColumnsList';
 
 export const Board = () => {
   const { id } = useParams();
@@ -30,7 +30,7 @@ export const Board = () => {
   return (
     <>
       <BoardTitle title={boardTitle} description={boardDescription} token={token} id={id} />
-      <ColumnList columns={columns} token={token} boardId={id} />
+      <ColumnsList columns={columns} token={token} boardId={id} />
     </>
   );
 };

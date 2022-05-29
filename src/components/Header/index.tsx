@@ -41,7 +41,10 @@ export const Header = () => {
     <>
       <AppBar
         position={token ? 'sticky' : 'static'}
-        sx={{ top: appBarTopStyle, transition: 'top 0.5s ease-in-out' }}
+        sx={{
+          top: appBarTopStyle,
+          transition: 'top 0.5s ease-in-out',
+        }}
       >
         <Container maxWidth={false}>
           <Toolbar>

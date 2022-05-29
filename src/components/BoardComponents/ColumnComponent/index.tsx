@@ -123,9 +123,10 @@ export const ColumnOfBoard = ({
   return (
     <ColumnListItem ref={(node) => drop(node)}>
       <ColumnContainer
-        onMouseOver={() => setIsVisibleRemoveBtn(!isDragging)}
+        onMouseOver={() => {
+          setIsVisibleRemoveBtn(!isDragging);
+        }}
         onMouseOut={() => setIsVisibleRemoveBtn(false)}
-        isDragging={isDragging}
         ref={(node) => drag(drop(node))}
       >
         <ColumnTitle>{title}</ColumnTitle>

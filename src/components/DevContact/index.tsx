@@ -17,7 +17,7 @@ export const DevContact = (props: Props) => {
     <DevContainer>
       <IconButton color="inherit">
         <Link color="inherit" href={link}>
-          <GitHubIcon color="info"></GitHubIcon>
+          <GitHubIcon color="primary"></GitHubIcon>
         </Link>
       </IconButton>
       {width >= size.laptop && <span>{name}</span>}

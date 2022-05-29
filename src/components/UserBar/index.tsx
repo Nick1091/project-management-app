@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { Button, IconButton, Link } from '@mui/material';
+import { Button, IconButton, Link, Box } from '@mui/material';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
@@ -32,6 +32,7 @@ export const UserBar = () => {
   };
 
   const handleCloseModal = () => {
+    reset();
     setIsModalBoardOpened(false);
   };
 
@@ -54,21 +55,20 @@ export const UserBar = () => {
       const newBoard = dispatch(
         createBoard({ token, title: formData.title, description: formData.description })
       );
-      reset();
       handleCloseModal();
       navigate('/main/board/' + (await newBoard).payload.id);
     }
   };
 
   return (
-    <>
-      <IconButton color="inherit" sx={{ pb: '2px' }}>
-        <Link color="inherit" component={RouterLink} to="/search">
-          <ManageSearchIcon sx={{ fontSize: 35, mr: '15px' }} />
-        </Link>
-      </IconButton>
-      <IconButton color="inherit" onClick={handleOpenModal} sx={{ pt: '4px', pb: '2px' }}>
-        <AddToQueueIcon sx={{ fontSize: 29, mr: '15px', mt: 0 }} />
+    <Box sx={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+      <Link color="inherit" component={RouterLink} to="/search">
+        <IconButton color="inherit">
+          <ManageSearchIcon sx={{ fontSize: 35 }} />
+        </IconButton>
+      </Link>
+      <IconButton size="large" color="inherit" onClick={handleOpenModal}>
+        <AddToQueueIcon sx={{ fontSize: 29 }} />
       </IconButton>
       <ModalWithForm<BoardInputs>
         titleText={t('CreateBoard')}
@@ -77,19 +77,19 @@ export const UserBar = () => {
         isModalOpened={isModalBoardOpened}
         handleCloseModal={handleCloseModal}
       />
-      <IconButton color="inherit" sx={{ pb: '2px' }}>
-        <Link color="inherit" component={RouterLink} to="/edit-profile">
-          <ManageAccountsIcon sx={{ fontSize: 35, mr: '15px' }} />
-        </Link>
-      </IconButton>
+      <Link color="inherit" component={RouterLink} to="/edit-profile">
+        <IconButton color="inherit">
+          <ManageAccountsIcon sx={{ fontSize: 35 }} />
+        </IconButton>
+      </Link>
       <Link color="inherit" style={{ textDecoration: 'none' }} component={RouterLink} to="/main">
-        <Button color="inherit" variant="outlined" sx={{ mr: '15px' }}>
+        <Button color="inherit" variant="outlined">
           {t('GoToMainPage')}
         </Button>
       </Link>
       <Button onClick={logout} color="secondary" variant="contained">
         {t('SignOut')}
       </Button>
-    </>
+    </Box>
   );
 };

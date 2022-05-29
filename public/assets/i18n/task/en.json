@@ -9,5 +9,6 @@
   "Column Title": "Column Title",
   "DeleteAsk": "Do you really want to delete",
   "task": "task?",
-  "column": "column?"
+  "column": "column?",
+  "board": "column?"
 }

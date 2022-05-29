@@ -1,8 +1,9 @@
 {
   "Cancel": "Cancel",
   "Create column": "Create column",
+  "Save": "Save",
   "Ok": "Ok",
-  "SignOut": "Sign out",  
+  "SignOut": "Sign out",
   "SignIn": "Sign In",
   "SignUp": "Sign up",
   "GoToMainPage": "Go to main page",
@@ -42,5 +43,5 @@
   "ToHomePage": "Go to homepage",
   "CreateNewBoard": "Create new board",
   "EditProfileMobile": "Edit Profile",
-  "GlobalSearch": "Global search"  
+  "GlobalSearch": "Global search"
 }

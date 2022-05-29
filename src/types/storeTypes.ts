@@ -27,7 +27,7 @@ type BasicComponentsState = {
 };
 
 export type MainBoards = {
-  boards: BoardPreview[];
+  boards?: BoardPreview[];
 } & BasicComponentsState;
 
 export type TaskState = {

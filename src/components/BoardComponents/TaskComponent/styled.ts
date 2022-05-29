@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { IconButton } from '@mui/material';
-import { styled as styles } from '@mui/material/styles';
 
 export const Task = styled.li`
   position: relative;
@@ -9,6 +7,7 @@ export const Task = styled.li`
   flex-shrink: 0;
   border-radius: 4px;
   padding: 10px;
+  padding-right: 36px;
   margin: 5px 0px;
   cursor: pointer;
   transition: 0.1s;
@@ -20,7 +19,7 @@ export const Task = styled.li`
   }
 `;
 
-export const DeleteBtn = styles(IconButton)`
+export const DeleteBtn = styled.div`
   position: absolute;
   right: 4px;
   top: 4px;

@@ -1,18 +1,21 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { deleteBoard } from '../../../requests';
 import { ConfirmModal } from '../../ConfirmModal';
-import { Board, BoardLink, DeleteBtnContainer } from './styled';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { DeleteButton } from '../../DeleteButton';
+import { Board, BoardLink, DeleteBtnContainer, Title, Description } from './styled';
 
 type BoardItemProps = {
   title: string;
+  description: string;
   id: string;
 };
 
-export const BoardItem = ({ title, id }: BoardItemProps) => {
+export const BoardItem = ({ title, description, id }: BoardItemProps) => {
   const [isVisibleRemoveBtn, setIsVisibleRemoveBtn] = useState(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
+  const { t } = useTranslation(['task']);
   const dispatch = useAppDispatch();
   const {
     authUser: { token },
@@ -24,7 +27,8 @@ export const BoardItem = ({ title, id }: BoardItemProps) => {
       onMouseOut={() => setIsVisibleRemoveBtn(false)}
     >
       <BoardLink to={'/main/board/' + id}>
-        <span>{title}</span>
+        <Title>{title}</Title>
+        <Description>{description}</Description>
       </BoardLink>
       {isVisibleRemoveBtn && (
         <DeleteBtnContainer>
@@ -37,7 +41,7 @@ export const BoardItem = ({ title, id }: BoardItemProps) => {
           handleSubmit={() => {
             if (token) dispatch(deleteBoard({ token, id }));
           }}
-          alertText={`Do you really want to delete "${title}" board?`}
+          alertText={`${t('DeleteAsk')} "${title}" ${t('board')}`}
           closeModal={() => {
             setIsOpenConfirmModal(false);
             setIsVisibleRemoveBtn(false);

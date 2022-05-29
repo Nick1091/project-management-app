@@ -3,7 +3,6 @@ import { Typography } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { DeleteForever } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { editTask, deleteTask } from '../../../requests';
 import { TaskInput, TaskState } from '../../../types';
@@ -11,6 +10,7 @@ import { taskFormSchema } from '../../../validation';
 import { ConfirmModal } from '../../ConfirmModal';
 import { ModalWithForm } from '../../ModalWithForm';
 import { getInputs } from '../ColumnComponent/inputsOptions';
+import { DeleteButton } from '../../DeleteButton';
 import { DeleteBtn, Task, TaskButton } from './styled';
 
 export const TaskContainer = (props: TaskState) => {
@@ -65,16 +65,32 @@ export const TaskContainer = (props: TaskState) => {
           }}
         >
           <Typography
-            sx={{ color: '#181818da', margin: '0px 0px 5px', fontWeight: '500' }}
+            sx={{
+              color: '#181818da',
+              marginBottom: '4px',
+              fontWeight: '500',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              WebkitBoxOrient: 'vertical',
+              display: '-webkit-box',
+              WebkitLineClamp: '2',
+              lineHeight: '1.4',
+            }}
             variant="subtitle1"
             component="p"
           >
-            {props.title.length > 25
-              ? props.title.split('').slice(0, 25).join('') + '...'
-              : props.title}
+            {props.title}
           </Typography>
           <Typography
-            sx={{ color: '#545454bb', whiteSpace: 'normal' }}
+            sx={{
+              color: '#545454bb',
+              whiteSpace: 'normal',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              WebkitBoxOrient: 'vertical',
+              display: '-webkit-box',
+              WebkitLineClamp: '3',
+            }}
             variant="inherit"
             component="p"
           >
@@ -82,13 +98,8 @@ export const TaskContainer = (props: TaskState) => {
           </Typography>
         </TaskButton>
         {isVisibleRemoveBt && (
-          <DeleteBtn
-            size="small"
-            onClick={() => {
-              setIsOpenConfirmWindow(true);
-            }}
-          >
-            <DeleteForever fontSize="small" />
+          <DeleteBtn>
+            <DeleteButton handleClick={() => setIsOpenConfirmWindow(true)} />
           </DeleteBtn>
         )}
       </Task>

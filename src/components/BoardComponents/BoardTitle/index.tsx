@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks';
@@ -16,6 +17,7 @@ import {
   Description,
   DescriptionInput,
   TitleInput,
+  InputContainer,
 } from './styled';
 
 type BoardTitleProps = {
@@ -30,6 +32,7 @@ export const BoardTitle = ({ token, id, title, description }: BoardTitleProps) =
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
   const [isTextHidden, setIsTextHidden] = useState(false);
+  const { t } = useTranslation(['common']);
   const {
     control,
     handleSubmit,
@@ -59,16 +62,22 @@ export const BoardTitle = ({ token, id, title, description }: BoardTitleProps) =
         <Description>{newDescription}</Description>
       </TextContainer>
       <Form onSubmit={handleSubmit(titleSubmitHandler)} isTitleHidden={isTextHidden}>
-        <Controller
-          render={({ field }) => <TitleInput {...field} />}
-          name="title"
-          control={control}
-        />
-        <Controller
-          render={({ field }) => <DescriptionInput {...field} />}
-          name="description"
-          control={control}
-        />
+        <InputContainer>
+          <Controller
+            render={({ field }) => <TitleInput {...field} />}
+            name="title"
+            control={control}
+          />
+          <ErrorMessage error={errors.title} />
+        </InputContainer>
+        <InputContainer>
+          <Controller
+            render={({ field }) => <DescriptionInput {...field} />}
+            name="description"
+            control={control}
+          />
+          <ErrorMessage error={errors.description} />
+        </InputContainer>
         <Actions>
           <Button
             type="button"
@@ -80,12 +89,11 @@ export const BoardTitle = ({ token, id, title, description }: BoardTitleProps) =
               setValue('description', newDescription);
             }}
           >
-            Cancel
+            {t('Cancel')}
           </Button>
-          <Button sx={{ marginRight: '16px' }} variant="outlined" size="small" type="submit">
-            Submit
+          <Button variant="contained" size="small" type="submit">
+            {t('Save')}
           </Button>
-          <ErrorMessage error={errors.title} />
         </Actions>
       </Form>
     </TitleContainer>
