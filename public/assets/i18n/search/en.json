@@ -1,0 +1,11 @@
+{
+  "GlobalSearch": "Global task search",
+  "EnterSearchValue": "Enter a search value",
+  "ByTitle": "by title",  
+  "ByDescription": "by description",  
+  "ByName": "by name",
+  "Task": "Task",
+  "CreatedBy": "created by",
+  "NoResults": "No results",
+  "GoToTheBoard": "go to the board with this task"  
+}

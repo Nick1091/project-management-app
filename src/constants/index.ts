@@ -10,6 +10,7 @@ export const REQUEST_URLS = {
   SING_IN_URL: `${URL}/signin`,
   BOARDS_URL: `${URL}/boards`,
   USERS: `${URL}/users`,
+  TASKS: `${URL}/search/tasks`,
 };
 
 export const contacts = [
