@@ -43,5 +43,6 @@
   "ToHomePage": "Домой",
   "CreateNewBoard": "Создать новую доску",
   "EditProfileMobile": "Редактировать профиль",
-  "GlobalSearch": "Глобальный поиск"
+  "GlobalSearch": "Глобальный поиск",
+  "SessionOut": "Время сеанса истекло пожалуйста войдите ещё раз"
 }

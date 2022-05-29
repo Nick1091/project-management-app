@@ -7,7 +7,11 @@ const initialState: MainBoards = { isLoading: false, error: null };
 const mainSlice = createSlice({
   name: 'main',
   initialState,
-  reducers: {},
+  reducers: {
+    removeError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getBoards.pending, (state) => {
       state.isLoading = true;
@@ -17,6 +21,7 @@ const mainSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(getBoards.rejected, (state, action) => {
+      console.log(action.error);
       state.error = action.payload as string;
       state.isLoading = false;
     });
@@ -34,4 +39,5 @@ const mainSlice = createSlice({
   },
 });
 
+export const { removeError } = mainSlice.actions;
 export default mainSlice.reducer;

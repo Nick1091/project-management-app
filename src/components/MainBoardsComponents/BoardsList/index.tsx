@@ -15,6 +15,7 @@ export const BoardsList = () => {
   useEffect(() => {
     if (token) dispatch(getBoards(token));
   }, [dispatch, token]);
+
   const totalSkeletons = 8;
   const skeletonsOnPage = Array.from(Array(totalSkeletons).keys());
 

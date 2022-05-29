@@ -43,5 +43,6 @@
   "ToHomePage": "Go to homepage",
   "CreateNewBoard": "Create new board",
   "EditProfileMobile": "Edit Profile",
-  "GlobalSearch": "Global search"
+  "GlobalSearch": "Global search",
+  "SessionOut": "Session timed out, please login again"
 }

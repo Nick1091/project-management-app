@@ -27,6 +27,9 @@ const boardSlice = createSlice({
     removeAllColumns: (state) => {
       state.columns = [];
     },
+    removeError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getBoardById.pending, (state) => {
@@ -41,6 +44,10 @@ const boardSlice = createSlice({
         state.isLoading = false;
       }
     );
+    builder.addCase(getBoardById.rejected, (state, action) => {
+      state.error = action.payload as string;
+      state.isLoading = false;
+    });
     builder.addCase(editBoard.fulfilled, (state, action) => {
       state.boardTitle = action.payload;
     });
@@ -91,6 +98,6 @@ const boardSlice = createSlice({
   },
 });
 
-export const { removeAllColumns } = boardSlice.actions;
+export const { removeAllColumns, removeError } = boardSlice.actions;
 
 export default boardSlice.reducer;

@@ -144,6 +144,7 @@ export const getBoards = createAsyncThunk(
       });
       return response.data;
     } catch (e) {
+      console.log(e);
       let error = 'noServerResponse';
       if (e instanceof AxiosError && e.response) {
         error = e.response.status.toString();
@@ -205,7 +206,11 @@ export const getBoardById = createAsyncThunk(
       });
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
@@ -231,7 +236,11 @@ export const editBoard = createAsyncThunk(
       );
       return response.data.title;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
@@ -252,7 +261,11 @@ export const createBoardColumn = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
@@ -269,7 +282,11 @@ export const deleteBoardColumn = createAsyncThunk(
       });
       return columnId;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
@@ -295,7 +312,11 @@ export const updateBoardColumn = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
@@ -324,7 +345,11 @@ export const createTask = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
@@ -338,7 +363,11 @@ export const getBoardColumns = createAsyncThunk(
 
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
@@ -370,7 +399,11 @@ export const editTask = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
@@ -392,7 +425,11 @@ export const deleteTask = createAsyncThunk(
       const data = { columnId, taskId };
       return data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
