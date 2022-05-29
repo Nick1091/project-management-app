@@ -43,5 +43,8 @@
   "ToHomePage": "Go to homepage",
   "CreateNewBoard": "Create new board",
   "EditProfileMobile": "Edit Profile",
-  "GlobalSearch": "Global search"
+  "GlobalSearch": "Global search",
+  "RequiredText": "This field is required",
+  "MaximumLengthText60": "Field should be less than 60 symbols",
+  "MaximumLengthText120": "Field should be less than 120 symbols"
 }
