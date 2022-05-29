@@ -10,7 +10,13 @@ export const AppLayout = () => {
       <Header />
       <main>
         <Container maxWidth={false}>
-          <Suspense fallback={<CircularProgress />}>
+          <Suspense
+            fallback={
+              <Container sx={{ pt: '15vh', ml: '45%' }} maxWidth={false}>
+                <CircularProgress />
+              </Container>
+            }
+          >
             <Outlet />
           </Suspense>
         </Container>

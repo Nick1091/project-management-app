@@ -54,3 +54,10 @@ export const SearchCategoryContainer = styled.div`
   gap: 3%;
   min-height: 80px;
 `;
+
+export const LazyImgContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5%;
+`;
