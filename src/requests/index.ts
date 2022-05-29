@@ -396,3 +396,21 @@ export const deleteTask = createAsyncThunk(
     }
   }
 );
+
+export const getTasks = createAsyncThunk(
+  'boards/getTasks',
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(REQUEST_URLS.TASKS, {
+        headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      });
+      return response.data;
+    } catch (e) {
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
+    }
+  }
+);
