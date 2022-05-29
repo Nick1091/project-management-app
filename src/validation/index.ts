@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import * as yup from 'yup';
 
 const minNameLength = 2;
@@ -50,7 +51,14 @@ export const loginValidation = {
   },
 };
 
-export const boardFormSchema = yup.object({
+export let columnFormSchema = yup.object({
+  title: yup
+    .string()
+    .required('This field is required')
+    .max(60, 'Field should be 60 characters maximum'),
+});
+
+export let boardFormSchema = yup.object({
   title: yup
     .string()
     .required('This field is required')
@@ -61,13 +69,7 @@ export const boardFormSchema = yup.object({
     .max(120, 'Field should be 120 characters maximum'),
 });
 
-export const columnFormSchema = yup.object({
-  title: yup
-    .string()
-    .required('This field is required')
-    .max(60, 'Field should be 60 characters maximum'),
-});
-export const taskFormSchema = yup.object({
+export let taskFormSchema = yup.object({
   title: yup
     .string()
     .required('This field is required')
@@ -76,4 +78,30 @@ export const taskFormSchema = yup.object({
     .string()
     .required('This field is required')
     .max(120, 'Field should be 120 characters maximum'),
+});
+
+const updateYupSchemas = () => {
+  const maxLengthShort = i18next.t(`common:MaximumLengthText60`);
+  const maxLengthLong = i18next.t(`common:MaximumLengthText120`);
+  const requiredText = i18next.t(`common:RequiredText`);
+
+  columnFormSchema = yup.object({
+    title: yup.string().required(requiredText).max(60, maxLengthShort),
+  });
+  boardFormSchema = yup.object({
+    title: yup.string().required(requiredText).max(60, maxLengthShort),
+    description: yup.string().required(requiredText).max(120, maxLengthLong),
+  });
+  taskFormSchema = yup.object({
+    title: yup.string().required(requiredText).max(60, maxLengthShort),
+    description: yup.string().required(requiredText).max(120, maxLengthLong),
+  });
+};
+
+if (i18next.isInitialized) {
+  updateYupSchemas();
+}
+
+i18next.on('languageChanged', function () {
+  updateYupSchemas();
 });
