@@ -1,4 +1,5 @@
-import { Container } from '@mui/material';
+import { Suspense } from 'react';
+import { CircularProgress, Container } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
@@ -9,7 +10,9 @@ export const AppLayout = () => {
       <Header />
       <main>
         <Container maxWidth={false}>
-          <Outlet />
+          <Suspense fallback={<CircularProgress />}>
+            <Outlet />
+          </Suspense>
         </Container>
       </main>
       <Footer />
