@@ -2,24 +2,17 @@ import styled, { css } from 'styled-components';
 import AutosizeInput from 'react-input-autosize';
 import { styled as styles } from '@mui/material/styles';
 import { Button } from '@mui/material';
-import { HEX_OPACITY, device } from '../../../constants';
+import { HEX_OPACITY } from '../../../constants';
 import { columnStyles } from '../styles';
 
 const titleStyles = css`
   padding: 2px 4px;
   font-weight: 500;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 28px;
   margin: 0;
   border: 2px solid ${(props) => props.theme.palette.primary.main + HEX_OPACITY['50']};
   border-radius: 4px;
-
-  @media ${device.laptopL} {
-    font-size: 20px;
-  }
-  @media ${device.desktop} {
-    font-size: 24px;
-  }
 `;
 
 export const ColumnTitle = styled.h1`
@@ -77,7 +70,7 @@ export const ContainerTask = styled.ul`
   padding: 10px;
   padding-left: 0;
   overflow-x: hidden;
-  max-height: calc(100vh - 410px);
+  max-height: calc(100vh - 394px);
   scrollbar-width: 6px;
   scrollbar-color: ${(props) => props.theme.palette.grey['100']}
     ${(props) => props.theme.palette.grey['400']};
