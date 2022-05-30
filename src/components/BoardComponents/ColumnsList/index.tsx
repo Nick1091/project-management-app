@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ColumnInputs, ModalInputState, ColumnState } from '../../../types';
 import { columnFormSchema } from '../../../validation';
-import { useAppDispatch } from '../../../hooks';
+import { Preloader } from '../../Preloader';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { ItemTypes } from '../../../constants';
 import { sortArray } from '../../../utils';
 import { createBoardColumn, getBoardColumns, updateBoardColumn } from '../../../requests';
@@ -23,6 +24,7 @@ export const ColumnsList = ({ columns, token, boardId }: ColumnListProps) => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const [, drop] = useDrop({ accept: ItemTypes.COLUMN });
+  const { isCreatingColumn } = useAppSelector((state) => state.boardState);
   const [columnsList, setColumnsList] = useState(sortArray(columns));
   const [draggedColumn, setDraggedColumn] = useState<undefined | ColumnState>();
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -126,7 +128,7 @@ export const ColumnsList = ({ columns, token, boardId }: ColumnListProps) => {
             }}
             onClick={() => setIsModalOpened(true)}
           >
-            {t('Create column')}
+            {isCreatingColumn ? <Preloader color="primary.contrastText" /> : t('Create column')}
           </CreateColumnBtn>
         </ColumnBtn>
       </ColumnListContainer>

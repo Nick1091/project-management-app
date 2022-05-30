@@ -1,0 +1,8 @@
+{
+  "400": "Sorry, but board with this id doesn`t exist",
+  "404": "Sorry, it looks like somebody deleted this board :(",
+  "404column": "Sorry, it looks like somebody deleted this column :(",
+  "404task": "Sorry, it looks like somebody deleted this task :(",
+  "401": "Session timed out, please login again",
+  "NetworkError": "You are offline, please check your connection! Your changes could not be saved"
+}

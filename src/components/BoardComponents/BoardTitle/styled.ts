@@ -1,6 +1,6 @@
 import AutosizeInput from 'react-input-autosize';
 import styled, { css } from 'styled-components';
-import { device, HEX_OPACITY } from '../../../constants';
+import { HEX_OPACITY } from '../../../constants';
 
 export const TitleContainer = styled.div`
   padding: 16px 0 50px 0;
@@ -10,30 +10,17 @@ export const TitleContainer = styled.div`
 const titleText = css`
   font-weight: 600;
   font-size: 24px;
-
-  @media ${device.laptopL} {
-    font-size: 30px;
-  }
-  @media ${device.desktop} {
-    font-size: 36px;
-  }
 `;
 
 const descriptionText = css`
   font-size: 16px;
   font-weight: 400;
-
-  @media ${device.laptopL} {
-    font-size: 20px;
-  }
-  @media ${device.desktop} {
-    font-size: 24px;
-  }
 `;
 
 const defaultBordersStyle = css`
   border: 2px solid ${(props) => props.theme.palette.primary.main + HEX_OPACITY['50']};
   border-radius: 4px;
+  box-sizing: border-box;
 `;
 
 const resizeInputText = css`

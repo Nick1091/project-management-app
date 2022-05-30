@@ -1,9 +1,12 @@
 import React from 'react';
+import { useAppSelector } from '../../../hooks';
 import { useTranslation } from 'react-i18next';
 import { NewBoardPopover } from '../NewBoardPopover';
+import { Preloader } from '../../Preloader';
 import { CreateBoardBtn, CreateBoardWrapper } from './styled';
 
 export const NewBoard = () => {
+  const { isCreatingBoard } = useAppSelector((state) => state.mainBoards);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const { t } = useTranslation(['common']);
   const isPopoverOpened = Boolean(anchorEl);
@@ -16,7 +19,11 @@ export const NewBoard = () => {
   return (
     <>
       <CreateBoardWrapper aria-describedby={popoverId} onClick={handlePopoverClick}>
-        <CreateBoardBtn>{t('CreateNewBoard')}</CreateBoardBtn>
+        {isCreatingBoard ? (
+          <Preloader color="#fafafa" />
+        ) : (
+          <CreateBoardBtn>{t('CreateNewBoard')}</CreateBoardBtn>
+        )}
       </CreateBoardWrapper>
       <NewBoardPopover
         popoverElement={anchorEl}

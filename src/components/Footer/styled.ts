@@ -12,6 +12,7 @@ export const DevsContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   max-width: 1900px;
+  margin: 0 auto;
   height: 72px;
   width: 100%;
   @media ${device.mobileS} {

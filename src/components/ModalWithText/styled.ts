@@ -15,9 +15,6 @@ export const modalStyles = {
   fontSize: '18px',
   borderRadius: '4px',
   p: '48px 32px 32px 32px',
-  '&:focus-visible': {
-    outline: 'none',
-  },
 };
 
 export const Close = styles(IconButton)`

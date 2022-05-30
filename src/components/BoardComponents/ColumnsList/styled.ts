@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { styled as styles } from '@mui/material/styles';
 import { Button } from '@mui/material';
+import { device } from '../../../constants';
 import { columnStyles } from '../styles';
 
 export const ColumnListContainer = styled.ul`
@@ -12,7 +13,7 @@ export const ColumnListContainer = styled.ul`
   overflow-y: hidden;
   margin: 0;
   padding: 0;
-  height: calc(100vh - 302px); // 64 + 166 + 72 header + title + footer
+  height: calc(100vh - 282px); // 64 + 146 + 72 header + title + footer
 
   scrollbar-color: ${(props) => props.theme.palette.grey['100']}
     ${(props) => props.theme.palette.grey['400']};
@@ -27,6 +28,10 @@ export const ColumnListContainer = styled.ul`
   &::-webkit-scrollbar-thumb {
     border-radius: 6px;
     background-color: ${(props) => props.theme.palette.grey['400']};
+  }
+
+  @media ${device.desktopL} {
+    height: calc(100vh - 292px);
   }
 `;
 

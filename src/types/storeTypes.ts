@@ -27,6 +27,9 @@ type BasicComponentsState = {
 };
 
 export type MainBoards = {
+  isDeletingBoard: boolean;
+  isCreatingBoard: boolean;
+  deletingBoardId?: string;
   boards?: BoardPreview[];
 } & BasicComponentsState;
 
@@ -52,7 +55,13 @@ export type ColumnState = {
 };
 
 export type BoardState = {
-  columns: ColumnState[];
-  boardTitle: string;
-  boardDescription: string;
+  isCreatingColumn: boolean;
+  isCreatingTask: boolean;
+  isDeletingColumn: boolean;
+  isDeletingTask: boolean;
+  deletingColumnId?: string;
+  deletingTaskId?: string;
+  boardTitle?: string;
+  boardDescription?: string;
+  columns?: ColumnState[];
 } & BasicComponentsState;
