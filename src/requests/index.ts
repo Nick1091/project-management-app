@@ -10,7 +10,7 @@ const handleError = (e: unknown) => {
     error = e.response.status.toString();
   }
   if (e instanceof AxiosError && e.code === 'ERR_NETWORK') {
-    error = e.message;
+    error = 'NetworkError';
   }
   return error;
 };

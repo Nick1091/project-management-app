@@ -59,6 +59,9 @@ const boardSlice = createSlice({
     builder.addCase(editBoard.fulfilled, (state, action) => {
       state.boardTitle = action.payload;
     });
+    builder.addCase(editBoard.rejected, (state, action) => {
+      state.error = action.payload as string;
+    });
     builder.addCase(createBoardColumn.fulfilled, (state, action) => {
       if (!state.columns) state.columns = [];
       state.columns.push(action.payload);
@@ -105,6 +108,9 @@ const boardSlice = createSlice({
           }
         }
       }
+    });
+    builder.addCase(editTask.rejected, (state, action) => {
+      state.error = action.payload as string;
     });
     builder.addCase(deleteTask.pending, (state) => {
       state.isDeletingTask = true;

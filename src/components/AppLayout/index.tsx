@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CircularProgress, Container, Snackbar, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from 'react-router-dom';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { removeUser, removeError as removeErrorAuth } from '../../store/authSlice';
@@ -24,7 +25,9 @@ export const AppLayout = () => {
   const [showModal, setShowModal] = useState(false);
   const [showConnectionMessage, setShowConnectionMessage] = useState(false);
   const handleCloseConnectionMessage = () => setShowConnectionMessage(false);
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation(['appErrors']);
+  const [statusError, setStatusError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -33,6 +36,7 @@ export const AppLayout = () => {
       errorAuth === '401' ||
       errorSearch === '401'
     ) {
+      setStatusError('401');
       localStorage.removeItem('token');
       localStorage.removeItem('login');
       dispatch(removeErrorMain());
@@ -42,17 +46,26 @@ export const AppLayout = () => {
       setShowModal(true);
     }
     if (
-      errorMainBoard === 'Network Error' ||
-      errorBoard === 'Network Error' ||
-      errorAuth === 'Network Error' ||
-      errorSearch === 'Network Error'
+      errorMainBoard === 'NetworkError' ||
+      errorBoard === 'NetworkError' ||
+      errorAuth === 'NetworkError' ||
+      errorSearch === 'NetworkError'
     ) {
+      setStatusError('NetworkError');
       dispatch(removeErrorMain());
       dispatch(removeErrorBoard());
       dispatch(removeErrorAuth());
       dispatch(removeErrorSearch());
       setShowConnectionMessage(true);
     }
+
+    if (errorBoard === '404') {
+      setStatusError('404');
+      dispatch(removeErrorBoard());
+      setShowModal(true);
+      navigate('/main');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, errorMainBoard, errorBoard, errorAuth, errorSearch]);
 
   return (
@@ -70,13 +83,11 @@ export const AppLayout = () => {
             <Outlet />
           </Suspense>
           {showModal && (
-            <>
-              <ModalWithText
-                isOpen={showModal}
-                alertText={t('SessionOut')}
-                closeModal={() => setShowModal(false)}
-              />
-            </>
+            <ModalWithText
+              isOpen={showModal}
+              alertText={t(statusError)}
+              closeModal={() => setShowModal(false)}
+            />
           )}
           {showConnectionMessage && (
             <Snackbar
@@ -84,7 +95,7 @@ export const AppLayout = () => {
               autoHideDuration={5000}
               onClose={handleCloseConnectionMessage}
               anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-              message={t('ConnectionError')}
+              message={t(statusError)}
               action={
                 <IconButton
                   size="small"
