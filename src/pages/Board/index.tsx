@@ -18,7 +18,7 @@ export const Board = () => {
   const { error, columns, boardTitle, boardDescription, isLoading } = useAppSelector(
     (state) => state.boardState
   );
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation(['appErrors']);
 
   useEffect(() => {
     if (token && id) dispatch(getBoardById({ token, id }));
@@ -30,7 +30,7 @@ export const Board = () => {
   if (error === '400') {
     return (
       <Typography sx={{ fontSize: '28px', fontWeight: '500', paddingTop: '16px' }}>
-        {t('BoardDoesntExist')}
+        {t(error)}
       </Typography>
     );
   }
