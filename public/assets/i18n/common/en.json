@@ -44,5 +44,7 @@
   "CreateNewBoard": "Create new board",
   "EditProfileMobile": "Edit Profile",
   "GlobalSearch": "Global search",
-  "SessionOut": "Session timed out, please login again"
+  "SessionOut": "Session timed out, please login again",
+  "ConnectionError": "You are offline, please check your connection! Your changes could not be saved",
+  "BoardDoesntExist": "Sorry, but board with this id doesn`t exist"
 }

@@ -55,16 +55,6 @@ function App() {
     }
   }, [token, login, id, dispatch]);
 
-  const isOnline = window.navigator.onLine;
-
-  useEffect(() => {
-    if (isOnline) {
-      console.log(isOnline);
-    } else {
-      console.log('not', isOnline);
-    }
-  }, [isOnline]);
-
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
