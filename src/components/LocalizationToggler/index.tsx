@@ -12,7 +12,7 @@ export const LocalizationToggler = () => {
   return (
     <Toggler>
       <Grid component="label" container alignItems="center" spacing={0.5}>
-        <Grid item>en</Grid>
+        <Grid item>ENG</Grid>
         <Grid item>
           <Switch
             checked={localStorage.getItem('i18nextLng') !== 'en'}
@@ -20,7 +20,7 @@ export const LocalizationToggler = () => {
             color="default"
           />
         </Grid>
-        <Grid item>ru</Grid>
+        <Grid item>RU</Grid>
       </Grid>
     </Toggler>
   );

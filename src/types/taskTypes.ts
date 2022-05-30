@@ -19,3 +19,16 @@ export type PropsTask = {
     taskId: string
   ) => { column: ColumnState; columnIndex: number; taskIndex: number } | undefined;
 } & TaskState;
+
+export type TaskSearch = {
+  id: string;
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
+  user: {
+    name: string;
+  };
+};

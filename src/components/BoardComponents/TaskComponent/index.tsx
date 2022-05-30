@@ -3,15 +3,17 @@ import { Typography } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { DeleteForever } from '@mui/icons-material';
 import { useDrag, useDrop } from 'react-dnd';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { Preloader } from '../../Preloader';
 import { editTask, deleteTask } from '../../../requests';
 import { PropsTask, TaskInput } from '../../../types';
 import { taskFormSchema } from '../../../validation';
 import { ConfirmModal } from '../../ConfirmModal';
 import { ModalWithForm } from '../../ModalWithForm';
 import { getInputs } from '../ColumnComponent/inputsOptions';
+import { DeleteButton } from '../../DeleteButton';
+import { setDeletingTaskId } from '../../../store/boardSlice';
 import { DeleteBtn, Task, TaskButton } from './styled';
 
 export const TaskContainer = (props: PropsTask) => {
@@ -30,6 +32,7 @@ export const TaskContainer = (props: PropsTask) => {
   const {
     authUser: { token },
   } = useAppSelector((state) => state.authUser);
+  const { deletingTaskId, isDeletingTask } = useAppSelector((state) => state.boardState);
 
   const [{ isDraggingTask }, dragTask] = useDrag(() => ({
     type: 'task',
@@ -131,35 +134,48 @@ export const TaskContainer = (props: PropsTask) => {
             setIsModalOpened(true);
           }}
         >
-          <Typography
-            sx={{
-              color: !isOver ? '#181818da' : 'transparent',
-              margin: '0px 0px 5px',
-              fontWeight: '500',
-            }}
-            variant="subtitle1"
-            component="p"
-          >
-            {props.title.length > 25
-              ? props.title.split('').slice(0, 25).join('') + '...'
-              : props.title}
-          </Typography>
-          <Typography
-            sx={{ color: !isOver ? '#545454bb' : 'transparent', whiteSpace: 'normal' }}
-            variant="inherit"
-            component="p"
-          >
-            {props.description}
-          </Typography>
+          {deletingTaskId === props.id && isDeletingTask ? (
+            <Preloader />
+          ) : (
+            <>
+              <Typography
+                sx={{
+                  color: !isOver && !isDraggingTask ? '#181818da' : 'transparent',
+                  marginBottom: '4px',
+                  fontWeight: '500',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  WebkitBoxOrient: 'vertical',
+                  display: '-webkit-box',
+                  WebkitLineClamp: '2',
+                  lineHeight: '1.4',
+                }}
+                variant="subtitle1"
+                component="p"
+              >
+                {props.title}
+              </Typography>
+              <Typography
+                sx={{
+                  color: !isOver && !isDraggingTask ? '#545454bb' : 'transparent',
+                  whiteSpace: 'normal',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  WebkitBoxOrient: 'vertical',
+                  display: '-webkit-box',
+                  WebkitLineClamp: '3',
+                }}
+                variant="inherit"
+                component="p"
+              >
+                {props.description}
+              </Typography>
+            </>
+          )}
         </TaskButton>
         {isVisibleRemoveBt && (
-          <DeleteBtn
-            size="small"
-            onClick={() => {
-              setIsOpenConfirmWindow(true);
-            }}
-          >
-            <DeleteForever fontSize="small" />
+          <DeleteBtn>
+            <DeleteButton handleClick={() => setIsOpenConfirmWindow(true)} />
           </DeleteBtn>
         )}
       </Task>
@@ -185,6 +201,8 @@ export const TaskContainer = (props: PropsTask) => {
                   taskId: props.id,
                 })
               );
+
+            dispatch(setDeletingTaskId(props.id));
           }}
           alertText={`${t('DeleteAsk')} "${props.title}" ${t('task')}`}
           closeModal={() => {

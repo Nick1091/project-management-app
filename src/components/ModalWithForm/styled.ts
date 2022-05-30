@@ -5,5 +5,4 @@ export const ColumnForm = styled.form`
   width: 100%;
   flex-direction: column;
   color: #fff;
-  gap: 8px;
 `;

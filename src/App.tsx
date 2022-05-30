@@ -9,6 +9,7 @@ import { LoginPage } from './pages/LoginPage';
 import { MainBoards } from './pages/MainBoards';
 import { NotFound } from './pages/NotFound';
 import { RegisterPage } from './pages/RegisterPage';
+import { Search } from './pages/Search';
 import { Welcome } from './pages/Welcome';
 import { getUserId } from './requests';
 import { setUserCredentials } from './store/authSlice';
@@ -76,6 +77,10 @@ function App() {
         <Route
           path="/main/board/:id"
           element={newToken ? <Board /> : <Navigate to="/" state={{ from: location }} />}
+        />
+        <Route
+          path="/search"
+          element={!newToken ? <Navigate to="/" state={{ from: location }} /> : <Search />}
         />
         <Route
           path="/edit-profile"

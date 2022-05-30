@@ -1,5 +1,6 @@
 import AutosizeInput from 'react-input-autosize';
 import styled, { css } from 'styled-components';
+import { HEX_OPACITY } from '../../../constants';
 
 export const TitleContainer = styled.div`
   padding: 16px 0 50px 0;
@@ -7,8 +8,8 @@ export const TitleContainer = styled.div`
 `;
 
 const titleText = css`
-  font-size: 24px;
   font-weight: 600;
+  font-size: 24px;
 `;
 
 const descriptionText = css`
@@ -17,8 +18,9 @@ const descriptionText = css`
 `;
 
 const defaultBordersStyle = css`
-  border: none;
-  border-bottom: 2px solid #000;
+  border: 2px solid ${(props) => props.theme.palette.primary.main + HEX_OPACITY['50']};
+  border-radius: 4px;
+  box-sizing: border-box;
 `;
 
 const resizeInputText = css`
@@ -71,6 +73,7 @@ export const TitleInput = styled(AutosizeInput)`
 
     &:focus-visible {
       outline: none;
+      border-color: ${(props) => props.theme.palette.primary.main};
     }
   }
 `;
@@ -83,6 +86,7 @@ export const DescriptionInput = styled(AutosizeInput)`
 
     &:focus-visible {
       outline: none;
+      border-color: ${(props) => props.theme.palette.primary.main};
     }
   }
 `;
@@ -91,4 +95,10 @@ export const Actions = styled.div`
   position: absolute;
   bottom: 10px;
   left: 0;
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 `;

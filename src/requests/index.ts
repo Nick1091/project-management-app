@@ -4,36 +4,41 @@ import { REQUEST_URLS } from '../constants';
 import { EditTaskType, ILoginObj, ILoginObjWithID, TypeUpdateTask } from '../types';
 import { CreateTaskType, DeleteTaskType } from '../types';
 
-export const fetchLogin = createAsyncThunk('post/fetchLogin', async (data: ILoginObj, thunkApi) => {
-  try {
-    const response = await axios.post(
-      REQUEST_URLS.SING_UP_URL,
-      JSON.stringify({ name: data.name, login: data.login, password: data.password }),
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    return response.data;
-  } catch (err) {
-    let error = ((err as AxiosError).response?.data as { statusCode: string; message: string })
-      .message;
-    if (axios.isAxiosError(err)) {
-      if (!err?.response) {
-        error = 'noServerResponse';
-      } else {
-        error = err.response?.status.toString();
-      }
-    }
-    return thunkApi.rejectWithValue(error);
+const handleError = (e: unknown) => {
+  let error = 'noServerResponse';
+  if (e instanceof AxiosError && e.response) {
+    error = e.response.status.toString();
   }
-});
+  if (e instanceof AxiosError && e.code === 'ERR_NETWORK') {
+    error = 'NetworkError';
+  }
+  return error;
+};
+
+export const fetchLogin = createAsyncThunk(
+  'post/fetchLogin',
+  async (data: ILoginObj, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        REQUEST_URLS.SING_UP_URL,
+        JSON.stringify({ name: data.name, login: data.login, password: data.password }),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      return rejectWithValue(handleError(e));
+    }
+  }
+);
 
 export const deleteUser = createAsyncThunk(
   'delete/deleteUser',
-  async ({ token, id }: { token: string; id: string }, thunkApi) => {
+  async ({ token, id }: { token: string; id: string }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(`${REQUEST_URLS.USERS}/${id}`, {
         headers: {
@@ -44,43 +49,32 @@ export const deleteUser = createAsyncThunk(
       });
       localStorage.removeItem('token');
       return response.data;
-    } catch (err) {
-      let error = ((err as AxiosError).response?.data as { statusCode: string; message: string })
-        .message;
-      if (axios.isAxiosError(err)) {
-        if (!err?.response) {
-          error = 'noServerResponse';
-        }
-      }
-      return thunkApi.rejectWithValue(error);
+    } catch (e) {
+      return rejectWithValue(handleError(e));
     }
   }
 );
-export const getUserId = createAsyncThunk('get/getUser', async (token: string, thunkApi) => {
-  try {
-    const response = await axios.get(REQUEST_URLS.USERS, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-      },
-    });
-    return response.data;
-  } catch (err) {
-    let error = ((err as AxiosError).response?.data as { statusCode: string; message: string })
-      .message;
-    if (axios.isAxiosError(err)) {
-      if (!err?.response) {
-        error = 'noServerResponse';
-      }
+export const getUserId = createAsyncThunk(
+  'get/getUser',
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(REQUEST_URLS.USERS, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      });
+      return response.data;
+    } catch (e) {
+      return rejectWithValue(handleError(e));
     }
-    return thunkApi.rejectWithValue(error);
   }
-});
+);
 
 export const putCredentialsData = createAsyncThunk(
   'put/putCredentialsData',
-  async (data: ILoginObjWithID, thunkApi) => {
+  async (data: ILoginObjWithID, { rejectWithValue }) => {
     try {
       const response = await axios.put(
         `${REQUEST_URLS.USERS}/${data.id}`,
@@ -94,46 +88,33 @@ export const putCredentialsData = createAsyncThunk(
         }
       );
       return response.data;
-    } catch (err) {
-      let error = ((err as AxiosError).response?.data as { statusCode: string; message: string })
-        .message;
-      if (axios.isAxiosError(err)) {
-        if (!err?.response) {
-          error = 'noServerResponse';
-        }
-      }
-      return thunkApi.rejectWithValue(error);
+    } catch (e) {
+      return rejectWithValue(handleError(e));
     }
   }
 );
 
-export const fetchToken = createAsyncThunk('post/fetchToken', async (data: ILoginObj, thunkApi) => {
-  try {
-    const response = await axios.post(
-      REQUEST_URLS.SING_IN_URL,
-      JSON.stringify({ login: data.login, password: data.password }),
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    const token = response.data;
-    return { ...token, login: data.login };
-  } catch (err) {
-    let error = ((err as AxiosError).response?.data as { statusCode: string; message: string })
-      .message;
-    if (axios.isAxiosError(err)) {
-      if (!err?.response) {
-        error = 'noServerResponse';
-      } else {
-        error = err.response?.status.toString();
-      }
+export const fetchToken = createAsyncThunk(
+  'post/fetchToken',
+  async (data: ILoginObj, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        REQUEST_URLS.SING_IN_URL,
+        JSON.stringify({ login: data.login, password: data.password }),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const token = response.data;
+      return { ...token, login: data.login };
+    } catch (e) {
+      return rejectWithValue(handleError(e));
     }
-    return thunkApi.rejectWithValue(error);
   }
-});
+);
 
 export const getBoards = createAsyncThunk(
   'boards/getBoards',
@@ -144,11 +125,7 @@ export const getBoards = createAsyncThunk(
       });
       return response.data;
     } catch (e) {
-      let error = 'noServerResponse';
-      if (e instanceof AxiosError && e.response) {
-        error = e.response.status.toString();
-      }
-      return rejectWithValue(error);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -169,11 +146,7 @@ export const createBoard = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      let error = 'noServerResponse';
-      if (e instanceof AxiosError && e.response) {
-        error = e.response.status.toString();
-      }
-      return rejectWithValue(error);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -187,11 +160,7 @@ export const deleteBoard = createAsyncThunk(
       });
       return id;
     } catch (e) {
-      let error = 'noServerResponse';
-      if (e instanceof AxiosError && e.response) {
-        error = e.response.status.toString();
-      }
-      return rejectWithValue(error);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -205,7 +174,7 @@ export const getBoardById = createAsyncThunk(
       });
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -231,7 +200,40 @@ export const editBoard = createAsyncThunk(
       );
       return response.data.title;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      return rejectWithValue(handleError(e));
+    }
+  }
+);
+
+export const editBoardColumn = createAsyncThunk(
+  'board/editBoardColumn',
+  async (
+    {
+      token,
+      boardId,
+      columnId,
+      columnTitle,
+      columnOrder,
+    }: {
+      token: string;
+      boardId: string;
+      columnId: string;
+      columnTitle: string;
+      columnOrder: number;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.put(
+        `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns/${columnId}`,
+        { title: columnTitle, order: columnOrder },
+        {
+          headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -252,7 +254,7 @@ export const createBoardColumn = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -269,7 +271,7 @@ export const deleteBoardColumn = createAsyncThunk(
       });
       return columnId;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -295,7 +297,7 @@ export const updateBoardColumn = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -324,7 +326,7 @@ export const createTask = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -338,7 +340,7 @@ export const getBoardColumns = createAsyncThunk(
 
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -370,7 +372,7 @@ export const editTask = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -392,7 +394,21 @@ export const deleteTask = createAsyncThunk(
       const data = { columnId, taskId };
       return data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      return rejectWithValue(handleError(e));
+    }
+  }
+);
+
+export const getTasks = createAsyncThunk(
+  'boards/getTasks',
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(REQUEST_URLS.TASKS, {
+        headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      });
+      return response.data;
+    } catch (e) {
+      return rejectWithValue(handleError(e));
     }
   }
 );

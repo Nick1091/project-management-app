@@ -3,7 +3,7 @@ import { DeleteForever } from '@mui/icons-material';
 
 export const DeleteButton = ({ handleClick }: { handleClick: () => void }) => {
   return (
-    <IconButton size="small" onClick={handleClick}>
+    <IconButton sx={{ color: 'error.dark' }} size="small" onClick={handleClick}>
       <DeleteForever fontSize="small" />
     </IconButton>
   );

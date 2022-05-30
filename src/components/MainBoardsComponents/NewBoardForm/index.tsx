@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createBoard } from '../../../requests';
@@ -25,6 +26,7 @@ export const NewBoardForm = ({ handleClosePopover }: { handleClosePopover: () =>
   const {
     authUser: { token },
   } = useAppSelector((state) => state.authUser);
+  const { t } = useTranslation(['common']);
 
   const handleBoardFormSubmit = (formData: BoardInputs) => {
     if (token)
@@ -36,7 +38,7 @@ export const NewBoardForm = ({ handleClosePopover }: { handleClosePopover: () =>
   return (
     <NewBoardFormWrapper>
       <HeaderBoardForm>
-        <h1>Create board</h1>
+        <h1>{t('CreateBoard')}</h1>
         <IconButton onClick={handleClosePopover}>
           <StyledCloseIcon />
         </IconButton>
@@ -44,7 +46,7 @@ export const NewBoardForm = ({ handleClosePopover }: { handleClosePopover: () =>
       <CreateBoardForm onSubmit={handleSubmit(handleBoardFormSubmit)}>
         <TitleInput
           id="outlined-basic"
-          label="Title"
+          label={t('Title')}
           variant="outlined"
           error={Boolean(errors.title)}
           helperText={errors.title?.message}
@@ -52,14 +54,14 @@ export const NewBoardForm = ({ handleClosePopover }: { handleClosePopover: () =>
         />
         <TitleInput
           id="outlined-basic"
-          label="Description"
+          label={t('Description')}
           variant="outlined"
           error={Boolean(errors.description)}
           helperText={errors.description?.message}
           {...register('description')}
         />
         <Button type="submit" variant="outlined" disabled={Boolean(errors.title)}>
-          Create
+          {t('Create')}
         </Button>
       </CreateBoardForm>
     </NewBoardFormWrapper>

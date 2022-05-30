@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getBoardById } from '../../requests';
 import { removeAllColumns } from '../../store/boardSlice';
 import { BoardTitle } from '../../components/BoardComponents/BoardTitle';
-import { ColumnList } from '../../components/BoardComponents/ColumnsList';
+import { ColumnsList } from '../../components/BoardComponents/ColumnsList';
+import { Preloader } from '../../components/Preloader';
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export const Board = () => {
   const { id } = useParams();
@@ -16,6 +18,7 @@ export const Board = () => {
   const { error, columns, boardTitle, boardDescription, isLoading } = useAppSelector(
     (state) => state.boardState
   );
+  const { t } = useTranslation(['common']);
 
   useEffect(() => {
     if (token && id) dispatch(getBoardById({ token, id }));
@@ -24,13 +27,27 @@ export const Board = () => {
     };
   }, [dispatch, token, id]);
 
-  if (isLoading) return <CircularProgress />;
-  if (error) return <h3>{error}</h3>;
+  if (error === '400') {
+    return (
+      <Typography sx={{ fontSize: '28px', fontWeight: '500', paddingTop: '16px' }}>
+        {t('BoardDoesntExist')}
+      </Typography>
+    );
+  }
 
-  return (
+  return columns && boardTitle && boardDescription && !isLoading ? (
     <>
       <BoardTitle title={boardTitle} description={boardDescription} token={token} id={id} />
-      <ColumnList columns={columns} token={token} boardId={id} />
+      <ColumnsList columns={columns} token={token} boardId={id} />
     </>
+  ) : (
+    <Preloader
+      sxContainer={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+    />
   );
 };

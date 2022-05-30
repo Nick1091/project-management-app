@@ -15,17 +15,14 @@ export const HeaderBoardForm = styled.header`
   justify-content: space-between;
   align-items: center;
   & h1 {
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 500;
     margin: 0;
   }
   & button {
     cursor: pointer;
     background-color: transparent;
     border: none;
-    & svg:hover {
-      color: #000;
-    }
   }
 `;
 

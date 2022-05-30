@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ColumnInputs, ModalInputState, ColumnState, TaskState } from '../../../types';
 import { columnFormSchema } from '../../../validation';
-import { useAppDispatch } from '../../../hooks';
+import { Preloader } from '../../Preloader';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { ItemTypes } from '../../../constants';
 import { sortArray } from '../../../utils';
 import {
@@ -24,11 +25,12 @@ type ColumnListProps = {
   boardId?: string;
 };
 
-export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
+export const ColumnsList = ({ columns, token, boardId }: ColumnListProps) => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const [, drop] = useDrop({ accept: ItemTypes.COLUMN });
 
+  const { isCreatingColumn } = useAppSelector((state) => state.boardState);
   const [columnsList, setColumnsList] = useState(sortArray(columns));
   const [draggedColumn, setDraggedColumn] = useState<undefined | ColumnState>();
   const [isSortArray, setIsTaskList] = useState(true);
@@ -419,8 +421,15 @@ export const ColumnList = ({ columns, token, boardId }: ColumnListProps) => {
               )
           )}
         <ColumnBtn>
-          <CreateColumnBtn onClick={() => setIsModalOpened(true)}>
-            {t('Create column')}
+          <CreateColumnBtn
+            variant="contained"
+            sx={{
+              backgroundColor: 'primary.light',
+              '&:hover': { backgroundColor: 'primary.main' },
+            }}
+            onClick={() => setIsModalOpened(true)}
+          >
+            {isCreatingColumn ? <Preloader color="primary.contrastText" /> : t('Create column')}
           </CreateColumnBtn>
         </ColumnBtn>
       </ColumnListContainer>
