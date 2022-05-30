@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { REQUEST_URLS } from '../constants';
-import { EditTaskType, ILoginObj, ILoginObjWithID } from '../types';
+import { EditTaskType, ILoginObj, ILoginObjWithID, TypeUpdateTask } from '../types';
 import { CreateTaskType, DeleteTaskType } from '../types';
 
 export const fetchLogin = createAsyncThunk('post/fetchLogin', async (data: ILoginObj, thunkApi) => {
@@ -49,7 +49,7 @@ export const deleteUser = createAsyncThunk(
         .message;
       if (axios.isAxiosError(err)) {
         if (!err?.response) {
-          error = 'no server response';
+          error = 'noServerResponse';
         }
       }
       return thunkApi.rejectWithValue(error);
@@ -71,7 +71,7 @@ export const getUserId = createAsyncThunk('get/getUser', async (token: string, t
       .message;
     if (axios.isAxiosError(err)) {
       if (!err?.response) {
-        error = 'no server response';
+        error = 'noServerResponse';
       }
     }
     return thunkApi.rejectWithValue(error);
@@ -99,7 +99,7 @@ export const putCredentialsData = createAsyncThunk(
         .message;
       if (axios.isAxiosError(err)) {
         if (!err?.response) {
-          error = 'no server response';
+          error = 'noServerResponse';
         }
       }
       return thunkApi.rejectWithValue(error);
@@ -391,6 +391,33 @@ export const deleteTask = createAsyncThunk(
       );
       const data = { columnId, taskId };
       return data;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
+    }
+  }
+);
+
+export const updateTask = createAsyncThunk(
+  'task/updateTask',
+  async (
+    { token, boardId, columnId, taskId, draggedTask }: TypeUpdateTask,
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.put(
+        `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        {
+          ...draggedTask,
+        },
+        {
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      return response.data;
     } catch (e) {
       if (e instanceof Error) return rejectWithValue(e.message);
     }

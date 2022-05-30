@@ -6,8 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { createTask, deleteBoardColumn } from '../../../requests';
 import { ItemTypes } from '../../../constants';
-import { ColumnState } from '../../../types';
-import { TaskInput } from '../../../types';
+import { ColumnItemProps, TaskInput } from '../../../types';
 import { taskFormSchema } from '../../../validation';
 import { ConfirmModal } from '../../ConfirmModal';
 import { DeleteButton } from '../../DeleteButton';
@@ -24,17 +23,12 @@ import {
   CreateTask,
 } from './styled';
 
-type ColumnItemProps = {
-  column: ColumnState;
-  boardId: string;
-  token: string | null;
-  moveColumn: (id: string, atIndex: number, movedId?: string) => void;
-  findColumn: (id: string) => { column: ColumnState; index: number } | undefined;
-};
-
 export const ColumnOfBoard = ({
+  moveTask,
+  findTask,
   moveColumn,
   findColumn,
+  isSortArray,
   column,
   token,
   boardId,
@@ -53,6 +47,9 @@ export const ColumnOfBoard = ({
   const handleDeleteColumn = () => {
     if (token) dispatch(deleteBoardColumn({ token, boardId, columnId: id }));
   };
+
+  const { columns } = useAppSelector((state) => state.boardState);
+
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.COLUMN,
     item: { id, originalIndex },
@@ -88,6 +85,22 @@ export const ColumnOfBoard = ({
     },
   });
 
+  const [, dropContainerTask] = useDrop({
+    accept: 'task',
+    hover({ taskId, columnId }: { taskId: string; columnId: string }) {
+      if (columnId !== id && (column.tasks === undefined || column.tasks.length === 0)) {
+        const columnIndex = sortArray(columns).findIndex((column) => column.id === id);
+        if (columnIndex !== -1) {
+          moveTask(taskId, columnId, columnIndex, 0, id, (Math.random() * 1000).toFixed(0));
+        }
+      }
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+    canDrop: () => false,
+  });
+
   const {
     control,
     handleSubmit,
@@ -121,21 +134,33 @@ export const ColumnOfBoard = ({
   };
 
   return (
-    <ColumnListItem ref={(node) => drop(node)}>
+    <ColumnListItem
+      ref={(node) => {
+        drop(node);
+      }}
+    >
       <ColumnContainer
         onMouseOver={() => setIsVisibleRemoveBtn(!isDragging)}
         onMouseOut={() => setIsVisibleRemoveBtn(false)}
         isDragging={isDragging}
-        ref={(node) => drag(drop(node))}
+        ref={(node) => {
+          drag(drop(node));
+        }}
       >
         <ColumnTitle>{title}</ColumnTitle>
-        {tasks && tasks.length > 0 && (
-          <ContainerTask>
-            {sortArray(tasks).map((task) => (
-              <TaskContainer key={task.id} {...task} columnId={id} boardId={boardId} />
+        <ContainerTask ref={(node) => dropContainerTask(node)}>
+          {tasks &&
+            (isSortArray ? sortArray(tasks) : tasks).map((task) => (
+              <TaskContainer
+                moveTask={moveTask}
+                findTask={findTask}
+                key={task.id}
+                {...task}
+                boardId={boardId}
+                columnId={id}
+              />
             ))}
-          </ContainerTask>
-        )}
+        </ContainerTask>
         <CreateTask onClick={() => setIsModalOpened(true)}>
           ＋ {t('add task', { ns: 'task' })}
         </CreateTask>
