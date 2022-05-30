@@ -23,6 +23,9 @@ const searchSlice = createSlice({
     saveSearchValue: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
     },
+    removeError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getTasks.pending, (state) => {
@@ -39,6 +42,6 @@ const searchSlice = createSlice({
   },
 });
 
-export const { saveSearchValue } = searchSlice.actions;
+export const { saveSearchValue, removeError } = searchSlice.actions;
 
 export default searchSlice.reducer;

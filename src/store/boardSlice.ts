@@ -10,6 +10,7 @@ import {
   deleteTask,
   deleteBoardColumn,
   getBoardColumns,
+  editBoardColumn,
 } from '../requests';
 
 const initialState: BoardState = {
@@ -108,6 +109,25 @@ const boardSlice = createSlice({
     builder.addCase(deleteTask.pending, (state) => {
       state.isDeletingTask = true;
     });
+    builder.addCase(editBoardColumn.rejected, (state, action) => {
+      state.error = action.payload as string;
+    });
+    builder.addCase(
+      editBoardColumn.fulfilled,
+      (
+        state,
+        action: PayloadAction<{ boardId: string; id: string; title: string; order: number }>
+      ) => {
+        if (state.columns) {
+          const indexOfColumn = state.columns.findIndex(
+            (column) => column.id === action.payload.id
+          );
+          if (indexOfColumn !== -1) {
+            state.columns[indexOfColumn].title = action.payload.title;
+          }
+        }
+      }
+    );
     builder.addCase(deleteTask.rejected, (state, action) => {
       state.error = action.payload as string;
       state.isDeletingTask = false;
@@ -144,6 +164,9 @@ const boardSlice = createSlice({
     });
     builder.addCase(getBoardColumns.fulfilled, (state, action) => {
       state.columns = action.payload.columns;
+    });
+    builder.addCase(getBoardColumns.rejected, (state, action) => {
+      state.error = action.payload as string;
     });
   },
 });

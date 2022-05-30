@@ -206,7 +206,7 @@ export const editBoard = createAsyncThunk(
 );
 
 export const editBoardColumn = createAsyncThunk(
-  'board/createColumn',
+  'board/editBoardColumn',
   async (
     {
       token,
@@ -231,7 +231,7 @@ export const editBoardColumn = createAsyncThunk(
           headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
         }
       );
-      return response.data.title;
+      return response.data;
     } catch (e) {
       if (e instanceof Error) return rejectWithValue(e.message);
     }
