@@ -233,7 +233,7 @@ export const editBoardColumn = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      if (e instanceof Error) return rejectWithValue(e.message);
+      return rejectWithValue(handleError(e));
     }
   }
 );
@@ -408,11 +408,7 @@ export const getTasks = createAsyncThunk(
       });
       return response.data;
     } catch (e) {
-      let error = 'noServerResponse';
-      if (e instanceof AxiosError && e.response) {
-        error = e.response.status.toString();
-      }
-      return rejectWithValue(error);
+      return rejectWithValue(handleError(e));
     }
   }
 );

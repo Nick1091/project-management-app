@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CircularProgress, Container, Snackbar, IconButton } from '@mui/material';
+import { CircularProgress, Container, Snackbar, IconButton, Stack } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import { Suspense } from 'react';
@@ -28,7 +28,7 @@ export const AppLayout = () => {
   const { t } = useTranslation(['appErrors']);
   const [statusError, setStatusError] = useState('');
   const navigate = useNavigate();
-
+  console.log(errorBoard);
   useEffect(() => {
     if (
       errorMainBoard === '401' ||
@@ -65,6 +65,16 @@ export const AppLayout = () => {
       setShowModal(true);
       navigate('/main');
     }
+    if (errorBoard === '404column') {
+      setStatusError('404column');
+      dispatch(removeErrorBoard());
+      setShowModal(true);
+    }
+    if (errorBoard === '404task') {
+      setStatusError('404task');
+      dispatch(removeErrorBoard());
+      setShowModal(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, errorMainBoard, errorBoard, errorAuth, errorSearch]);
 
@@ -75,9 +85,9 @@ export const AppLayout = () => {
         <Container maxWidth={false}>
           <Suspense
             fallback={
-              <Container sx={{ pt: '15vh', ml: '45%' }} maxWidth={false}>
+              <Stack alignItems="center" sx={{ pt: '15vh' }}>
                 <CircularProgress />
-              </Container>
+              </Stack>
             }
           >
             <Outlet />

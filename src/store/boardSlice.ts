@@ -110,13 +110,13 @@ const boardSlice = createSlice({
       }
     });
     builder.addCase(editTask.rejected, (state, action) => {
-      state.error = action.payload as string;
+      state.error = (action.payload as string) + 'task';
     });
     builder.addCase(deleteTask.pending, (state) => {
       state.isDeletingTask = true;
     });
     builder.addCase(editBoardColumn.rejected, (state, action) => {
-      state.error = action.payload as string;
+      state.error = (action.payload as string) + 'column';
     });
     builder.addCase(
       editBoardColumn.fulfilled,
@@ -135,7 +135,7 @@ const boardSlice = createSlice({
       }
     );
     builder.addCase(deleteTask.rejected, (state, action) => {
-      state.error = action.payload as string;
+      state.error = (action.payload as string) + 'task';
       state.isDeletingTask = false;
       state.deletingTaskId = undefined;
     });
@@ -164,7 +164,7 @@ const boardSlice = createSlice({
       state.deletingColumnId = undefined;
     });
     builder.addCase(deleteBoardColumn.rejected, (state, action) => {
-      state.error = action.payload as string;
+      state.error = (action.payload as string) + 'column';
       state.isDeletingColumn = false;
       state.deletingColumnId = undefined;
     });

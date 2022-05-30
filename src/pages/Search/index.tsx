@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircularProgress, Container, InputAdornment, TextField } from '@mui/material';
+import { CircularProgress, Container, InputAdornment, Stack, TextField } from '@mui/material';
 import useWindowDimensions, { useAppDispatch, useAppSelector } from '../../hooks';
 import SearchIcon from '@mui/icons-material/Search';
 import { getTasks } from '../../requests';
@@ -36,9 +36,9 @@ export const Search = () => {
 
   if (isLoading)
     return (
-      <Container sx={{ pt: '15vh', ml: '45%' }} maxWidth={false}>
+      <Stack alignItems="center" sx={{ pt: '15vh' }}>
         <CircularProgress />
-      </Container>
+      </Stack>
     );
   if (error) return <h3>{error}</h3>;
 
