@@ -28,7 +28,7 @@ export const AppLayout = () => {
   const { t } = useTranslation(['appErrors']);
   const [statusError, setStatusError] = useState('');
   const navigate = useNavigate();
-  console.log(errorBoard);
+
   useEffect(() => {
     if (
       errorMainBoard === '401' ||
