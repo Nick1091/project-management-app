@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { REQUEST_URLS } from '../constants';
-import { EditTaskType, ILoginObj, ILoginObjWithID } from '../types';
+import { EditTaskType, ILoginObj, ILoginObjWithID, TypeUpdateTask } from '../types';
 import { CreateTaskType, DeleteTaskType } from '../types';
 
 const handleError = (e: unknown) => {
@@ -409,6 +409,33 @@ export const getTasks = createAsyncThunk(
       return response.data;
     } catch (e) {
       return rejectWithValue(handleError(e));
+    }
+  }
+);
+
+export const updateTask = createAsyncThunk(
+  'task/updateTask',
+  async (
+    { token, boardId, columnId, taskId, draggedTask }: TypeUpdateTask,
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.put(
+        `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        {
+          ...draggedTask,
+        },
+        {
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
     }
   }
 );

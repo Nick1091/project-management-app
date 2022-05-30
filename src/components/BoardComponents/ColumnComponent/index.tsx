@@ -10,7 +10,7 @@ import { setDeletingColumnId } from '../../../store/boardSlice';
 import { ItemTypes } from '../../../constants';
 import { Preloader } from '../../Preloader';
 import { createTask, deleteBoardColumn, editBoardColumn } from '../../../requests';
-import { ColumnState, ColumnInputs, TaskInput } from '../../../types';
+import { ColumnInputs, ColumnItemProps, TaskInput } from '../../../types';
 import { taskFormSchema, columnFormSchema } from '../../../validation';
 import { ConfirmModal } from '../../ConfirmModal';
 import { DeleteButton } from '../../DeleteButton';
@@ -32,17 +32,12 @@ import {
   ActionsContainer,
 } from './styled';
 
-type ColumnItemProps = {
-  column: ColumnState;
-  boardId: string;
-  token: string | null;
-  moveColumn: (id: string, atIndex: number, movedId?: string) => void;
-  findColumn: (id: string) => { column: ColumnState; index: number } | undefined;
-};
-
 export const ColumnOfBoard = ({
+  moveTask,
+  findTask,
   moveColumn,
   findColumn,
+  isSortArray,
   column,
   token,
   boardId,
@@ -65,6 +60,9 @@ export const ColumnOfBoard = ({
     if (token) dispatch(deleteBoardColumn({ token, boardId, columnId: id }));
     dispatch(setDeletingColumnId(id));
   };
+
+  const { columns } = useAppSelector((state) => state.boardState);
+
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.COLUMN,
     item: { id, originalIndex },
@@ -98,6 +96,24 @@ export const ColumnOfBoard = ({
         if (columnData) moveColumn(draggedId, columnData.index, id);
       }
     },
+  });
+
+  const [, dropContainerTask] = useDrop({
+    accept: 'task',
+    hover({ taskId, columnId }: { taskId: string; columnId: string }) {
+      if (columnId !== id && (column.tasks === undefined || column.tasks.length === 0)) {
+        if (columns) {
+          const columnIndex = sortArray(columns).findIndex((column) => column.id === id);
+          if (columnIndex !== -1) {
+            moveTask(taskId, columnId, columnIndex, 0, id, (Math.random() * 1000).toFixed(0));
+          }
+        }
+      }
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+    canDrop: () => false,
   });
 
   const {
@@ -162,11 +178,13 @@ export const ColumnOfBoard = ({
   };
 
   return (
-    <ColumnListItem ref={(node) => drop(node)}>
+    <ColumnListItem
+      ref={(node) => {
+        drop(node);
+      }}
+    >
       <ColumnContainer
-        onMouseOver={() => {
-          setIsVisibleRemoveBtn(!isDragging);
-        }}
+        onMouseOver={() => setIsVisibleRemoveBtn(!isDragging)}
         onMouseOut={() => setIsVisibleRemoveBtn(false)}
         ref={(node) => drag(drop(node))}
       >
@@ -198,13 +216,19 @@ export const ColumnOfBoard = ({
         ) : (
           <ColumnTitle onClick={() => setIsTitleInput(true)}>{newColumnTitle}</ColumnTitle>
         )}
-        {tasks && tasks.length > 0 && (
-          <ContainerTask>
-            {sortArray(tasks).map((task) => (
-              <TaskContainer key={task.id} {...task} columnId={id} boardId={boardId} />
+        <ContainerTask ref={(node) => dropContainerTask(node)}>
+          {tasks &&
+            (isSortArray ? sortArray(tasks) : tasks).map((task) => (
+              <TaskContainer
+                moveTask={moveTask}
+                findTask={findTask}
+                key={task.id}
+                {...task}
+                boardId={boardId}
+                columnId={id}
+              />
             ))}
-          </ContainerTask>
-        )}
+        </ContainerTask>
         <CreateTask onClick={() => setIsModalOpened(true)}>
           {isCreatingTask ? (
             <Preloader color="primary.contrastText" />
