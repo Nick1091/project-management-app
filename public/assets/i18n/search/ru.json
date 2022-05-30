@@ -1,0 +1,11 @@
+{
+  "GlobalSearch": "Глобальный поиск задач",
+  "EnterSearchValue": "Введите значение для поиска",
+  "ByTitle": "по заголовку",  
+  "ByDescription": "по описанию",  
+  "ByName": "по имени",
+  "Task": "Задача",
+  "CreatedBy": "создано",
+  "No results yet": "Результатов нет",
+  "GoToTheBoard": "перейти к доске с этой задачей"    
+}

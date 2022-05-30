@@ -46,5 +46,8 @@
   "GlobalSearch": "Global search",
   "SessionOut": "Session timed out, please login again",
   "ConnectionError": "You are offline, please check your connection! Your changes could not be saved",
-  "BoardDoesntExist": "Sorry, but board with this id doesn`t exist"
+  "BoardDoesntExist": "Sorry, but board with this id doesn`t exist",
+  "RequiredText": "This field is required",
+  "MaximumLengthText60": "Field should be less than 60 symbols",
+  "MaximumLengthText120": "Field should be less than 120 symbols"
 }

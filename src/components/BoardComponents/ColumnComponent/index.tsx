@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useForm } from 'react-hook-form';
+import { Box } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
+import { Cancel as CancelIcon, CheckCircle as CheckCircleIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { createTask, deleteBoardColumn } from '../../../requests';
 import { setDeletingColumnId } from '../../../store/boardSlice';
 import { ItemTypes } from '../../../constants';
 import { Preloader } from '../../Preloader';
-import { ColumnState } from '../../../types';
-import { TaskInput } from '../../../types';
-import { taskFormSchema } from '../../../validation';
+import { createTask, deleteBoardColumn, editBoardColumn } from '../../../requests';
+import { ColumnState, ColumnInputs, TaskInput } from '../../../types';
+import { taskFormSchema, columnFormSchema } from '../../../validation';
 import { ConfirmModal } from '../../ConfirmModal';
 import { DeleteButton } from '../../DeleteButton';
+import { ErrorMessage } from '../../ErrorMessage';
 import { sortArray } from '../../../utils';
 import { ModalWithForm } from '../../ModalWithForm';
 import { TaskContainer } from '../TaskComponent';
@@ -24,6 +26,10 @@ import {
   ColumnTitle,
   ContainerTask,
   CreateTask,
+  ColumnTitleInput,
+  EditColumnForm,
+  StyledSubmitButton,
+  ActionsContainer,
 } from './styled';
 
 type ColumnItemProps = {
@@ -43,7 +49,7 @@ export const ColumnOfBoard = ({
 }: ColumnItemProps) => {
   const [isVisibleRemoveBtn, setIsVisibleRemoveBtn] = useState(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
-  const { title, tasks, id } = column;
+  const { title, tasks, id, order } = column;
   const { t } = useTranslation(['task']);
   const dispatch = useAppDispatch();
   const originalIndex = findColumn(id)?.index;
@@ -95,13 +101,23 @@ export const ColumnOfBoard = ({
   });
 
   const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
+    control: controlTask,
+    handleSubmit: handleSubmitTask,
+    reset: resetTask,
+    formState: { errors: errorsTask },
   } = useForm<TaskInput>({
     resolver: yupResolver(taskFormSchema),
     defaultValues: { title: '', description: '' },
+  });
+
+  const {
+    control: controlColumn,
+    handleSubmit: handleSubmitColumn,
+    setValue: setValueColumn,
+    formState: { errors: errorsColumn },
+  } = useForm<ColumnInputs>({
+    resolver: yupResolver(columnFormSchema),
+    defaultValues: { title },
   });
 
   const createTaskHandler = ({ title, description }: TaskInput) => {
@@ -116,14 +132,33 @@ export const ColumnOfBoard = ({
           description,
         })
       );
-      reset();
+      resetTask();
       setIsModalOpened(false);
     }
   };
 
   const handleCloseModal = () => {
     setIsModalOpened(false);
-    reset();
+    resetTask();
+  };
+
+  const [isTitleInput, setIsTitleInput] = useState(false);
+  const [newColumnTitle, setNewColumnTitle] = useState(title);
+  const columnSubmitHandler = (formState: ColumnInputs) => {
+    if (formState.title !== newColumnTitle) {
+      setNewColumnTitle(formState.title);
+      if (token && id)
+        dispatch(
+          editBoardColumn({
+            token,
+            boardId,
+            columnId: id,
+            columnTitle: formState.title,
+            columnOrder: order,
+          })
+        );
+    }
+    setIsTitleInput(false);
   };
 
   return (
@@ -137,8 +172,31 @@ export const ColumnOfBoard = ({
       >
         {deletingColumnId === id && isDeletingColumn ? (
           <Preloader color="secondary.main" />
+        ) : isTitleInput ? (
+          <EditColumnForm onSubmit={handleSubmitColumn(columnSubmitHandler)}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Controller
+                render={({ field }) => <ColumnTitleInput {...field} />}
+                name="title"
+                control={controlColumn}
+              />
+              <ErrorMessage error={errorsColumn.title} />
+            </Box>
+            <ActionsContainer>
+              <StyledSubmitButton type="submit">
+                <CheckCircleIcon sx={{ fontSize: '20px', color: 'success.dark' }} />
+              </StyledSubmitButton>
+              <CancelIcon
+                sx={{ cursor: 'pointer', fontSize: '20px', color: 'error.dark' }}
+                onClick={() => {
+                  setIsTitleInput(false);
+                  setValueColumn('title', newColumnTitle);
+                }}
+              />
+            </ActionsContainer>
+          </EditColumnForm>
         ) : (
-          <ColumnTitle>{title}</ColumnTitle>
+          <ColumnTitle onClick={() => setIsTitleInput(true)}>{newColumnTitle}</ColumnTitle>
         )}
         {tasks && tasks.length > 0 && (
           <ContainerTask>
@@ -157,8 +215,8 @@ export const ColumnOfBoard = ({
         {isModalOpened && (
           <ModalWithForm<TaskInput>
             titleText={t('Create task')}
-            inputs={getInputs(errors, control)}
-            handleSubmit={handleSubmit(createTaskHandler)}
+            inputs={getInputs(errorsTask, controlTask)}
+            handleSubmit={handleSubmitTask(createTaskHandler)}
             isModalOpened={isModalOpened}
             handleCloseModal={handleCloseModal}
           />

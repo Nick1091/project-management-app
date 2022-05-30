@@ -1,21 +1,18 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import AutosizeInput from 'react-input-autosize';
 import { styled as styles } from '@mui/material/styles';
 import { Button } from '@mui/material';
 import { HEX_OPACITY, device } from '../../../constants';
 import { columnStyles } from '../styles';
 
-export const ColumnTitle = styled.h1`
-  margin: 0;
-  padding: 0;
-  line-height: 1.5;
-  margin-right: 28px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
+const titleStyles = css`
+  padding: 2px 4px;
   font-weight: 500;
   font-size: 18px;
+  line-height: 1.5;
+  margin: 0;
+  border: 2px solid ${(props) => props.theme.palette.primary.main + HEX_OPACITY['50']};
+  border-radius: 4px;
 
   @media ${device.laptopL} {
     font-size: 20px;
@@ -23,6 +20,35 @@ export const ColumnTitle = styled.h1`
   @media ${device.desktop} {
     font-size: 24px;
   }
+`;
+
+export const ColumnTitle = styled.h1`
+  ${titleStyles}
+  border-color: transparent;
+  margin-right: 28px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  cursor: pointer;
+`;
+
+export const ColumnTitleInput = styled(AutosizeInput)`
+  width: calc(100% - 42px);
+  & input {
+    ${titleStyles};
+    max-width: 100%;
+
+    &:focus-visible {
+      outline: none;
+      border-color: ${(props) => props.theme.palette.primary.main};
+    }
+  }
+`;
+
+export const EditColumnForm = styled.form`
+  position: relative;
 `;
 
 export const ColumnTask = styled.li`
@@ -87,4 +113,24 @@ export const DeleteButtonContainer = styled.div`
   position: absolute;
   right: 4px;
   top: 4px;
+`;
+
+export const StyledSubmitButton = styled.button`
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  height: 20px;
+`;
+
+export const ActionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: -3px;
+  left: -16px;
+  z-index: 1;
 `;

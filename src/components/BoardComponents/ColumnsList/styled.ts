@@ -12,7 +12,7 @@ export const ColumnListContainer = styled.ul`
   overflow-y: hidden;
   margin: 0;
   padding: 0;
-  height: calc(100vh - 300px); // 64 + 140 + 72 + 24 header + title + footer + footer margin
+  height: calc(100vh - 302px); // 64 + 166 + 72 header + title + footer
 
   scrollbar-color: ${(props) => props.theme.palette.grey['100']}
     ${(props) => props.theme.palette.grey['400']};

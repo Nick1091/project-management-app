@@ -205,6 +205,39 @@ export const editBoard = createAsyncThunk(
   }
 );
 
+export const editBoardColumn = createAsyncThunk(
+  'board/createColumn',
+  async (
+    {
+      token,
+      boardId,
+      columnId,
+      columnTitle,
+      columnOrder,
+    }: {
+      token: string;
+      boardId: string;
+      columnId: string;
+      columnTitle: string;
+      columnOrder: number;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.put(
+        `${REQUEST_URLS.BOARDS_URL}/${boardId}/columns/${columnId}`,
+        { title: columnTitle, order: columnOrder },
+        {
+          headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+        }
+      );
+      return response.data.title;
+    } catch (e) {
+      if (e instanceof Error) return rejectWithValue(e.message);
+    }
+  }
+);
+
 export const createBoardColumn = createAsyncThunk(
   'board/createColumn',
   async (
@@ -362,6 +395,24 @@ export const deleteTask = createAsyncThunk(
       return data;
     } catch (e) {
       return rejectWithValue(handleError(e));
+    }
+  }
+);
+
+export const getTasks = createAsyncThunk(
+  'boards/getTasks',
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(REQUEST_URLS.TASKS, {
+        headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      });
+      return response.data;
+    } catch (e) {
+      let error = 'noServerResponse';
+      if (e instanceof AxiosError && e.response) {
+        error = e.response.status.toString();
+      }
+      return rejectWithValue(error);
     }
   }
 );
