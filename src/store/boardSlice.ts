@@ -31,6 +31,12 @@ const boardSlice = createSlice({
     removeError: (state) => {
       state.error = null;
     },
+    setDeletingColumnId: (state, action) => {
+      state.deletingColumnId = action.payload;
+    },
+    setDeletingTaskId: (state, action) => {
+      state.deletingTaskId = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getBoardById.pending, (state) => {
@@ -105,6 +111,7 @@ const boardSlice = createSlice({
     builder.addCase(deleteTask.rejected, (state, action) => {
       state.error = action.payload as string;
       state.isDeletingTask = false;
+      state.deletingTaskId = undefined;
     });
     builder.addCase(deleteTask.fulfilled, (state, action) => {
       if (state.columns) {
@@ -118,6 +125,7 @@ const boardSlice = createSlice({
         }
       }
       state.isDeletingTask = false;
+      state.deletingTaskId = undefined;
     });
     builder.addCase(deleteBoardColumn.pending, (state) => {
       state.isDeletingColumn = true;
@@ -127,10 +135,12 @@ const boardSlice = createSlice({
         state.columns = state.columns.filter((column) => column.id !== action.payload);
       }
       state.isDeletingColumn = false;
+      state.deletingColumnId = undefined;
     });
     builder.addCase(deleteBoardColumn.rejected, (state, action) => {
       state.error = action.payload as string;
       state.isDeletingColumn = false;
+      state.deletingColumnId = undefined;
     });
     builder.addCase(getBoardColumns.fulfilled, (state, action) => {
       state.columns = action.payload.columns;
@@ -138,6 +148,7 @@ const boardSlice = createSlice({
   },
 });
 
-export const { removeAllColumns, removeError } = boardSlice.actions;
+export const { removeAllColumns, removeError, setDeletingColumnId, setDeletingTaskId } =
+  boardSlice.actions;
 
 export default boardSlice.reducer;

@@ -59,6 +59,8 @@ export type BoardState = {
   isCreatingTask: boolean;
   isDeletingColumn: boolean;
   isDeletingTask: boolean;
+  deletingColumnId?: string;
+  deletingTaskId?: string;
   boardTitle?: string;
   boardDescription?: string;
   columns?: ColumnState[];

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container, Snackbar, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Outlet } from 'react-router-dom';
-import { removeUser } from '../../store/authSlice';
+import { removeUser, removeError as removeErrorAuth } from '../../store/authSlice';
 import { removeError as removeErrorMain } from '../../store/boardSlice';
 import { removeError as removeErrorBoard } from '../../store/mainSlice';
 import { useAppSelector, useAppDispatch } from '../../hooks';
@@ -24,7 +24,7 @@ export const AppLayout = () => {
   const { t } = useTranslation(['common']);
 
   useEffect(() => {
-    if (errorMainBoard === '401' || errorBoard === '401') {
+    if (errorMainBoard === '401' || errorBoard === '401' || errorAuth === '401') {
       localStorage.removeItem('token');
       localStorage.removeItem('login');
       dispatch(removeErrorMain());
@@ -39,10 +39,7 @@ export const AppLayout = () => {
     ) {
       dispatch(removeErrorMain());
       dispatch(removeErrorBoard());
-      setShowConnectionMessage(true);
-    }
-    if (errorAuth === 'Network Error') {
-      dispatch(removeUser());
+      dispatch(removeErrorAuth());
       setShowConnectionMessage(true);
     }
   }, [dispatch, errorMainBoard, errorBoard, errorAuth]);

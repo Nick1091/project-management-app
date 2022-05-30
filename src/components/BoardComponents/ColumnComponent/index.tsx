@@ -5,7 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { createTask, deleteBoardColumn } from '../../../requests';
+import { setDeletingColumnId } from '../../../store/boardSlice';
 import { ItemTypes } from '../../../constants';
+import { Preloader } from '../../Preloader';
 import { ColumnState } from '../../../types';
 import { TaskInput } from '../../../types';
 import { taskFormSchema } from '../../../validation';
@@ -47,11 +49,15 @@ export const ColumnOfBoard = ({
   const originalIndex = findColumn(id)?.index;
 
   const { authUser } = useAppSelector((state) => state.authUser);
+  const { deletingColumnId, isDeletingColumn, isCreatingTask } = useAppSelector(
+    (state) => state.boardState
+  );
   const userId = authUser.id;
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   const handleDeleteColumn = () => {
     if (token) dispatch(deleteBoardColumn({ token, boardId, columnId: id }));
+    dispatch(setDeletingColumnId(id));
   };
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.COLUMN,
@@ -129,7 +135,11 @@ export const ColumnOfBoard = ({
         onMouseOut={() => setIsVisibleRemoveBtn(false)}
         ref={(node) => drag(drop(node))}
       >
-        <ColumnTitle>{title}</ColumnTitle>
+        {deletingColumnId === id && isDeletingColumn ? (
+          <Preloader color="secondary.main" />
+        ) : (
+          <ColumnTitle>{title}</ColumnTitle>
+        )}
         {tasks && tasks.length > 0 && (
           <ContainerTask>
             {sortArray(tasks).map((task) => (
@@ -138,7 +148,11 @@ export const ColumnOfBoard = ({
           </ContainerTask>
         )}
         <CreateTask onClick={() => setIsModalOpened(true)}>
-          ＋ {t('add task', { ns: 'task' })}
+          {isCreatingTask ? (
+            <Preloader color="primary.contrastText" />
+          ) : (
+            `＋ ${t('add task', { ns: 'task' })}`
+          )}
         </CreateTask>
         {isModalOpened && (
           <ModalWithForm<TaskInput>

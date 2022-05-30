@@ -42,6 +42,12 @@ const authSlice = createSlice({
         isLoading: false,
       };
     },
+    removeError: (state) => {
+      state.authUser = {
+        ...state.authUser,
+        error: null,
+      };
+    },
     setUserCredentials: (
       state,
       action: PayloadAction<{ token: string; login: string; id: string }>
@@ -137,5 +143,5 @@ const authSlice = createSlice({
     },
   },
 });
-export const { removeUser, setUserCredentials } = authSlice.actions;
+export const { removeUser, setUserCredentials, removeError } = authSlice.actions;
 export default authSlice.reducer;
