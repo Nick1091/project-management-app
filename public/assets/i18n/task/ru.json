@@ -1,0 +1,14 @@
+{
+  "EditTask": "Изменить задачу",
+  "add task": "добавить задачу",
+  "Create task": "Создать задачу",
+  "Task title": "Заголовок",
+  "Task description": "Описание",
+  "Column Title": "Заголовок",
+  "Board title": "Заголовок",
+  "Board description": "Описание",
+  "DeleteAsk": "Вы действительно хотите удалить",
+  "task": "задачу?",
+  "column": "колонку?",
+  "board": "доску?"
+}

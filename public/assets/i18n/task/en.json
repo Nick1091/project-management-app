@@ -1,0 +1,14 @@
+{
+  "EditTask": "Edit task",
+  "add task": "add task",
+  "Create task": "Create task",
+  "Task title": "Task title",
+  "Task description": "Task description",
+  "Board title": "Board title",
+  "Board description": "Board description",
+  "Column Title": "Column Title",
+  "DeleteAsk": "Do you really want to delete",
+  "task": "task?",
+  "column": "column?",
+  "board": "column?"
+}
